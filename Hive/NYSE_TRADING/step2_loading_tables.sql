@@ -1,11 +1,20 @@
-use handson_nasdaq;
+use nyse_db;
 
 --load data into the managed table mng_daily_prices
 load data inpath '/user/yuanhsin/rawdata/nasdaq_daily_price/NASDAQ_daily_prices_subset.csv' 
-overwrite into mng_daily_prices;
+overwrite into table mng_daily_prices;
 
+select * from mng_daily_prices limit 3;
 
---load data into the managed parquet table tbl_nasdaq_daily_prices 
+exchange	stock_symbol	date	NULL	NULL	NULL	NULL	NULL	NULL
+NASDAQ	DELL	1997-08-26	83.87	84.75	82.5	82.81	48736000	10.35
+NASDAQ	DITC	2002-10-24	1.56	1.69	1.53	1.6	133600	1.6
+
+select count(1) from mng_daily_prices;    -- how many records in the table?
+
+load data local inpath '/home/cloudera/NASDAQ_daily_prices_subset.csv'  
+into table mng_daily_prices;
+-- wget https://raw.githubusercontent.com/thebigjc/HackReduce/master/datasets/nasdaq/daily_prices/NASDAQ_daily_prices_subset.csv--load data into the managed parquet table tbl_nasdaq_daily_prices 
 insert overwrite table tbl_nasdaq_daily_prices_parquet
 select * from tbl_nasdaq_daily_prices;
 
