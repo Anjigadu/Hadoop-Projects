@@ -1,19 +1,20 @@
 -- To log into Hive
->hive
->beeline
->history | grep beeline
-beeline> !connect jdbc:hive2://localhost:10000/ cloudera cloudera
-> beeline -u jdbc:hive2://localhost:10000/ -n cloudera
-beeline> !quit
+-- >hive
+-- >beeline
+-- >history | grep beeline
+-- beeline> !connect jdbc:hive2://localhost:10000/ cloudera cloudera
+-- > beeline -u jdbc:hive2://localhost:10000/ -n cloudera
+-- beeline> !quit
 
 -- HDFS commands
-1. create directory
+--1. create directory
 hdfs dfs -mkdir -p hive/warehouse
 hdfs dfs -mkdir -p /user/hive/warehouse/nyse_db
-2. search iteratively 
+--2. search iteratively 
 hdfs dfs -ls -R hive/warehouse/
 
 -- create a database for this project
+-- when creating a database, hive creates a folder
 create database nyse_db location '/user/yuanhsin/hive/warehouse/nyse_db';
 
 show databases;
@@ -26,18 +27,35 @@ desc table_name;
 
 -- Hive Data Types
 -- Create Hive Tables
-   1. Managed 
-   2. External
+-- 1. Managed: has table and data totally controlled by Hive
+-- 2. External: has table but not data totally controlled by Hive
 -- Queries
 
---Create a managed table for NASDAQ daily prices data set.
-create table tbl_nasdaq_daily_prices (
-	exchange_name string,stock_symbol string,date string,stock_price_open float,
-	stock_price_high float,stock_price_low float,stock_price_close float,
-	stock_volume int, stock_price_adj_close float
-)
-row format delimited
-fields terminated by ',';
+use nyse_db;
+alter database nyse_db set dbproperties('author'='YuanHsin Huang');
+alter database nyse_db set dbproperties('comment'='This is the sample comment.');
+
+--List out the last n rows
+hdfs dfs -tail /user/yuanhsin/rawdata/nasdaq_daily_price/NASDAQ_daily_prices_subset.csv
+
+NASDAQ,DORM,1995-07-10,7.75,8.50,7.75,8.50,10800,4.25
+NASDAQ,DGAS,2004-01-09,24.65,24.65,24.28,24.28,1100,18.17
+NASDAQ,DEPO,2007-07-12,2.39,2.53,2.35,2.37,2195500,2.37
+NASDAQ,DNDN,2007-10-10,7.95,8.50,7.94,8.42,9718200,8.42
+
+--Create a managed table for NASDAQ daily prices data set
+create table mng_daily_prices(
+	exchange_name string, stock_symbol string, date string, price_open float,price_high float, price_low float,
+	price_close float, volume int, price_adj_close float)
+ROW format delimited
+fields terminated by ','
+stored as TEXTFILE;
+
+show tables;
+
+
+
+
 
 --Create a managed table for NASDAQ daily prices data set with parquet data format
 create table tbl_nasdaq_daily_prices_parquet (
