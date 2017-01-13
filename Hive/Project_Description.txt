@@ -16,3 +16,5 @@ Project 3 - Analysis of Forex Tick Data using Hive
 -- Hive Metastore will be introduced here. 
 -- Cloudera Impala will also be used in this project.
 -- performance tuning.
+
+Project 4 - 
