@@ -8,3 +8,5 @@ wget https://raw.githubusercontent.com/thebigjc/HackReduce/master/datasets/nasda
 
 hdfs dfs -put NASDAQ_daily_prices_subset.csv /user/yuanhsin/rawdata/nasdaq_daily_price
 
+hdfs dfs -tail /user/yuanhsin/rawdata/nasdaq_daily_price/NASDAQ_daily_prices_subset.csv
+
