@@ -1,0 +1,18 @@
+Project 1 - Processing NYSE Trading Data using Hive 
+-- This project used Hive to process the NYSE trading data on daily price. 
+-- To check different file types and formats available in Hive  
+-- To learn how to create and load data into Hive tables.
+-- To learn how partitioning works in Hive.
+
+Project 2 - Querying Airline on-time Performance Dataset using Hive
+-- we will use pig to pre-process the data to restrict the class to few features instead
+-- Table partitioning
+-- Joins
+-- User-defined functions (UDF) and custom UDFs
+
+
+Project 3 - Analysis of Forex Tick Data using Hive
+-- Advance concepts like aggregated queries 
+-- Hive Metastore will be introduced here. 
+-- Cloudera Impala will also be used in this project.
+-- performance tuning.
