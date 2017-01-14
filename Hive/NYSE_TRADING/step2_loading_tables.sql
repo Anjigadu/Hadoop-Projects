@@ -21,16 +21,16 @@ hdfs dfs -ls -R .
 -- Put data into the folder
 hdfs dfs -put NASDAQ_daily_prices_subset.csv /user/yuanhsin/rawdata/hive/ext_daily_prices
 
--- Insert data into Hive Table
+-- Load data into Hive Table
+--(1)
 insert into mng_daily_prices 
 select * from ext_daily_prices where exchange_name != 'exchange';
-
-
---load data into the managed parquet table tbl_nasdaq_daily_prices into table mng_daily_prices;
-
-
-insert overwrite table tbl_nasdaq_daily_prices_parquet
-select * from tbl_nasdaq_daily_prices;
-
----- to load data into our new avro table from another previous table or the same column specification
-insert overwrite table nasdaq_dividends_avro select * from nasdaq_dividends;
+--(2)
+-- a.
+-- Load data into the managed parquet table mng_daily_prices from table mng_daily_prices
+insert overwrite table mng_daily_prices_parquet
+select * from mng_daily_prices;
+-- b.
+-- Load data into new avro table from another previous table or the same column specification
+insert overwrite table nasdaq_dividends_avro 
+select * from nasdaq_dividends;
