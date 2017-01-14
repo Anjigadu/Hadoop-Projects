@@ -73,7 +73,11 @@ row format delimited
 fields terminated by ','
 location '/user/yuanhsin/rawdata/hive/nasdaq_daily_prices';
 
-
+--(4) Alternative method to create Table
+create table zb_result
+row format delimited
+fields terminated by '\t'
+as select stock_symbol, sum(volume) total_stock_volume from mng_daily_prices group by stock_symbol order by stock_symbol;
 
 
 
