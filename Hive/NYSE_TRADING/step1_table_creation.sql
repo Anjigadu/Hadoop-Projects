@@ -43,7 +43,7 @@ NASDAQ,DGAS,2004-01-09,24.65,24.65,24.28,24.28,1100,18.17
 NASDAQ,DEPO,2007-07-12,2.39,2.53,2.35,2.37,2195500,2.37
 NASDAQ,DNDN,2007-10-10,7.95,8.50,7.94,8.42,9718200,8.42
 
---Create a managed table for NASDAQ daily prices data set
+--(1) Create a Managed Table for NASDAQ daily prices data set
 create table mng_daily_prices(
 	exchange_name string, stock_symbol string, date string, price_open float,price_high float, price_low float,
 	price_close float, volume int, price_adj_close float)
@@ -54,27 +54,27 @@ location '/user/yuanhsin/hive/warehouse/nyse_db/mng_daily_prices';
 
 show tables;
 
-
-
-
-
---Create a managed table for NASDAQ daily prices data set with parquet data format
-create table tbl_nasdaq_daily_prices_parquet (
-	exchange_name string,stock_symbol string,date string,stock_price_open float,
-	stock_price_high float,stock_price_low float,stock_price_close float,
-	stock_volume int, stock_price_adj_close float
-)
+--(2) Create a Managed Table for data set with parquet data format
+-- Parquet: columnar storage format 
+create table mng_daily_prices_parquet (
+	exchange_name string, stock_symbol string, date string, price_open float,price_high float, price_low float,
+	price_close float, volume int, price_adj_close float)
 stored as parquet;
 
---Create an external table for NASDAQ daily prices data set.
-create external table nasdaq_daily_prices (
-	exchange_name string,stock_symbol string,date string,stock_price_open float,
-	stock_price_high float,stock_price_low float,stock_price_close float,
-	stock_volume int, stock_price_adj_close float
-)
+--(3) Create an External Table for NASDAQ daily prices data set.
+
+hdfs dfs -mkdir -p /user/yuanhsin/rawdata/hive/nasdaq_daily_prices
+hdfs dfs -put NASDAQ_daily_prices_subset.csv /user/yuanhsin/rawdata/hive/nasdaq_daily_prices
+
+create external table ext_daily_prices(
+	exchange_name string, stock_symbol string, date string, price_open float,price_high float, price_low float,
+	price_close float, volume int, price_adj_close float)
 row format delimited
 fields terminated by ','
-location '/user/cloudera/rawdata/hadoop_class/nasdaq_prices';
+location '/user/yuanhsin/rawdata/hive/nasdaq_daily_prices';
+
+
+
 
 
 -- Create an external table for NASDAQ dividends data set.
