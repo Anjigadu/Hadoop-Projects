@@ -77,6 +77,7 @@ location '/user/yuanhsin/rawdata/hive/nasdaq_daily_prices';
 create table zb_result
 row format delimited
 fields terminated by '\t'
+location '/user/yuanhsin/hive_result/stock_volume'
 as select stock_symbol, sum(volume) total_stock_volume from mng_daily_prices group by stock_symbol order by stock_symbol;
 
 
