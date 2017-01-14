@@ -1,7 +1,18 @@
-use handson_nasdaq;
+-- Shoe table structure (column,data type)
+desc mng_daily_prices;
 
--- Find out total volume sale for each stock symbol which has closing price more than $5.
-select stock_symbol, sum(stock_volume) total_volume from nasdaq_daily_prices where stock_price_close > 5.0 group by stock_symbol
+use nyse_db;
+
+-- Find out total volume sale for each stock symbol which has closing price more than $5
+select stock_symbol, sum(volume) total_volume from mng_daily_prices where price_close > 5.0 group by stock_symbol;
+
+-- Explain the execution plan for the query
+explain
+select stock_symbol, sum(volume) total_volume from mng_daily_prices where price_close > 5.0 group by stock_symbol;
+
+
+
+
 
 -- Find out highest price in the history for each stock symbol.
 -- assume highest closing price
