@@ -49,7 +49,8 @@ create table mng_daily_prices(
 	price_close float, volume int, price_adj_close float)
 ROW format delimited
 fields terminated by ','
-stored as TEXTFILE;
+stored as TEXTFILE
+location '/user/yuanhsin/hive/warehouse/nyse_db/mng_daily_prices';
 
 show tables;
 
