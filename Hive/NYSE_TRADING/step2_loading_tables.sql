@@ -12,9 +12,20 @@ NASDAQ	DITC	2002-10-24	1.56	1.69	1.53	1.6	133600	1.6
 
 select count(1) from mng_daily_prices;    -- how many records in the table?
 
-load data local inpath '/home/cloudera/NASDAQ_daily_prices_subset.csv'  
+load data local inpath '/home/cloudera/NASDAQ_daily_prices_subset.csv'  -- wget https://raw.githubusercontent.com/thebigjc/HackReduce/master/datasets/nasdaq/daily_prices/NASDAQ_daily_prices_subset.csv
 into table mng_daily_prices;
--- wget https://raw.githubusercontent.com/thebigjc/HackReduce/master/datasets/nasdaq/daily_prices/NASDAQ_daily_prices_subset.csv--load data into the managed parquet table tbl_nasdaq_daily_prices 
+
+-- List files and directories in alphabetic order
+hdfs dfs -ls -R .
+
+-- Put data into the folder
+hdfs dfs -put NASDAQ_daily_prices_subset.csv /user/yuanhsin/rawdata/hive/ext_daily_prices
+
+
+
+--load data into the managed parquet table tbl_nasdaq_daily_prices into table mng_daily_prices;
+
+
 insert overwrite table tbl_nasdaq_daily_prices_parquet
 select * from tbl_nasdaq_daily_prices;
 
