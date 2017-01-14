@@ -10,10 +10,6 @@ select stock_symbol, sum(volume) total_volume from mng_daily_prices where price_
 explain
 select stock_symbol, sum(volume) total_volume from mng_daily_prices where price_close > 5.0 group by stock_symbol;
 
-
-
-
-
 -- Find out highest price in the history for each stock symbol.
 -- assume highest closing price
 select stock_symbol, max(stock_price_close) record_closing_price from nasdaq_daily_prices group by stock_symbol
