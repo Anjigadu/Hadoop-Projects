@@ -21,6 +21,9 @@ hdfs dfs -ls -R .
 -- Put data into the folder
 hdfs dfs -put NASDAQ_daily_prices_subset.csv /user/yuanhsin/rawdata/hive/ext_daily_prices
 
+-- Insert data into Hive Table
+insert into mng_daily_prices 
+select * from ext_daily_prices where exchange_name != 'exchange';
 
 
 --load data into the managed parquet table tbl_nasdaq_daily_prices into table mng_daily_prices;
