@@ -1,0 +1,7 @@
+Issue a select state => 
+Hive creates a MapReduce job,
+(1)Hive uses the input format to read the file split(roughly= file block)
+   input format uses the record reader to read the file split
+(2)Hive uses the Serde to make sense of each data read by the record reader 
+   and try to match the fields with the table column definition. 
+   It also does any necessary data type conversion.
