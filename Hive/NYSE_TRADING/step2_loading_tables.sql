@@ -35,8 +35,8 @@ select * from mng_daily_prices;
 insert overwrite table nasdaq_dividends_avro 
 select * from nasdaq_dividends;
 
---
+-- Load data via query into directory
 insert overwrite directory '/user/yuanhsin/hive_result/stock_volume_dir'
 row format delimited
 fields terminated by '-'
-as select symbol, sum(volume) total_stock_volume from mng_daily_prices group by symbol order by symbol;
+select symbol, sum(volume) total_stock_volume from mng_daily_prices group by symbol order by symbol;
