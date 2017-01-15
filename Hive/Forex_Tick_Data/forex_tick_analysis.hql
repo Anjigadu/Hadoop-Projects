@@ -51,21 +51,22 @@ stored as avro
 location '/user/yuanhsin/rawdata/forex_tick/price_data_avro'
 tblproperties('avro.schema.url'='hdfs://quickstart.cloudera:8020/user/cloudera/rawdata/forex_tick/schema/price_data.avsc');
 
---load data from raw_price_data
+-- Load data from raw_price_data
 insert overwrite table price_data_avro
 select cast(substr(datetimestamp, 0, 4) as int) year, cast(substr(datetimestamp, 5, 2) as int) month, 
 cast(substr(datetimestamp, 7, 2) as int) day, cast(substr(datetimestamp, 10, 2) as int) hour, cast(substr(datetimestamp, 12, 2) as int) min 
-, open, high, low, close, sym
+, open, high, low, close, symbol
 from raw_price_data;
 
 #sample query
 -- return the monthly average volatility (differnce between high and low) for all dollar pairs in the year 2010 
-select year, month, sym, avg(high-low) avg_volatility from price_data_wide where year = 2010 and sym like '%USD%' group by year, month, sym;
+select year, month, symbol, avg(high-low) avg_volatility from price_data_wide where year = 2010 and symbol like '%USD%' 
+group by year, month, symbol;
 
 
-
-
-Scenario: Assume that quant analysis do their analysis mainly on data in a year window. You are asked to partition all sales data by year and sym and load all dataset from the data_price_wide table into it. The new table should be named data_price_part. Also because analyst discovered that the volume column is always null, you have been asked to remove it from the new table.
+Scenario 4: Assume that quant analysis do their analysis mainly on data in a year window. 
+You are asked to partition all sales data by year and sym and load all dataset from the data_price_wide table into it. 
+The new table should be named data_price_part. Also because analyst discovered that the volume column is always null, you have been asked to remove it from the new table.
 
 (Objective): Improve query performance by creating partitioned tables in the Hive metastore
 =====================================================================================================
