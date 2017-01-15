@@ -83,6 +83,11 @@ as select stock_symbol, sum(volume) total_stock_volume from mng_daily_prices gro
 -- Open text editor
 nano stock_vol.hql
 
+insert overwrite directory '/user/yuanhsin/hive_result/stock_volume_dir1'
+row format delimited
+fields terminated by '-'
+select symbol, sum(volume) total_stock_volume from mng_daily_prices group by symbol order by symbol;
+
 hive -f stock_vol.hql
 
 
