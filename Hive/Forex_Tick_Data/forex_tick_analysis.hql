@@ -45,7 +45,8 @@ Scenario 3: Using the raw_price_data, dataset create a wider table called price_
 
 (Objective) Create a table in the Hive metastore using the Avro file format and an external schema file
 ==============================================================================
-create external table price_data_avro (year int, month int, day int, hour int, min int, open float, high float, low float, close float, sym string)
+create external table price_data_avro 
+(year int, month int, day int, hour int, min int, open float, high float, low float, close float, symbol string)
 stored as avro
 location '/user/yuanhsin/rawdata/forex_tick/price_data_avro'
 tblproperties('avro.schema.url'='hdfs://quickstart.cloudera:8020/user/yuanhsin/rawdata/forex_tick/schema/price_data.avsc');
