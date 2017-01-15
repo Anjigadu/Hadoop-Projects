@@ -82,6 +82,7 @@ as select stock_symbol, sum(volume) total_stock_volume from mng_daily_prices gro
 
 -- Open text editor
 nano stock_vol.hql
+
 hive -f stock_vol.hql
 
 
