@@ -34,3 +34,9 @@ select * from mng_daily_prices;
 -- Load data into new avro table from another previous table or the same column specification
 insert overwrite table nasdaq_dividends_avro 
 select * from nasdaq_dividends;
+
+--
+insert overwrite directory '/user/yuanhsin/hive_result/stock_volume_dir'
+row format delimited
+fields terminated by '-'
+as select symbol, sum(volume) total_stock_volume from mng_daily_prices group by symbol order by symbol;
