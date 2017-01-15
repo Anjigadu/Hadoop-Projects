@@ -2,6 +2,10 @@ Scenario: Create a hive table from the all_price_data.txt dataset and run sample
 
 (Objective) Read and/or create a table in the Hive metastore in a given schema
 ====================================================================
+
+hdfs dfs -mkdir -p /user/yuanhsin/rawdata/forex_tick/price_data
+hdfs dfs -copyFromLocal price_data.txt /user/yuanhsin/rawdata/forex_tick/price_data
+
 create external table raw_price_data (datetimestamp string, open float, high float, low float, close float, volume int, symbol string)
 row format delimited
 fields terminated by ';'
