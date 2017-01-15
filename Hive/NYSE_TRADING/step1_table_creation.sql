@@ -113,17 +113,19 @@ hdfs dfs -ls -R /user/yuanhsin/
 -- Also use the output to view the real details for building a hive table
 show create table ext_daily_prices;
 
--- view details of avro table
+-- View details of avro table
 show create table ext_daily_prices_avro;  
 
---alter table to add the schema location
-alter table nasdaq_dividends_avro
-set location '/user/cloudera/rawdata/hadoop_class/nasdaq_dividend_avro';
+-- Alter table to add the schema location
+alter table ext_daily_prices_avro
+set location '/user/yuanhsin/rawdata/hive_result/ext_daily_prices_avro';
 
--- alter a table to add a table property
-alter table nasdaq_dividends_avro set tblproperties('author'='michael enudi')
+-- Alter a table to add a table property
+alter table ext_daily_prices_avro
+set tblproperties('author'='YuanHsin');
 
--- alter table to rename the table
-alter table nasdaq_dividends_avro rename to avro_dividend	
+-- Alter table to rename the table
+alter table ext_daily_prices_avro 
+rename to avro_prices;
 
 
