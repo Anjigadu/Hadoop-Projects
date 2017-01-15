@@ -76,10 +76,13 @@ location '/user/yuanhsin/rawdata/hive/nasdaq_daily_prices';
 --(4) Alternative method to create Table
 create table zb_result
 row format delimited
-fields terminated by '\t'
+fields terminated by '\t'   -- DEFAULT '\001','\u001'
 location '/user/yuanhsin/hive_result/stock_volume'
 as select stock_symbol, sum(volume) total_stock_volume from mng_daily_prices group by stock_symbol order by stock_symbol;
 
+-- Open text editor
+nano stock_vol.hql
+hive -f stock_vol.hql
 
 
 -- Create an external table for NASDAQ dividends data set.
