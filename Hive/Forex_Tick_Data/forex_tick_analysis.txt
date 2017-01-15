@@ -2,10 +2,10 @@ Scenario: Create a hive table from the all_price_data.txt dataset and run sample
 
 (Objective) Read and/or create a table in the Hive metastore in a given schema
 ====================================================================
-create external table raw_price_data (datetimestamp string, open float, high float, low float, close float, volume int, sym string)
+create external table raw_price_data (datetimestamp string, open float, high float, low float, close float, volume int, symbol string)
 row format delimited
 fields terminated by ';'
-location '/user/cloudera/rawdata/hist_forex/price_data';
+location '/user/yuanhsin/rawdata/forex_tick/price_data';
 
 #sample queries
 --return all datatimestamp, open, close and sym for all instances of XUAUSD traded.
