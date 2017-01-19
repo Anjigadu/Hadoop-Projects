@@ -1,1 +1,17 @@
-HBase built on top of hadoop.
+# HBase built on top of hadoop.
+# GOOGLE 3 Seminal Paper:
+# (1) GFS (GOOGLE File System): storage (HDFS)
+# (2) MapReduce: processing data (Hadoop MapReduce)
+# (3) BigTable: database management (HBase)
+
+# HDFS:
+# name node (master node): manages overall file systems
+# (1)the directory structure  (2)metadata for all the files
+# data nodes: the data is physically stored on these nodes
+# To define a replication factor in HDFS
+# Each block is replicated and the replicas are stored in different data nodes
+
+# MapReduce:
+# 2 phases -> (1) Process each block in the node it is stored in (Map phase)
+              (2) Take all the results to one node and combine them (Reduce phase)
+# 
