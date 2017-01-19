@@ -1,0 +1,53 @@
+##(1) Create a table to hold notifications data
+create 'notifications','attributes','metrics'
+#      name of the table, column families 
+
+# column families are groups of columns which are usually semantically related
+# when creating a table in HBase, it is not necessary to specify columns
+# every table must have at least 1 column family
+# column family, unlike columns are usually created at the time of table creation
+# It is possible to add or change column families later, but this is rarely done
+
+##(2) Insert data into a table using PUT operation
+
+# every entry in a HBase table is like a cell in a traditional table
+put 'notifications',2, 'attributes: for user', 'Chaz'
+#    table name, rowid, 'column family:column name', value
+# every column must belong to a cloumn family 
+
+# an hbase table is like a sorted map
+put 'notifications',2, 'attributes: for user', 'Chaz'
+#                   [            key        ], [value]
+
+# with put operation, it can insert new keys into the map 
+put 'notifications',2,'attributes: type', 'Comment'
+
+##(3) Update data using HBase shell
+# put operation has 2 purposes: inserting values for new keys(row id, cloumn) / updating value for exisiting keys
+# ex. track number of times a notification was opened/clicked on
+  put 'notification',2,'metrics:open',0
+# step 1. put 'notification',2  => create row id 2 in notification table  if the row id doesn't exist
+# step 2. 2,'metrics:open' => create column open for the row id 2 in the metrics column family
+# step 3. 0 => insert the value 0 for the row id 2 and column open
+
+# HBase actually does not lose the old value
+# The history of updates for a specific key is maintained and retrievable
+# Each version is stored with the created timestamp
+# During retrieval, the latest version is retrieved by default
+
+##(4) Retrieving data using HBase shell
+get 'notification',2 
+# get only allow to retrieve data for 1 row id at a time
+# get has 2 mandatory arguments: table name, row id
+[result]  column                   cell
+          attributes: for_user     timestamp=1467179977249,value=Chaz
+          attributes: type         timestamp=1467181276487,value=comment        
+          attributes: metrics      timestamp=1467184097569,value=1
+# By default, the cell with the latest timestamp is retrieved
+# retrieve values for specific column
+get 'notification',2,'metrics:open','attributes:type'
+
+##(5)Retriving a range of row ids 
+# with scan operation, it can retrieve row ids within a specified range
+scan 'notification'      # return all values from the notification table
+scan 'notification',{COLUMNS=>,limit=>,STARTROW=>}
