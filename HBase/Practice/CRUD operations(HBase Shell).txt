@@ -55,4 +55,10 @@ scan 'notification',{COLUMNS=>,limit=>,STARTROW=>}
 #(6) Deleting a row
 delete 'notification',2,'attributes:for_user'
 get 'notification',2
-#(7) Deleting a table
+#(7) Deleting HBase table
+# when a table is in use, HBase keeps an index of the row ids in memory
+# HBase keeps a log of recent changes in memory, which are periodically flushed to disk
+# Disabling will flush all recent changes to disk and remove the row id index from memory
+disable 'notification'
+drop 'notification'
+list
