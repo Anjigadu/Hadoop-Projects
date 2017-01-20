@@ -51,3 +51,8 @@ get 'notification',2,'metrics:open','attributes:type'
 # with scan operation, it can retrieve row ids within a specified range
 scan 'notification'      # return all values from the notification table
 scan 'notification',{COLUMNS=>,limit=>,STARTROW=>}
+
+#(6) Deleting a row
+delete 'notification',2,'attributes:for_user'
+get 'notification',2
+#(7) Deleting a table
