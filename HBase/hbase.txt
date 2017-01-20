@@ -14,4 +14,28 @@
 # MapReduce:
 # 2 phases -> (1) Process each block in the node it is stored in (Map phase)
               (2) Take all the results to one node and combine them (Reduce phase)
-# 
+
+## Hadoop vd HBase
+# Why Hadoop not suited for transaction processing?
+# Hadoop limitations:
+(1)Unstructured data (2)No random access (3)High latency (4)Not ACID compliant
+
+# HBase is a distributed database management system
+# HBase uses HDFS to store data
+# HBase has the architecture benefit of HDFS: (1)fault tolerance (2)distributed storage
+# HBase also has many of the properties required for transaction processing 
+  (1) awareness of the structured data
+  (2) low latency
+  (3) random access
+  (4) ACID compliant at some levels
+  
+## HBase vs RDBMS
+(1) Hbase doesn't support SQL
+# HBase only supports a basic set of operations(create-read-update-delete)
+  => only CRUD operations
+(2) HBase does not support any operations across row or columns
+# This means that can not perform operations like joins,group by
+(3) HBase tables are not designed using a relational data model(denormalized)
+# All the data pertaining to an entity is stored in 1 row (ex. tables are denormalized)
+(4) column oriented storage
+# HBase is ACID compliant for limited kinds of transactions (ACID at a row level) 
