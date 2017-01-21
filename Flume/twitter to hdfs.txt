@@ -1,5 +1,6 @@
 ## Twiiter Source with Interceptors
-
+## Problem: save tweets with keyword "election" to the HDFS
+# Flume has a built-in Twitter Source
 agent1.sources =source1
 agent1.sinks = sink1
 agent1.channels = channel1
