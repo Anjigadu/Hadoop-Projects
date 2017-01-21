@@ -1,6 +1,7 @@
 ## Twiiter Source with Interceptors
 ## Problem: save tweets with keyword "election" to the HDFS
-# Flume has a built-in Twitter Source
+
+
 agent1.sources =source1
 agent1.sinks = sink1
 agent1.channels = channel1
@@ -9,7 +10,9 @@ agent1.channels = channel1
 agent1.sources.source1.channels = channel1
 agent1.sinks.sink1.channel = channel1 
 
+# Flume has a built-in Twitter Source
 agent1.sources.source1.type = org.apache.flume.source.twitter.TwitterSource
+# Set up a flume agent with a Twitter Source and specify the keywords
 agent1.sources.source1.consumerKey = tpAestpXtM2pYAlomfZr6LN7d
 agent1.sources.source1.consumerSecret = MCQ1aVPypaBOZIlg7MDp36znULAIcmf9Cj8xfxodyVyLpILpQu
 agent1.sources.source1.accessToken = 124163864-koQiHbqAF1QvLUzGqMb2ITvWk60jaa5yOsgJeaT7
