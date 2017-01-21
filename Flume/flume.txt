@@ -1,0 +1,9 @@
+# A Flume is the simplest unit of flume
+# A Flume can connect any number of sources to any number of data stores 
+# A Flume agent represents 1 hop for the data; if multiple hops using a chain of Flume agents
+# Every flume agent has 3 compoents: receive data(source) /buffer data(channel) /write data(sink)
+# (1)Source: receives data and pushes it to the channel
+             listens to the specified source and understands the format in which data is sent
+# Flume support many types of sources (1)Spooling directory    
+# syslog: log messages written in the syslog format
+                           
