@@ -1,4 +1,4 @@
-# Twitter Feed Analysis
+# Build Job Portal Service using Twitter Feed Analysis
 We will be loading live twitter feeds related to jobs advertisements. 
 We will setup batch processing of tweets on hdfs and then extract the data to MySQL database. 
 We will also use Oozie as workflow manager.
