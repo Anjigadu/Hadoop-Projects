@@ -1,0 +1,41 @@
+## Twiiter Source with Interceptors
+
+agent1.sources =source1
+agent1.sinks = sink1
+agent1.channels = channel1
+
+
+agent1.sources.source1.channels = channel1
+agent1.sinks.sink1.channel = channel1 
+
+agent1.sources.source1.type = org.apache.flume.source.twitter.TwitterSource
+agent1.sources.source1.consumerKey = tpAestpXtM2pYAlomfZr6LN7d
+agent1.sources.source1.consumerSecret = MCQ1aVPypaBOZIlg7MDp36znULAIcmf9Cj8xfxodyVyLpILpQu
+agent1.sources.source1.accessToken = 124163864-koQiHbqAF1QvLUzGqMb2ITvWk60jaa5yOsgJeaT7
+agent1.sources.source1.accessTokenSecret = qdMSjnab0O49k1pnck0fgtVQre60VN7pb0qkSC2vSYwJE
+agent1.sources.source1.keywords = @realDonaldTrump, @HillaryClinton
+
+
+agent1.sources.source1.interceptors =  regexInterceptor
+
+agent1.sources.source1.interceptors.regexInterceptor.type = regex_filter
+agent1.sources.source1.interceptors.regexInterceptor.regex = .*election.*
+agent1.sources.source1.interceptors.regexInterceptor.excludeEvents = false
+  
+
+agent1.sinks.sink1.type = hdfs 
+agent1.sinks.sink1.hdfs.useLocalTimeStamp = true
+
+agent1.sinks.sink1.hdfs.path = /tmp/flume/twitterinterceptor/%Y/%m/%d/%H
+
+agent1.sinks.sink1.hdfs.filePrefix = events 
+agent1.sinks.sink1.hdfs.fileSuffix = .log 
+agent1.sinks.sink1.hdfs.inUsePrefix = _
+agent1.sinks.sink1.hdfs.fileType = DataStream 
+
+
+
+
+agent1.channels.channel1.type = file 
+
+
