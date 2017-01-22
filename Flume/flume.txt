@@ -10,3 +10,6 @@
 # (3)exec: standard output from any command
 # (4)custom sources: write your own sources which can receive and understand the format of data produced by your application
 # 1 Flume can have multiple source components
+
+# The channel is a buffer where data stays until the Sink writes it out to an endpoint
+# The buffer capacity can be configured by the user
