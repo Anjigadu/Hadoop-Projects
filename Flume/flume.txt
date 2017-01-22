@@ -4,6 +4,8 @@
 # Every flume agent has 3 compoents: receive data(source) /buffer data(channel) /write data(sink)
 # (1)Source: receives data and pushes it to the channel
              listens to the specified source and understands the format in which data is sent
-# Flume support many types of sources (1)Spooling directory    
+# Flume support many types of sources (1)Spooling directory: a directory to which files are written by an application    
 # syslog: log messages written in the syslog format
-                           
+# exec: standard output from any command
+# custom sources: write your own sources which can receive and understand the format of data produced by your application
+
