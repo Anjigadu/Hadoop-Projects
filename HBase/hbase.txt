@@ -39,3 +39,32 @@
 # All the data pertaining to an entity is stored in 1 row (ex. tables are denormalized)
 (4) column oriented storage
 # HBase is ACID compliant for limited kinds of transactions (ACID at a row level) 
+
+## HBase data model
+#column 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
