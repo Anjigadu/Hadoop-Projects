@@ -16,16 +16,18 @@ cat genre_counting.pig
 - 5,Father of the Bride Part II (1995),Comedy
 
 ## Code:
+#  step 1. load data from source
+data = LOAD '/user/cloudera/rawdata/hadoop_train/movielens/latest/movies/movies.csv'
+       USING myCSVLoader()
+       AS (movieid: chararray, title: chararray, genres: chararry);
+#  step 2.  
 
-register /mnt/home/okmich20/hadoop-training-projects/pig/movielens/piggybank-0.15.0.jar
 
-# load data from source
+
 - remove the header
 - project one fields genres
 - split the genres by a pipe   - (Adventure,Children,Fantasy)
-- flatten the tuple of splitted genres (Adventure)
--									   (Children)
--										(Fantasy)
+- flatten the tuple of splitted genres: (Adventure) (Children) (Fantasy)
 - group the flattened tuple by name
 - get the count on each group
 
@@ -33,7 +35,6 @@ register /mnt/home/okmich20/hadoop-training-projects/pig/movielens/piggybank-0.1
 
 DEFINE myCSVLoader org.apache.pig.piggybank.storage.CSVLoader();
 
-data = LOAD '/user/okmich20/rawdata/handson_train/movielens/latest/movies' using myCSVLoader() AS (movieId:chararray,title:chararray,genres:chararray);
 headless = FILTER data BY movieId != 'movieId';
 flattend = FOREACH headless GENERATE FLATTEN(STRSPLIT(genres, '\\|', 0)) as f;
 grouped = GROUP flattend BY f;
