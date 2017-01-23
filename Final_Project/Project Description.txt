@@ -6,5 +6,5 @@ We will also use Oozie as workflow manager.
 flume -> load tweets from twitter 
 pig -> process the tweet to project feature
 Impala/hive -> quering and analysis on hdfs / data warehouse for structured data
-Sqoop -> move data 
-Oozie -> to coordinate pig and hive work
+Sqoop -> move data to mysql database 
+Oozie -> workflow/ to coordinate pig and hive work
