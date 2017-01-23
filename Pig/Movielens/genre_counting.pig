@@ -3,6 +3,7 @@ head movies.csv
 head -n -40 movies.csv
 wc -l movies.csv
 
+cat genre_counting.pig
 
 
 - find all genres and the number of movies
