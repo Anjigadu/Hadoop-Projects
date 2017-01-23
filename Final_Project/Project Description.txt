@@ -3,7 +3,8 @@ We will be loading live twitter feeds related to jobs advertisements.
 We will setup batch processing of tweets on hdfs and then extract the data to MySQL database. 
 We will also use Oozie as workflow manager.
 
-flume -> ingest tweets data
-pig -> 
-Impala/hive -> data warehouse for structured data
+flume -> load tweets from twitter 
+pig -> process the tweet to project feature
+Impala/hive -> quering and analysis on hdfs / data warehouse for structured data
+Sqoop -> move data 
 Oozie -> to coordinate pig and hive work
