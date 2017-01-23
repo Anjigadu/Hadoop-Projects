@@ -5,9 +5,9 @@ wc -l movies.csv
 
 cat genre_counting.pig
 
+## Objective: find all genres and the number of movies
 
-- find all genres and the number of movies
-
+## Sample Data:
 - movieId,title,genres
 - 1,Toy Story (1995),Adventure|Animation|Children|Comedy|Fantasy 
 - 2,Jumanji (1995),Adventure|Children|Fantasy
@@ -15,7 +15,11 @@ cat genre_counting.pig
 - 4,"Waiting, to Exhale (1995)",Comedy|Drama|Romance
 - 5,Father of the Bride Part II (1995),Comedy
 
-- load the data from source
+## Code:
+
+register /mnt/home/okmich20/hadoop-training-projects/pig/movielens/piggybank-0.15.0.jar
+
+# load data from source
 - remove the header
 - project one fields genres
 - split the genres by a pipe   - (Adventure,Children,Fantasy)
