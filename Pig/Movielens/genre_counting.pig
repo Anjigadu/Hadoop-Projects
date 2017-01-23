@@ -1,3 +1,11 @@
+hdfs dfs -get /user/cloudera/rawdata/hadoop_train/movielens/latest/movies/movies.csv
+head movies.csv
+head -n -40 movies.csv
+
+
+
+
+
 - find all genres and the number of movies
 
 - movieId,title,genres
