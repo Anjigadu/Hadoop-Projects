@@ -13,3 +13,5 @@
 
 # The channel is a buffer where data stays until the Sink writes it out to an endpoint
 # The buffer capacity can be configured by the user
+# It is important to configure the channel capacity as per the rates of the source and sink
+# If the channels 
