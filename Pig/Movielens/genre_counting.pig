@@ -4,6 +4,7 @@ head -n -40 movies.csv
 wc -l movies.csv
 
 cat genre_counting.pig
+vi genre_counting.pig      # edit filename starting at line 1
 
 ## Objective: find all genres and the number of movies
 
@@ -43,10 +44,12 @@ projData = FOREACH headless GENERATE genres;
 #  STRSPLIT: Splits a string around matches of a given regular expression
 #  STRSPLIT(string, regex, limit)
 #  http://pig.apache.org/docs/r0.9.1/func.html#strsplit
-splitted = FOREACH projData GENERATE STRSPLIT(genres,'|',0) AS t;
+splitted = FOREACH projData GENERATE STRSPLIT(genres,'\\|',0) AS t;
 
 #  step 5. flatten the tuple of splitted genres  (Adventure) (Children) (Fantasy)
 flattened = FOREACH splitted GENERATE FLATTEN(t);
+
+
 
 #  step 6. group the flattened typle by name
 grouped = GROUP flattened BY t;
