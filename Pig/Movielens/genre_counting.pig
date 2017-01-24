@@ -74,10 +74,12 @@ hdfs dfs -tail rawdata/hadoop_train/movielens/latest/movies/movies.csv
 # CSV Loader
 pwd
 ls home/cloudera/
-REGISTER 
-org.apache.pig.piggybank.storage.CSVLoader
+hdfs dfs -moveFromLocal home/cloudera/piggybank-0.15.0.jar  
+REGISTER rawdata/hadoop_train/movielens/piggybank-0.15.0.jar
+
 register /mnt/home/okmich20/hadoop-training-projects/pig/movielens/piggybank-0.15.0.jar
-DEFINE myCSVLoader org.apache.pig.piggybank.storage.CSVLoader();
+
+DEFINEd myCSVLoader as org.apache.pig.piggybank.storage.CSVLoader();
 data = LOAD '/user/cloudera/rawdata/hadoop_train/movielens/latest/movies/movies.csv'
        USING myCSVLoader()
        AS (movieid: chararray, title: chararray, genres: chararry);headless = FILTER data BY movieId != 'movieId';
