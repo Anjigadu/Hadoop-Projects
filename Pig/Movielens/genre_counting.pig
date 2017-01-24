@@ -29,12 +29,15 @@ headless = FILTER data BY movieId != 'movieId';
 projData = FOREACH headless GENERATE genres;
 
 #  step 4. split the genres by a pipe (Adventure,Children,Fantasy)
-splitted = FOREACH projData GENERATE SPLIT(genres,'|');
+splitted = FOREACH projData GENERATE SPLIT(genres,'|') AS t;
 
 #  step 5. flatten the tuple of splitted genres  (Adventure) (Children) (Fantasy)
+flattened = FOREACH splitted GENERATE FLATTEN(t);
 
+#  step 6. group the flattened typle by name
 
-- group the flattened tuple by name
+#  step 7. get the count on each group
+
 - get the count on each group
 
 register /mnt/home/okmich20/hadoop-training-projects/pig/movielens/piggybank-0.15.0.jar
