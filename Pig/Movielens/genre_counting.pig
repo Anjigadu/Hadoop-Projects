@@ -35,10 +35,12 @@ splitted = FOREACH projData GENERATE SPLIT(genres,'|') AS t;
 flattened = FOREACH splitted GENERATE FLATTEN(t);
 
 #  step 6. group the flattened typle by name
+grouped = GROUP flattened BY t;
 
 #  step 7. get the count on each group
+agged = FOREACH grouped GENERATE (chararray)group AS genre, count(group) AS num;
 
-- get the count on each group
+
 
 register /mnt/home/okmich20/hadoop-training-projects/pig/movielens/piggybank-0.15.0.jar
 
@@ -47,8 +49,9 @@ data = LOAD '/user/cloudera/rawdata/hadoop_train/movielens/latest/movies/movies.
        USING myCSVLoader()
        AS (movieid: chararray, title: chararray, genres: chararry);headless = FILTER data BY movieId != 'movieId';
 flattend = FOREACH headless GENERATE FLATTEN(STRSPLIT(genres, '\\|', 0)) as f;
-grouped = GROUP flattend BY f;
+
 agged = FOREACH grouped GENERATE (chararray)group as genre, COUNT(flattend) as num;
+
 sorted  = ORDER agged BY genre;
 
 STORE sorted into '/user/okmich20/output/handson_train/movielens/genre_count/text'  USING  PigStorage(',');
