@@ -46,32 +46,35 @@ projData = FOREACH headless GENERATE genres;
 splitted = FOREACH projData GENERATE STRSPLIT(genres,'\\|',0) AS t;
 
 #  step 5. flatten the tuple of splitted genres  (Adventure) (Children) (Fantasy)
-flattened = FOREACH splitted GENERATE FLATTEN(t);
+flattened = FOREACH splitted GENERATE FLATTEN(t) AS f;
 
 # edit filename starting at line 1
-vi pig_1481992766450.log      
-rm pig_1481992766450.log
+vi pig_1485214765234.log     
+rm pig_1485214765234.log
+
 
 #  step 6. group the flattened typle by name
-grouped = GROUP flattened BY t;
+grouped = GROUP flattened BY f;
 
 #  step 7. get the count on each group
 agged = FOREACH grouped GENERATE (chararray)group AS genre, count(group) AS num;
 
+#  step 8. debugging
+ls
+cat pig_1485214765234.log
+rm pig_1485214765234.log
+hdfs dfs -ls -R rawdata rawdata
+hdfs dfs -tail rawdata/hadoop_train/movielens/latest/movies/movies.csv
+
 
 
 register /mnt/home/okmich20/hadoop-training-projects/pig/movielens/piggybank-0.15.0.jar
-
 DEFINE myCSVLoader org.apache.pig.piggybank.storage.CSVLoader();
 data = LOAD '/user/cloudera/rawdata/hadoop_train/movielens/latest/movies/movies.csv'
        USING myCSVLoader()
        AS (movieid: chararray, title: chararray, genres: chararry);headless = FILTER data BY movieId != 'movieId';
-flattend = FOREACH headless GENERATE FLATTEN(STRSPLIT(genres, '\\|', 0)) as f;
-
 agged = FOREACH grouped GENERATE (chararray)group as genre, COUNT(flattend) as num;
-
 sorted  = ORDER agged BY genre;
-
 STORE sorted into '/user/okmich20/output/handson_train/movielens/genre_count/text'  USING  PigStorage(',');
 STORE sorted into '/user/okmich20/output/handson_train/movielens/genre_count/avro'  using  AvroStorage();
 STORE sorted into '/user/okmich20/output/handson_train/movielens/genre_count/json'  using  JsonStorage();
