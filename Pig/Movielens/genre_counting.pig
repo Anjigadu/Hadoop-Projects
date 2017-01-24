@@ -66,7 +66,11 @@ rm pig_1485214765234.log
 hdfs dfs -ls -R rawdata rawdata
 hdfs dfs -tail rawdata/hadoop_train/movielens/latest/movies/movies.csv
 
-
+## User-Defined Function
+   1. datafu
+   2. piggybank : load/storage function
+      #https://mvnrepository.com/artifact/org.apache.pig/piggybank/0.15.0
+   3. elephantbird: json
 
 register /mnt/home/okmich20/hadoop-training-projects/pig/movielens/piggybank-0.15.0.jar
 DEFINE myCSVLoader org.apache.pig.piggybank.storage.CSVLoader();
