@@ -71,7 +71,11 @@ hdfs dfs -tail rawdata/hadoop_train/movielens/latest/movies/movies.csv
    2. piggybank : load/storage function
       #https://mvnrepository.com/artifact/org.apache.pig/piggybank/0.15.0
    3. elephantbird: json
-
+# CSV Loader
+pwd
+ls home/cloudera/
+REGISTER 
+org.apache.pig.piggybank.storage.CSVLoader
 register /mnt/home/okmich20/hadoop-training-projects/pig/movielens/piggybank-0.15.0.jar
 DEFINE myCSVLoader org.apache.pig.piggybank.storage.CSVLoader();
 data = LOAD '/user/cloudera/rawdata/hadoop_train/movielens/latest/movies/movies.csv'
