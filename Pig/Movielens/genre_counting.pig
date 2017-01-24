@@ -69,17 +69,22 @@ hdfs dfs -tail rawdata/hadoop_train/movielens/latest/movies/movies.csv
 ## User-Defined Function
    1. datafu
    2. piggybank : load/storage function
-      #https://mvnrepository.com/artifact/org.apache.pig/piggybank/0.15.0
+      # https://mvnrepository.com/artifact/org.apache.pig/piggybank/0.15.0
+      # a Java repository for accessing UDF written by other users
    3. elephantbird: json
+
 # CSV Loader
 # https://pig.apache.org/docs/r0.9.1/api/org/apache/pig/piggybank/storage/CSVLoader.html
 pwd
 ls home/cloudera/
 hdfs dfs -moveFromLocal home/cloudera/piggybank-0.15.0.jar  rawdata/hadoop_train/movielens/
-register /user/cloudera/rawdata/hadoop_train/movielens/piggybank-0.15.0.jar
 
+#  step 1. registering the jar file 
+register /home/cloudera/piggybank-0.15.0.jar
 
-DEFINEd myCSVLoader as org.apache.pig.piggybank.storage.CSVLoader();
+#  step 2. 
+define myCSVLoader as org.apache.pig.piggybank.storage.CSVLoader();
+
 data = LOAD '/user/cloudera/rawdata/hadoop_train/movielens/latest/movies/movies.csv'
        USING myCSVLoader()
        AS (movieid: chararray, title: chararray, genres: chararry);headless = FILTER data BY movieId != 'movieId';
