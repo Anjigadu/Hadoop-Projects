@@ -4,7 +4,6 @@ head -n -40 movies.csv
 wc -l movies.csv
 
 cat genre_counting.pig
-vi genre_counting.pig      # edit filename starting at line 1
 
 ## Objective: find all genres and the number of movies
 
@@ -49,7 +48,9 @@ splitted = FOREACH projData GENERATE STRSPLIT(genres,'\\|',0) AS t;
 #  step 5. flatten the tuple of splitted genres  (Adventure) (Children) (Fantasy)
 flattened = FOREACH splitted GENERATE FLATTEN(t);
 
-
+# edit filename starting at line 1
+vi pig_1481992766450.log      
+rm pig_1481992766450.log
 
 #  step 6. group the flattened typle by name
 grouped = GROUP flattened BY t;
