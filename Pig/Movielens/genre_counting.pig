@@ -20,10 +20,21 @@ cat genre_counting.pig
 #  step 1. load data from source
 data = LOAD '/user/cloudera/rawdata/hadoop_train/movielens/latest/movies/movies.csv'
        USING PigStorage(',')
-       AS (movieid: chararray, title: chararray, genres: chararry);
+       AS (movieid: chararray, title: chararray, genres: chararray);
+
+# inspect the structure
+describe data;
+=> data: {movieid: chararray,title: chararray,genres: chararray}
+
+# request an example
+illustrate data;
+
+ data     | movieid:chararray    | title:chararray         | genres:chararray     | 
+------------------------------------------------------------------------------------
+|          | 3803                 | Greaser's Palace (1972) | Comedy|Drama|Western | 
 
 #  step 2. remove the header
-headless = FILTER data BY movieId != 'movieId';
+headless = FILTER data BY movieid != 'movieid';
 
 #  step 3. project one fields genres
 projData = FOREACH headless GENERATE genres;
