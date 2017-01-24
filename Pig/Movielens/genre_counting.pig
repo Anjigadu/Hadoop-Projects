@@ -40,7 +40,10 @@ headless = FILTER data BY movieid != 'movieid';
 projData = FOREACH headless GENERATE genres;
 
 #  step 4. split the genres by a pipe (Adventure,Children,Fantasy)
-splitted = FOREACH projData GENERATE SPLIT(genres,'|') AS t;
+#  STRSPLIT: Splits a string around matches of a given regular expression
+#  STRSPLIT(string, regex, limit)
+#  http://pig.apache.org/docs/r0.9.1/func.html#strsplit
+splitted = FOREACH projData GENERATE STRSPLIT(genres,'|',0) AS t;
 
 #  step 5. flatten the tuple of splitted genres  (Adventure) (Children) (Fantasy)
 flattened = FOREACH splitted GENERATE FLATTEN(t);
