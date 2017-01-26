@@ -1,28 +1,13 @@
+### Create db
 create database yelp;
 
+### Change to specified db
 use yelp;
 
+### Used UDF
 add jar /usr/lib/hive-hcatalog/share/hcatalog/hive-hcatalog-core.jar;
 
-CREATE EXTERNAL TABLE 
-
-CREATE EXTERNAL TABLE business (
-	business_id string,
-	full_address string,
-	open boolean,
-	categories array<string>,
-	city string,
-	review_count int,
-	name string,
-	neighborhoods array<string>,
-	longitude float,
-	state string,
-	stars float,
-	latitude float
-)
-STORED AS parquet
-LOCATION '/user/cloudera/hackerday/yelp/transformed/business';
-
+### Create Table: 
 
 CREATE EXTERNAL TABLE tip (
 	user_id string,
@@ -87,4 +72,42 @@ ROW FORMAT DELIMITED
 LOCATION '/user/cloudera/hackerday/yelp/processed/photos';
 
 
+## Create external table for Business
+
+# Content:
+#{"business_id": "DH2Ujt_hwcMBIz8VvCb0Lg", 
+# "full_address": "Charlotte Douglas International Airport Terminal E\n5501 Josh Birmingham Parkway\nCharlotte, NC 28208", 
+# "hours": {},     #### no ####
+# "open": true, 
+# "categories": ["Mexican", "Restaurants"], 
+# "city": "Charlotte", 
+# "review_count": 57, 
+# "name": "Salsarita's Express", 
+# "neighborhoods": [], 
+# "longitude": -80.9402901706085, 
+# "state": "NC", 
+# "stars": 2.5, 
+# "latitude": 35.2242230735555, 
+# "attributes": {}, 
+# "type": "business"  #### no ####
+# }
+ 
+CREATE EXTERNAL TABLE business(
+       business_id string,
+       full_address string,
+       open boolean,
+       categories array<string>,
+       city string,
+       review_count int,
+       name string,
+       neighborhoods array<string>,
+       longitude float,
+       state string,
+       stars float,
+       latitude float
+)
+STORED AS parquet        
+LOCATION '/user/cloudera/project/yelp/transformed/business';
+
+# Parquet is a columnar storage format that supports nested data.
 
