@@ -1,6 +1,7 @@
 create database yelp;
 
 use yelp;
+
 add jar /usr/lib/hive-hcatalog/share/hcatalog/hive-hcatalog-core.jar;
 
 CREATE EXTERNAL TABLE tip (
