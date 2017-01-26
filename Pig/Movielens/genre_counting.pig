@@ -56,8 +56,10 @@ rm pig_1485214765234.log
 #  step 6. group the flattened typle by name
 grouped = GROUP flattened BY f;
 
+grouped = GROUP flattened BY (chararray)f;   ## after using myCSVLoader
+
 #  step 7. get the count on each group
-agged = FOREACH grouped GENERATE (chararray)group AS genre, count(group) AS num;
+agged = FOREACH grouped GENERATE group AS genre, COUNT(flattened) AS num;
 
 #  step 8. debugging
 ls
@@ -65,7 +67,7 @@ cat pig_1485214765234.log
 rm pig_1485214765234.log
 hdfs dfs -ls -R rawdata rawdata
 hdfs dfs -tail rawdata/hadoop_train/movielens/latest/movies/movies.csv
-
+##-----------------------------------------------------------------------------------------------------------------------##
 ## User-Defined Function
    1. datafu
    2. piggybank : load/storage function
@@ -79,17 +81,46 @@ pwd
 ls home/cloudera/
 hdfs dfs -moveFromLocal home/cloudera/piggybank-0.15.0.jar  rawdata/hadoop_train/movielens/
 
-#  step 1. registering the jar file 
-register /home/cloudera/piggybank-0.15.0.jar
+#  step 1. Registering the jar file 
+REGISTER /home/cloudera/piggybank-0.15.0.jar
 
-#  step 2. 
-define myCSVLoader as org.apache.pig.piggybank.storage.CSVLoader();
+#  step 2. Defining Alias
+DEFINE myCSVLoader org.apache.pig.piggybank.storage.CSVLoader();
 
+#  step 3. Use UDF
+# (1)
 data = LOAD '/user/cloudera/rawdata/hadoop_train/movielens/latest/movies/movies.csv'
        USING myCSVLoader()
-       AS (movieid: chararray, title: chararray, genres: chararry);headless = FILTER data BY movieId != 'movieId';
-agged = FOREACH grouped GENERATE (chararray)group as genre, COUNT(flattend) as num;
+       AS (movieid:chararray,title:chararray, genres:chararray);
+# (2)
+data = LOAD '/user/cloudera/rawdata/hadoop_train/movielens/latest/movies/movies.csv' 
+       using org.apache.pig.piggybank.storage.CSVLoader() 
+       AS (movieid:chararray,title:chararray,genres:chararray);
+##------------------------------------------------------------------------------------------------------------------------##
+
+#
+dump agged;
+
 sorted  = ORDER agged BY genre;
 STORE sorted into '/user/okmich20/output/handson_train/movielens/genre_count/text'  USING  PigStorage(',');
 STORE sorted into '/user/okmich20/output/handson_train/movielens/genre_count/avro'  using  AvroStorage();
 STORE sorted into '/user/okmich20/output/handson_train/movielens/genre_count/json'  using  JsonStorage();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
