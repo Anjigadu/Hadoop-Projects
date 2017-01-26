@@ -1,30 +1,31 @@
 ls yelp
 ls yelp_photo
 
-# create the hdfs directory
+# Create the hdfs directory
 hdfs dfs -mkdir -p /user/cloudera/project/yelp/business
 hdfs dfs -mkdir -p /user/cloudera/project/yelp/review
 hdfs dfs -mkdir -p /user/cloudera/project/yelp/checkin
 hdfs dfs -mkdir -p /user/cloudera/project/yelp/tip
-hdfs dfs -mkdir -p /user/cloudera/hackerday/yelp/user
+hdfs dfs -mkdir -p /user/cloudera/project/yelp/user
 
-hdfs dfs -mkdir -p /user/cloudera/hackerday/yelp/photo
+hdfs dfs -mkdir -p /user/cloudera/project/yelp/photo
 
-# move file to hdfs
+# Move file to hdfs
 hdfs dfs -moveFromLocal yelp_academic_dataset_business.json /user/cloudera/project/yelp/business
 hdfs dfs -moveFromLocal yelp_academic_dataset_review.json /user/cloudera/project/yelp/review
-hdfs dfs -moveFromLocal yelp_academic_dataset_checkin.json hdfs dfs -mkdir -p /user/cloudera/project/yelp/checkin
+hdfs dfs -moveFromLocal yelp_academic_dataset_checkin.json /user/cloudera/project/yelp/checkin
 hdfs dfs -moveFromLocal yelp_academic_dataset_tip.json /user/cloudera/project/yelp/tip
-hdfs dfs -moveFromLocal yelp_academic_dataset_user.json /user/cloudera/hackerday/yelp/user
+hdfs dfs -moveFromLocal yelp_academic_dataset_user.json /user/cloudera/project/yelp/user
 
-＃Photos 
-ls yelp_photo | wc -l
-hdfs dfs -moveFromLocal 2016_yelp_dataset_challenge_photos/photo_id_to_business_id.json /user/cloudera/hackerday/yelp/photos
-
+# Inspect dataset
 cd yelp
 ls
 head yelp_academic_dataset_business.json
 
 
+＃Photos 
+ls yelp_photo | wc -l
 
-hdfs dfs -mkdir -p /user/cloudera/hackerday/yelp/transformed/business
+# hdfs dfs -moveFromLocal 2016_yelp_dataset_challenge_photos/photo_id_to_business_id.json /user/cloudera/hackerday/yelp/photos
+
+hdfs dfs -mkdir -p /user/cloudera/project/yelp/transformed/business
