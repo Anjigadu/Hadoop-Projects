@@ -10,6 +10,9 @@ hdfs dfs -mkdir -p /user/cloudera/project/yelp/user
 
 hdfs dfs -mkdir -p /user/cloudera/project/yelp/photo
 
+hdfs dfs -mkdir -p /user/cloudera/project/yelp/transformed/business
+
+
 # Move file to hdfs
 hdfs dfs -moveFromLocal yelp/yelp_academic_dataset_business.json /user/cloudera/project/yelp/business
 hdfs dfs -moveFromLocal yelp/yelp_academic_dataset_review.json /user/cloudera/project/yelp/review
@@ -28,7 +31,3 @@ head yelp_academic_dataset_business.json
 
 ＃How many files ? 
 ls yelp_photo | wc -l
-
-
-
-hdfs dfs -mkdir -p /user/cloudera/project/yelp/transformed/business
