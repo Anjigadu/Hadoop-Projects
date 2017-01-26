@@ -129,10 +129,13 @@ describe agged;
 sorted  = ORDER agged BY genre;
 
 # Store data into different file format
-/user/cloudera/output/hadoop_train/movielens/genre_count/text -> PigStorage(',')
-/user/cloudera/output/hadoop_train/movielens/genre_count/avro -> AvroStorage()
+#(1) /user/cloudera/output/hadoop_train/movielens/genre_count/text -> PigStorage(',')
+STORE sorted into '/user/cloudera/output/hadoop_train/movielens/genre_count/text' using PigStorage(',');
+#(2) /user/cloudera/output/hadoop_train/movielens/genre_count/avro -> AvroStorage()
+STORE sorted into '/user/cloudera/output/hadoop_train/movielens/genre_count/avro' using AvroStorage(',');
+#(3) /user/cloudera/output/hadoop_train/movielens/genre_count/json -> JsonStorage()
+STORE sorted into '/user/cloudera/output/hadoop_train/movielens/genre_count/text' using PigStorage(',');
 
-STORE sorted into '/user/okmich20/output/handson_train/movielens/genre_count/text'  USING  PigStorage(',');
 STORE sorted into '/user/okmich20/output/handson_train/movielens/genre_count/avro'  using  AvroStorage();
 STORE sorted into '/user/okmich20/output/handson_train/movielens/genre_count/json'  using  JsonStorage();
 
