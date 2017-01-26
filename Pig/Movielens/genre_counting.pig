@@ -59,7 +59,7 @@ grouped = GROUP flattened BY f;
 grouped = GROUP flattened BY (chararray)f;   ## after using myCSVLoader
 
 #  step 7. get the count on each group
-agged = FOREACH grouped GENERATE group AS genre, COUNT(flattened) AS num;
+agged = FOREACH grouped GENERATE (chararray)group AS genre, COUNT(flattened) AS num;
 
 #  step 8. debugging
 ls
@@ -98,10 +98,35 @@ data = LOAD '/user/cloudera/rawdata/hadoop_train/movielens/latest/movies/movies.
        AS (movieid:chararray,title:chararray,genres:chararray);
 ##------------------------------------------------------------------------------------------------------------------------##
 
-#
+# Execute
 dump agged;
+[Result]
+(War,56)
+(IMAX,1)
+(Crime,2100)
+(Drama,10560)
+(Action,5095)
+(Comedy,9254)
+(Horror,2181)
+(Sci-Fi,254)
+(genres,1)
+(Fantasy,205)
+(Musical,97)
+(Mystery,238)
+(Romance,230)
+(Western,346)
+(Children,799)
+(Thriller,530)
+(Adventure,1773)
+(Animation,971)
+(Film-Noir,38)
+(Documentary,3284)
+((no genres listed),2098)
 
+describe agged;
+# Sort 
 sorted  = ORDER agged BY genre;
+
 STORE sorted into '/user/okmich20/output/handson_train/movielens/genre_count/text'  USING  PigStorage(',');
 STORE sorted into '/user/okmich20/output/handson_train/movielens/genre_count/avro'  using  AvroStorage();
 STORE sorted into '/user/okmich20/output/handson_train/movielens/genre_count/json'  using  JsonStorage();
