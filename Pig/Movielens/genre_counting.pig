@@ -123,7 +123,7 @@ dump agged;
 (Documentary,3284)
 ((no genres listed),2098)
 
-describe agged;
+DESCRIBE agged;
 
 # Sort 
 sorted  = ORDER agged BY genre;
@@ -138,12 +138,12 @@ STORE sorted into '/user/cloudera/output/hadoop_train/movielens/genre_count/avro
 #(3) /user/cloudera/output/hadoop_train/movielens/genre_count/json -> JsonStorage()
 STORE sorted into '/user/cloudera/output/hadoop_train/movielens/genre_count/json' using JsonStorage();
 
+ls /user/cloudera/output/hadoop_train/movielens/genre_count/text/
+hdfs://quickstart.cloudera:8020/user/cloudera/output/hadoop_train/movielens/genre_count/text/_SUCCESS<r 1>	0
+hdfs://quickstart.cloudera:8020/user/cloudera/output/hadoop_train/movielens/genre_count/text/part-r-00000<r 1>	261
 
-
-
-
-
-
+# Analyze the sorted process
+EXPLAIN sorted;     # logical plan / physical plan / mapreduce plan
 
 
 
