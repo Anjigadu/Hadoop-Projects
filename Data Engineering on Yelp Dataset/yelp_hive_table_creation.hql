@@ -4,6 +4,26 @@ use yelp;
 
 add jar /usr/lib/hive-hcatalog/share/hcatalog/hive-hcatalog-core.jar;
 
+CREATE EXTERNAL TABLE 
+
+CREATE EXTERNAL TABLE business (
+	business_id string,
+	full_address string,
+	open boolean,
+	categories array<string>,
+	city string,
+	review_count int,
+	name string,
+	neighborhoods array<string>,
+	longitude float,
+	state string,
+	stars float,
+	latitude float
+)
+STORED AS parquet
+LOCATION '/user/cloudera/hackerday/yelp/transformed/business';
+
+
 CREATE EXTERNAL TABLE tip (
 	user_id string,
 	text string,
@@ -67,19 +87,4 @@ ROW FORMAT DELIMITED
 LOCATION '/user/cloudera/hackerday/yelp/processed/photos';
 
 
-CREATE EXTERNAL TABLE business (
-	business_id string,
-	full_address string,
-	open boolean,
-	categories array<string>,
-	city string,
-	review_count int,
-	name string,
-	neighborhoods array<string>,
-	longitude float,
-	state string,
-	stars float,
-	latitude float
-)
-STORED AS parquet
-LOCATION '/user/cloudera/hackerday/yelp/transformed/business';
+
