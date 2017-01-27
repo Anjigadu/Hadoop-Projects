@@ -1,3 +1,4 @@
+# Average number of friends by age
 from mrjob.job import MRJob
 
 class MRFriendsByAge(MRJob):
@@ -18,3 +19,21 @@ class MRFriendsByAge(MRJob):
 
 if __name__ == '__main__':
     MRFriendsByAge.run()
+
+class MRFriendsByAge(MRJob):
+    def mapper(self,):
+        
+    def reducer(self,age,numfriends):
+        yield age,
+        
+
+    
+    
+    
+    
+    
+    
+# Execute the file
+# python  friends_by_age.py fakefriends.csv
+
+
