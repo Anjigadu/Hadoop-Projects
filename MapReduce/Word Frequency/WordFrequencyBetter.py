@@ -18,3 +18,5 @@ class MRWordFrequencyCount(MRJob):
 if __name__ == '__main__':
     MRWordFrequencyCount.run()
 
+# Execute file
+# python WordFrequencyBetter.py Book.txt>wordsbetter.txt
