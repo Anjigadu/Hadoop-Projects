@@ -1,3 +1,5 @@
+# Find Temperature Extremes
+# Data: weather station, date, temperature type, temperature
 from mrjob.job import MRJob
 
 class MRMinTemperature(MRJob):
@@ -19,3 +21,5 @@ class MRMinTemperature(MRJob):
 
 if __name__ == '__main__':
     MRMinTemperature.run()
+
+
