@@ -46,7 +46,11 @@ No, Hive does not provide insert and update at row level. So it is not suitable 
 Alter Table table_name 
 RENAME TO new_name
 
+#7. What is a metastore in Hive?
+It is a relational database storing the metadata of hive tables, partitions, Hive databases etc
 
+#8. Why do we need Hive?
+Hive is a tool in Hadoop ecosystem which provides an interface to organize and query data in a databse like fashion and write SQL like queries. It is suitable for accessing and analyzing data in Hadoop using SQL syntax.
 
 
 
