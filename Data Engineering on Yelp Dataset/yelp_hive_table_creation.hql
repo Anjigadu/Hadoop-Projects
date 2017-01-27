@@ -30,9 +30,27 @@ CREATE EXTERNAL TABLE review (
 	business_id string
 )
 ROW FORMAT SERDE 'org.apache.hive.hcatalog.data.JsonSerDe'  # https://hive.apache.org/javadocs/r0.13.1/api/hcatalog/core/org/apache/hive/hcatalog/data/JsonSerDe.htmlSTORED AS textfile
+STORED AS textfile
 LOCATION '/user/cloudera/project/yelp/review';
 
-##(2) Create external table for Tip
+##(2) Create external table for Checkin
+# Content:
+# hdfs dfs -tail /user/cloudera/project/yelp/checkin/yelp_academic_dataset_checkin.json
+# {"checkin_info": {"2-3": 1, "0-2": 1, "5-2": 1, "1-0": 1, "7-1": 1, "7-6": 2, 
+#                   "11-5": 1, "23-0": 2, "13-4": 1, "14-4": 1, "1-3": 1, "14-3": 1}, 
+#  "type": "checkin", 
+#  "business_id": "HuLzZUBkHEcHk6ETDJIVhQ"}
+
+CREATE EXTERNAL TABLE checkin (
+	checkin_info map<string, string>,
+	type string,
+	business_id string
+)
+ROW FORMAT SERDE 'org.apache.hive.hcatalog.data.JsonSerDe'
+STORED AS textfile
+LOCATION '/user/cloudera/project/yelp/checkin';
+
+##(3) Create external table for Tip
 # Content:
 
 CREATE EXTERNAL TABLE tip (
@@ -46,17 +64,7 @@ ROW FORMAT SERDE 'org.apache.hive.hcatalog.data.JsonSerDe'
 STORED AS TEXTFILE
 LOCATION '/user/cloudera/hackerday/yelp/tips';
 
-##(3) Create external table for Checkin
-# Content:
 
-CREATE EXTERNAL TABLE checkin (
-	checkin_info map<string, string>,
-	type string,
-	business_id string
-)
-ROW FORMAT SERDE 'org.apache.hive.hcatalog.data.JsonSerDe'
-STORED AS TEXTFILE
-LOCATION '/user/cloudera/hackerday/yelp/checkins';
 
 ##(4) Create external table for User
 # Content:CREATE EXTERNAL TABLE user (
