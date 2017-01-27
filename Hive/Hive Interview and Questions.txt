@@ -52,9 +52,18 @@ It is a relational database storing the metadata of hive tables, partitions, Hiv
 #8. Why do we need Hive?
 Hive is a tool in Hadoop ecosystem which provides an interface to organize and query data in a databse like fashion and write SQL like queries. It is suitable for accessing and analyzing data in Hadoop using SQL syntax.
 
+#9. What is the default location where hive stores table data?
+hdfs://namenode_server/user/hive/warehouse
 
+#10. What are the three different modes in which hive can be run?
+Local mode
+Distributed mode
+Pseudodistributed mode
 
+#11. Is there a date data type in Hive?
+Yes. The TIMESTAMP data types stores date in java.sql.timestamp format
 
+#12. 
 
 
 
