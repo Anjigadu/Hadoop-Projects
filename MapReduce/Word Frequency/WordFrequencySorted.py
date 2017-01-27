@@ -33,3 +33,18 @@ class MRWordFrequencyCount(MRJob):
 
 if __name__ == '__main__':
     MRWordFrequencyCount.run()
+
+# Output
+"0321"	"have"
+"0334"	"i"
+"0343"	"as"
+"0354"	"can"
+"0369"	"be"
+"0382"	"business"
+"0411"	"if"
+"0424"	"are"
+"0428"	"on"
+"0496"	"it"
+"0537"	"for"
+"0560"	"is"
+"0616"	"in"
