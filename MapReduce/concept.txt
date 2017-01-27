@@ -1,0 +1,5 @@
+# How MapReduce works: Mapping
+The MAPPER converts raw source data into key/value pairs
+def Mapper(self,key,line):
+    (userid,rating,)=line.split('\t')
+    yield rating,1
