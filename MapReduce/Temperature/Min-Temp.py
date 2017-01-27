@@ -22,4 +22,9 @@ class MRMinTemperature(MRJob):
 if __name__ == '__main__':
     MRMinTemperature.run()
 
+# Execute file
+# python Min-Temp.py temperature.csv
 
+# Output
+"EZE00100082"	7.699999999999999
+"ITE00100554"	5.359999999999999
