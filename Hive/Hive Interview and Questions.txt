@@ -1,3 +1,95 @@
-# What is the need for custom Serde?
+#1. What is the need for custom Serde?
 Depending on the nature of data the user has, the inbuilt SerDe may not satisfy the format of the data. 
 SO users need to write their own java code to satisfy their data format requirements.
+
+#2. Can we change the data type of a column in a hive table?
+Using REPLACE column option
+ALTER TABLE table_name REPLACE COLUMNS 
+(1)
+-- REPLACE COLUMNS: removes all existing columns and adds the new set of columns. 
+-- This can be done only for tables with a native SerDe (DynamicSerDe, MetadataTypedColumnsetSerDe, LazySimpleSerDe and ColumnarSerDe). 
+-- REPLACE COLUMNS can also be used to drop columns. For example, "ALTER TABLE test_change REPLACE COLUMNS (a int, b int);" will remove column 'c' from test_change's schema.
+(2)
+-- CHANGE: only modify Hive's metadata, and will not modify data. 
+-- Users should make sure the actual data layout of the table/partition conforms with the metadata definition.
+
+CREATE TABLE test_change (a int, b int, c int);
+ 
+a. change column a's name to a1.
+ALTER TABLE test_change 
+CHANGE a a1 INT;
+ 
+b. change column a1's name to a2, its data type to string, and put it after column b.
+ALTER TABLE test_change 
+CHANGE a1 a2 STRING AFTER b;
+=> The new table's structure is:  b int, a2 string, c int.
+ 
+c. change column c's name to c1, and put it as the first column.
+ALTER TABLE test_change 
+CHANGE c c1 INT FIRST;
+=> The new table's structure is:  c1 int, b int, a2 string.
+ 
+d. Add a comment to column a1
+ALTER TABLE test_change 
+CHANGE a1 a1 INT COMMENT 'this is column a1';
+
+#3. What does the “USE” command in hive do?
+With the use command, you fix the database on which all the subsequent hive queries will run.
+
+#4. What are the different types of tables available in HIve?
+Managed table and external table. In managed table both the data and schema are under control of hive but in external table only the schema is under control of Hive.
+
+#5. Is Hive suitable to be used for OLTP systems? Why?
+No, Hive does not provide insert and update at row level. So it is not suitable for OLTP system.
+
+#6. Can a table be renamed in Hive?
+Alter Table table_name 
+RENAME TO new_name
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
