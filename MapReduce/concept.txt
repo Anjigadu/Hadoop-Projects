@@ -1,5 +1,10 @@
-# How MapReduce works: Mapping
-The MAPPER converts raw source data into key/value pairs
+## How MapReduce works: Mapping
+# Step 1. The MAPPER converts raw source data into key/value pairs
 def Mapper(self,key,line):
     (userid,rating,)=line.split('\t')
     yield rating,1
+# Step 2. Sort and Group
+# Step 3. Reducer
+def Reducer(self,rating,occurences):
+        yield rating,sum(occurences)
+
