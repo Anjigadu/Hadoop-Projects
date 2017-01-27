@@ -1,0 +1,3 @@
+# What is the need for custom Serde?
+Depending on the nature of data the user has, the inbuilt SerDe may not satisfy the format of the data. 
+SO users need to write their own java code to satisfy their data format requirements.
