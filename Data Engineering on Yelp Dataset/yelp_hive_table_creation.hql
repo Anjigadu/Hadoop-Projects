@@ -34,8 +34,8 @@ STORED AS textfile
 LOCATION '/user/cloudera/project/yelp/review';
 
 ##(2) Create external table for Checkin
-# Content:
 # hdfs dfs -tail /user/cloudera/project/yelp/checkin/yelp_academic_dataset_checkin.json
+# Content:
 # {"checkin_info": {"2-3": 1, "0-2": 1, "5-2": 1, "1-0": 1, "7-1": 1, "7-6": 2, 
 #                   "11-5": 1, "23-0": 2, "13-4": 1, "14-4": 1, "1-3": 1, "14-3": 1}, 
 #  "type": "checkin", 
@@ -51,7 +51,15 @@ STORED AS textfile
 LOCATION '/user/cloudera/project/yelp/checkin';
 
 ##(3) Create external table for Tip
+# hdfs dfs -tail /user/cloudera/project/yelp/tip/yelp_academic_dataset_tip.json
 # Content:
+{"user_id": "f2yrVy2iVooO1_pMCr9XNg", 
+"text": "Sixth night of Mexican in Phoenix and this place is probably the best!", 
+"business_id": "g0vvhkZWZKlwF8BUeSPaTA", 
+"likes": 0, 
+"date": "2010-06-19", 
+"type": "tip"}
+
 
 CREATE EXTERNAL TABLE tip (
 	user_id string,
