@@ -1,0 +1,16 @@
+
+## Data Type
+#1. Primitive 
+
+#2. Complex
+
+(1) Array: Contain a list of elements of the same data type. These elements are accessed by using an index. 
+            For example an array, “fruits”, containing a list of elements [‘apple’, ’mango’, ‘orange’], 
+            the element “apple” in the array can be accessed by specifying fruits[1]
+
+(2) Map: Contains key, value pairs. The elements are accessed by using the keys. 
+         For example a map, “pass_list” containing the “user name” as key and “password” as value, 
+         the password of the user can be accessed by specifying pass_list[‘username’]
+
+(3) Struct: Contains elements of different data types. The elements can be accessed by using the dot notation. 
+             For example in a struct, ”car”, the color of the car can be retrieved as specifying car.color
