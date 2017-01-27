@@ -16,22 +16,8 @@ class MRFriendsByAge(MRJob):
             
         yield age, total / numElements
 
-
 if __name__ == '__main__':
     MRFriendsByAge.run()
-
-class MRFriendsByAge(MRJob):
-    def mapper(self,):
-        
-    def reducer(self,age,numfriends):
-        yield age,
-        
-
-    
-    
-    
-    
-    
     
 # Execute the file
 # python  friends_by_age.py fakefriends.csv
