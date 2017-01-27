@@ -29,14 +29,8 @@ CREATE EXTERNAL TABLE review (
 	type string,
 	business_id string
 )
-STORED AS textfile
-LOCATION '/user/cloudera/project/yelp/;
-
-
-
-ROW FORMAT SERDE 'org.apache.hive.hcatalog.data.JsonSerDe'
-STORED AS TEXTFILE
-LOCATION '/user/cloudera/hackerday/yelp/review';
+ROW FORMAT SERDE 'org.apache.hive.hcatalog.data.JsonSerDe'  # https://hive.apache.org/javadocs/r0.13.1/api/hcatalog/core/org/apache/hive/hcatalog/data/JsonSerDe.htmlSTORED AS textfile
+LOCATION '/user/cloudera/project/yelp/review';
 
 ##(2) Create external table for Tip
 # Content:
