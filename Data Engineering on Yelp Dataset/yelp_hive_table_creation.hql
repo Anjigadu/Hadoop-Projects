@@ -76,8 +76,19 @@ LOCATION '/user/cloudera/project/yelp/tips';
 ##(4) Create external table for User
 # hdfs dfs -tail /user/cloudera/project/yelp/user1/yelp_academic_dataset_user.json
 # Content:
-
-CREATE EXTERNAL TABLE user (
+#{"yelping_since": "2016-04", 
+# "votes": {"funny": 1, "useful": 0, "cool": 0}, 
+# "review_count": 1, 
+# "name": "Amelia", 
+# "user_id": "DL0S4Ro4KY77akGPbEkrug", 
+# "friends": [], 
+# "fans": 0, 
+# "average_stars": 5.0, 
+# "type": "user",
+# "compliments": {}, 
+# "elite": []}
+ 
+CREATE EXTERNAL TABLE user1 (
 	yelping_since string,
 	votes map<string, string>,
 	review_count int,
@@ -91,12 +102,13 @@ CREATE EXTERNAL TABLE user (
 	elite array<string>
 )
 ROW FORMAT SERDE 'org.apache.hive.hcatalog.data.JsonSerDe'
-STORED AS TEXTFILE
-LOCATION '/user/cloudera/hackerday/yelp/users';
-
+STORED AS textfile
+LOCATION '/user/cloudera/project/yelp/user1';
 
 ##(5) Create external table for Photo
+
 # Content:
+
 CREATE EXTERNAL TABLE photo (
 	photo_id string,
 	business_id string,
