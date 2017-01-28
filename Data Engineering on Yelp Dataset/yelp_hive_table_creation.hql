@@ -116,7 +116,7 @@ CREATE EXTERNAL TABLE photo (
 	label string
 )
 ROW FORMAT DELIMITED
-LOCATION '/user/cloudera/hackerday/yelp/processed/photos';
+LOCATION '/user/cloudera/project/yelp/processed/photos';
 
 
 ##(6) Create external table for Business
