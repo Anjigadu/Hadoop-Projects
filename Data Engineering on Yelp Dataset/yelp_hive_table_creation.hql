@@ -74,15 +74,8 @@ STORED AS textfile
 LOCATION '/user/cloudera/project/yelp/tips';
 
 ##(4) Create external table for User
-# hdfs dfs -tail /user/cloudera/project/yelp/user/yelp_academic_dataset_user.json
+# hdfs dfs -tail /user/cloudera/project/yelp/user1/yelp_academic_dataset_user.json
 # Content:
-
-
-
-
-
-
-
 
 CREATE EXTERNAL TABLE user (
 	yelping_since string,
