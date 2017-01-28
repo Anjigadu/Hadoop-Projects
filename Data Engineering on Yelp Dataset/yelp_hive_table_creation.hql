@@ -9,6 +9,7 @@ add jar /usr/lib/hive-hcatalog/share/hcatalog/hive-hcatalog-core.jar;
 
 ### Create Table
 ##(1) Create external table for Review
+# hdfs dfs -tail /user/cloudera/project/yelp/review/yelp_academic_dataset_review.json
 # Content:
 # {"votes": {"funny": 0, "useful": 0, "cool": 0}, 
 #  "user_id": "maAimqEE4G483rtifPKlYg", 
@@ -53,29 +54,37 @@ LOCATION '/user/cloudera/project/yelp/checkin';
 ##(3) Create external table for Tip
 # hdfs dfs -tail /user/cloudera/project/yelp/tip/yelp_academic_dataset_tip.json
 # Content:
-{"user_id": "f2yrVy2iVooO1_pMCr9XNg", 
-"text": "Sixth night of Mexican in Phoenix and this place is probably the best!", 
-"business_id": "g0vvhkZWZKlwF8BUeSPaTA", 
-"likes": 0, 
-"date": "2010-06-19", 
-"type": "tip"}
-
+# {"user_id": "f2yrVy2iVooO1_pMCr9XNg", 
+# "text": "Sixth night of Mexican in Phoenix and this place is probably the best!", 
+# "business_id": "g0vvhkZWZKlwF8BUeSPaTA", 
+# "likes": 0, 
+# "date": "2010-06-19", 
+# "type": "tip"}
 
 CREATE EXTERNAL TABLE tip (
 	user_id string,
 	text string,
+	business_id string,
 	likes tinyint,
 	date string,
 	type string
 )
 ROW FORMAT SERDE 'org.apache.hive.hcatalog.data.JsonSerDe'
-STORED AS TEXTFILE
-LOCATION '/user/cloudera/hackerday/yelp/tips';
-
-
+STORED AS textfile
+LOCATION '/user/cloudera/project/yelp/tips';
 
 ##(4) Create external table for User
-# Content:CREATE EXTERNAL TABLE user (
+# hdfs dfs -tail /user/cloudera/project/yelp/user/yelp_academic_dataset_user.json
+# Content:
+
+
+
+
+
+
+
+
+CREATE EXTERNAL TABLE user (
 	yelping_since string,
 	votes map<string, string>,
 	review_count int,
