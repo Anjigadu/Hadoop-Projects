@@ -6,7 +6,7 @@ hdfs dfs -mkdir -p /user/cloudera/project/yelp/business
 hdfs dfs -mkdir -p /user/cloudera/project/yelp/review
 hdfs dfs -mkdir -p /user/cloudera/project/yelp/checkin
 hdfs dfs -mkdir -p /user/cloudera/project/yelp/tip
-hdfs dfs -mkdir -p /user/cloudera/project/yelp/user
+hdfs dfs -mkdir -p /user/cloudera/project/yelp/user1
 
 hdfs dfs -mkdir -p /user/cloudera/project/yelp/photo
 
@@ -18,7 +18,7 @@ hdfs dfs -moveFromLocal yelp/yelp_academic_dataset_business.json /user/cloudera/
 hdfs dfs -moveFromLocal yelp/yelp_academic_dataset_review.json /user/cloudera/project/yelp/review
 hdfs dfs -moveFromLocal yelp/yelp_academic_dataset_checkin.json /user/cloudera/project/yelp/checkin
 hdfs dfs -moveFromLocal yelp/yelp_academic_dataset_tip.json /user/cloudera/project/yelp/tip
-hdfs dfs -moveFromLocal yelp/yelp_academic_dataset_user.json /user/cloudera/project/yelp/user
+hdfs dfs -moveFromLocal yelp/yelp_academic_dataset_user.json /user/cloudera/project/yelp/user1
 
 hdfs dfs -moveFromLocal yelp_photo/photo_id_to_business_id.json /user/cloudera/project/yelp/photo
 
