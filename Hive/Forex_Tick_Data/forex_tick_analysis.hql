@@ -1,14 +1,21 @@
 Scenario 1: Create a hive table from the all_price_data.txt dataset and run sample select queries.
 
 (Objective) Read and/or create a table in the Hive metastore in a given schema
-====================================================================
+==================================================================================
 
 hdfs dfs -mkdir -p /user/yuanhsin/rawdata/forex_tick/price_data
 hdfs dfs -copyFromLocal price_data.txt /user/yuanhsin/rawdata/forex_tick/price_data
 
-create external table raw_price_data (datetimestamp string, open float, high float, low float, close float, volume int, symbol string)
+create external table raw_price_data(
+datetimestamp string, 
+open float, 
+high float, 
+low float, 
+close float, 
+volume int, 
+symbol string)
 row format delimited
-fields terminated by '\;'  -- ';' is reserved character
+fields terminated by '\;'      # ';' is reserved character
 location '/user/yuanhsin/rawdata/forex_tick/price_data';
 
 #sample queries
@@ -38,10 +45,15 @@ from raw_price_data;
 
 #sample query
 -- return the monthly average volatility (differnce between high and low) for all dollar pairs in the year 2010 
-select year, month, symbol, avg(high-low) avg_volatility from price_data_wide where year = 2010 and symbol like '%USD%' group by year, month, symbol; 
+select year, month, symbol, avg(high-low) avg_volatility 
+from price_data_wide 
+where year = 2010 and symbol like '%USD%' 
+group by year, month, symbol; 
 
 
-Scenario 3: Using the raw_price_data, dataset create a wider table called price_data_avro that splits the datatimestamp column into year, month, day, hour, min integer columns. The new table must be stored in avro format using a /user/yuanhsin/rawdata/forex_tick/schema/price_data.avsc schema file provide to you. All records in the raw_price_data must be successfully migrated to price_data_avro
+Scenario 3: Using the raw_price_data, dataset create a wider table called price_data_avro that splits the datatimestamp column into year, month, day, hour, min integer columns. 
+The new table must be stored in avro format using a /user/yuanhsin/rawdata/forex_tick/schema/price_data.avsc schema file provide to you. 
+All records in the raw_price_data must be successfully migrated to price_data_avro.
 
 (Objective) Create a table in the Hive metastore using the Avro file format and an external schema file
 ==============================================================================
