@@ -10,8 +10,13 @@
 --1. create directory
 hdfs dfs -mkdir -p hive/warehouse
 hdfs dfs -mkdir -p /user/hive/warehouse/nyse_db
+hdfs dfs -mkdir -p /user/yuanhsin/rawdata/nasdaq_daily_price/
 --2. search iteratively 
 hdfs dfs -ls -R hive/warehouse/
+--3. move data to directory
+hdfs dfs -moveFromLocal NASDAQ_daily_prices_subset.csv  /user/yuanhsin/rawdata/nasdaq_daily_price/
+--4.(optional)
+hdfs dfs -put NASDAQ_daily_prices_subset.csv /user/yuanhsin/rawdata/hive/nasdaq_daily_prices
 
 -- create a database for this project
 -- when creating a database, hive creates a folder
@@ -42,6 +47,10 @@ NASDAQ,DORM,1995-07-10,7.75,8.50,7.75,8.50,10800,4.25
 NASDAQ,DGAS,2004-01-09,24.65,24.65,24.28,24.28,1100,18.17
 NASDAQ,DEPO,2007-07-12,2.39,2.53,2.35,2.37,2195500,2.37
 NASDAQ,DNDN,2007-10-10,7.95,8.50,7.94,8.42,9718200,8.42
+NASDAQ,DGIT,2001-11-20,1.42,1.49,1.36,1.36,14000,13.60
+NASDAQ,DECK,2009-08-20,69.09,71.43,69.09,69.76,379100,69.76
+NASDAQ,DYNT,2003-12-12,1.69,1.73,1.46,1.65,43200,1.65
+NASDAQ,DLTR,2007-11-05,36.03,36.17,34.06,34.06,2144900,34.06
 
 --(1) Create a Managed Table for NASDAQ daily prices data set
 create table mng_daily_prices(
@@ -49,7 +58,7 @@ create table mng_daily_prices(
 	price_close float, volume int, price_adj_close float)
 ROW format delimited
 fields terminated by ','
-stored as TEXTFILE
+stored as textfile
 location '/user/yuanhsin/hive/warehouse/nyse_db/mng_daily_prices';
 
 show tables;
@@ -62,10 +71,6 @@ create table mng_daily_prices_parquet (
 stored as parquet;
 
 --(3) Create an External Table for NASDAQ daily prices data set.
-
-hdfs dfs -mkdir -p /user/yuanhsin/rawdata/hive/nasdaq_daily_prices
-hdfs dfs -put NASDAQ_daily_prices_subset.csv /user/yuanhsin/rawdata/hive/nasdaq_daily_prices
-
 create external table ext_daily_prices(
 	exchange_name string, stock_symbol string, date string, price_open float,price_high float, price_low float,
 	price_close float, volume int, price_adj_close float)
