@@ -75,15 +75,15 @@ from raw_price_data;
 select year, month, symbol, avg(high-low) avg_volatility from price_data_wide where year = 2010 and symbol like '%USD%' 
 group by year, month, symbol;
 
-
 Scenario 4: Assume that quant analysis do their analysis mainly on data in a year window. 
 You are asked to partition all sales data by year and sym and load all dataset from the data_price_wide table into it. 
-The new table should be named data_price_part. Also because analyst discovered that the volume column is always null, you have been asked to remove it from the new table.
+The new table should be named data_price_part. 
+Also because analyst discovered that the volume column is always null, you have been asked to remove it from the new table.
 
 (Objective): Improve query performance by creating partitioned tables in the Hive metastore
 =====================================================================================================
 create external table price_data_part (month int, day int, hour int, min int, open float, high float, low float, close float)
-partitioned by (year int, sym string)
+partitioned by (year int, symbol string)
 stored as parquet
 location '/user/cloudera/rawdata/hist_forex/price_data_part';
 
@@ -93,6 +93,9 @@ set hive.exec.dynamic.partition=enable;
 --set the mode of dynamic partition to nonstrict
 set hive.exec.dynamic.partition.mode=nonstrict;
 
-insert overwrite table price_data_part partition (year, sym)
-select month, day, hour, min, open, high, low, close, year, sym
-from price_data_wide
+insert overwrite table price_data_part 
+partition (year, symbol)
+select month, day, hour, min, open, high, low, close, year, symbol
+from price_data_wide;
+
+
