@@ -1,7 +1,7 @@
-hdfs dfs -mkdir -p /user/cloudera/rawdata/handson_train/nyse
+hdfs dfs -mkdir -p /user/cloudera/rawdata/hadoop/nyse
 
-hdfs dfs -copyFromLocal NASDAQ_dividends_A.csv /user/cloudera/rawdata/handson_train/nyse/
-hdfs dfs -put NASDAQ_dividends_C.csv /user/cloudera/rawdata/handson_train/nyse/
+hdfs dfs -copyFromLocal NASDAQ_dividends_A.csv /user/cloudera/rawdata/hadoop/nyse/
+hdfs dfs -put NASDAQ_dividends_C.csv /user/cloudera/rawdata/hadoop/nyse/
 
 
 for ibm cloud users
