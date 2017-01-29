@@ -1,35 +1,42 @@
-create database ok_airline location '/user/cloudera/hive/warehouse/airline.db';
+create database yh_airline location '/user/cloudera/hive/warehouse/airline.db';
 
-use ok_airline;
+use yh_airline;
 
--- create a managed table on airline timing
+## 2007, 12     ,15         ,6        ,1646   ,1645      ,1827    ,1836       ,DL            ,49       ,N394DA  ,221             
+## year month    dayofmonth dayofweek deptime crsdeptime arrtime  crsarrtime  uniquecarrier  flightnum tailnum   actualelapsedtime   
+   
+## ,231             ,202      ,-9         ,1        ,CVG    ,SLC   ,1449     ,6          ,13            ,0        ,          
+##  crselapsedtime   airtime   arrdelay    depdelay  origin  dest   distance  taxiin      taxiout     cancelled    cancellationcode
+
+## ,0               ,0            ,0             ,0         ,0             ,0
+##  diverted         carrierdelay  weatherdelay   nasdelay   securitydelay  lateaircraftdelay
+
+# create a managed table on airline timing
 create table airline_timing 
-	(year smallint,month tinyint,dayofmonth tinyint,dayofweek tinyint,
-	deptime smallint, crsdeptime smallint, arrtime smallint, crsarrtime smallint, 
-	uniquecarrier string, flightnum string, tailnum string, actualelapsedtime smallint,
-	crselapsedtime smallint, airtime smallint, arrdelay smallint, depdelay smallint, 
-	origin string, dest string, distance smallint, taxiin string, taxiout string,
-	cancelled string, cancellationcode string, diverted string, carrierdelay smallint,
-	weatherdelay smallint, nasdelay smallint, securitydelay smallint, lateaircraftdelay smallint)
+(year smallint,month tinyint,dayofmonth tinyint,dayofweek tinyint,
+ deptime smallint, crsdeptime smallint, arrtime smallint, crsarrtime smallint, 
+ uniquecarrier string, flightnum string, tailnum string, actualelapsedtime smallint, 
+ crselapsedtime smallint, airtime smallint, arrdelay smallint, depdelay smallint,  
+ origin string, dest string, distance smallint, taxiin string, taxiout string,
+ cancelled string, cancellationcode string, diverted string, carrierdelay smallint,
+ weatherdelay smallint, nasdelay smallint, securitydelay smallint, lateaircraftdelay smallint)
 row format delimited
 fields terminated by ',';
 
-
--- creates an external table table on airline timing
+# creates an external table table on airline timing
 create external table ext_airline_timing 
-	(year smallint,month tinyint,dayofmonth tinyint,dayofweek tinyint,
-	deptime smallint, crsdeptime smallint, arrtime smallint, crsarrtime smallint, 
-	uniquecarrier string, flightnum string, tailnum string, actualelapsedtime smallint,
-	crselapsedtime smallint, airtime smallint, arrdelay smallint, depdelay smallint, 
-	origin string, dest string, distance smallint, taxiin string, taxiout string,
-	cancelled string, cancellationcode string, diverted string, carrierdelay smallint,
-	weatherdelay smallint, nasdelay smallint, securitydelay smallint, lateaircraftdelay smallint)
+(year smallint,month tinyint,dayofmonth tinyint,dayofweek tinyint,
+ deptime smallint, crsdeptime smallint, arrtime smallint, crsarrtime smallint, 
+ uniquecarrier string, flightnum string, tailnum string, actualelapsedtime smallint,
+ crselapsedtime smallint, airtime smallint, arrdelay smallint, depdelay smallint, 
+ origin string, dest string, distance smallint, taxiin string, taxiout string,
+ cancelled string, cancellationcode string, diverted string, carrierdelay smallint,
+ weatherdelay smallint, nasdelay smallint, securitydelay smallint, lateaircraftdelay smallint)
 row format delimited
 fields terminated by ','
-location '/user/cloudera/output/handson_train/pig/airline_time_performance/refactored';
+location '/user/cloudera/output/hadoop/hive/airline_time_performance/refactored';
 
-
--- creates an external avro table with partition (by year) on airline timing
+# creates an external avro table with partition (by year) on airline timing
 create external table airline_timing_part
 	(month tinyint,dayofmonth tinyint,dayofweek tinyint,
 	deptime smallint, crsdeptime smallint, arrtime smallint, crsarrtime smallint, 
