@@ -47,3 +47,8 @@ from
 group by from_airport, to_airport
 order by 3
 limit 3;
+
+# [Output]
+# Wellington Municipal	Lancaster	330.0364047375409
+# Wellington Municipal	Lanai	3711.4239882799507
+# Wellington Municipal	Lampson 	1386.2938879151527
