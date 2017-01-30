@@ -1,21 +1,43 @@
--- simple multiple join
-select flightnum, year, month, dayofmonth, dayofweek, c.description, f.tailnum, p.aircraft_type,
-	CONCAT(a.airport, ' ', a.city, ', ', a.state, ', ', a.country ) origin, 
-	CONCAT(b.airport, ' ', b.city, ', ', b.state, ', ', b.country ) dest 
-from flights f 
-	join carriers c on f.uniquecarrier = c.cdde
-	join airports a on f.origin = a.iata
-	join airports b on f.dest = b.iata
-	join plane_info p on p.tailnum = f.tailnum;
+# simple multiple join
+
+select flightnum, year, month, dayofmonth,dayofweek, c.description, f.tailnum, p.aircraft_type,
+       concat(a.airport,' ',a.city,',',a.state,',',a.country) origin,
+       concat(b.airport,' ',b.city,',',b.state,',',b.country) dest
+from flights f
+     join carriers c on f.uniquecarrier = c.cdde
+     join airports a on f.origin = a.iata
+     join airports b on f.dest = b.iata
+     join plane_info p on p.tailnum = f.tailnum;
+
+select count(1) from flights;
+# 14462945
 
 
--- find the top 3 airports pairs with the shortest distance between them
-add jar file:/home/cloudera/Classes/hadoop-training-projects/hive/airline_ontime_perf/HiveSwarm-1.0-SNAPSHOT.jar;
+# explain select * from flights where year=2007;
+
+# beeline -u jdbc:hive2://localhost:10000/yh_airline -n cloudera
 
 
-create temporary function gps_distance_from as 'com.livingsocial.hive.udf.gpsDistanceFrom';
+create index _index on table t1() as '';
+show index on table01;
+drop index 
 
---- creating a hive view
+
+
+
+create index xx on table bb () as ''
+
+
+# find the top 3 airports pairs with the shortest distance between them
+
+add jar /home/cloudera/hadoop-projects/hadoop-training-projects-master/hive/airline_ontime_perf/HiveSwarm-1.0-SNAPSHOT.jar;
+
+
+
+create temporary function gps_distance_from 
+as 'com.livingsocial.hive.udf.gpsDistanceFrom';
+
+# creating a hive view
 create view airport_without_header as
 select * from airports where iata <> 'iata';
 
