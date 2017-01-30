@@ -217,7 +217,46 @@ insert overwrite directory '/user/cloudera/output/hadoop/hive/insrt_directory'
 row format delimited
 fields terminated by '::::'
 select * from airports limit  100;
+# => /user/cloudera/output/hadoop/hive/insrt_directory/000000_0
+
+# create external table for flights information
+# contents:
+# [2007.csv] :
+# hdfs dfs -tail /user/yuanhsin/rawdata/hadoop/airline_performance/flights/2007.csv
+# 2007,12,15,6,1024,1025,1750,1735,DL,61,N623DL,266,250,233,15,-1,LAX,ATL,1946,14,19,0,,0,0,0,15,0,0
+# 2007,12,15,6,1353,1315,1658,1622,DL,62,N970DL,125,127,100,36,38,DFW,ATL,732,11,14,0,,0,0,0,0,0,36
+# [2008.csv] :
+# hdfs dfs -tail /user/yuanhsin/rawdata/hadoop/airline_performance/flights/2008.csv
+# 2008,12,13,6
+ ,655,700,856,856
+ ,DL,1638,N671DN,121
+ ,116,85,0,-5
+ ,PBI,ATL,545,24
+ ,12,0,,0
+ ,NA,NA,NA,NA,NA
+# 2008,12,13,6,1251,1240,1446,1437,DL,1639,N646DL,115,117,89,9,11,IAD,ATL,533,13,13,0,,0,NA,NA,NA,NA,NA
+create external table flights(
+year smallint,month tinyint,dayofmonth tinyint,dayofweek tinyint,
+deptime smallint,crsdeptime smallint,arrtime smallint, crsarrtime smallint,
+uniquecarrier string,flightnum string,tailnum string,actualelapsedtime smallint,
+crselapsedtime smallint, airtime smallint,arrdelay 
 
 
-# /user/cloudera/output/hadoop/hive/insrt_directory/000000_0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
