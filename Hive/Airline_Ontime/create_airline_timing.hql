@@ -219,5 +219,5 @@ fields terminated by '::::'
 select * from airports limit  100;
 
 
-
+# /user/cloudera/output/hadoop/hive/insrt_directory/000000_0
 
