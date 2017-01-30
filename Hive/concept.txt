@@ -14,3 +14,14 @@
 
 (3) Struct: Contains elements of different data types. The elements can be accessed by using the dot notation. 
              For example in a struct, ”car”, the color of the car can be retrieved as specifying car.color
+             
+             
+                        
+## Index
+
+CREATE INDEX table01_index ON TABLE table01 (column2) AS 'COMPACT';
+
+SHOW INDEX ON table01;
+
+DROP INDEX table01_index ON table01;
+
