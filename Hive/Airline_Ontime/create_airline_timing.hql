@@ -85,8 +85,7 @@ select
 	weatherdelay  ,     
 	nasdelay ,          
 	securitydelay    ,  
-
-lateaircraftdelay 
+        lateaircraftdelay 
 from airline_timing 
 where year = 2007;
 
@@ -247,22 +246,4 @@ weatherdelay smallint, nasdelay smallint,securitydelay smallint,lateaircraftdela
 row format delimited
 fields terminated by ','
 location '/user/yuanhsin/rawdata/hadoop/airline_performance/flights';
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
