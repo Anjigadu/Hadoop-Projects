@@ -47,14 +47,16 @@ create external table airline_timing_part
 	weatherdelay smallint, nasdelay smallint, securitydelay smallint, lateaircraftdelay smallint)
 partitioned by (year smallint)
 stored as avro
-location '/user/cloudera/output/handson_train/pig/airline_time_performance/flight_partitioned_avro';
+location '/user/cloudera/output/hadoop/hive/airline_time_performance/flight_partitioned_avro';
 
--- STATIC PARTITIONING
--- manual add a partition to the partitoned table
-alter table airline_timing_part add partition (year=2007);
+## STATIC PARTITIONING
+# manual add a partition to the partitoned table
+alter table airline_timing_part 
+add partition (year=2007);
 
--- insert data into a table partition using static partitioning
-insert overwrite table airline_timing_part partition(year=2007)
+# insert data into a table partition using static partitioning
+insert overwrite table airline_timing_part 
+partition(year=2007)
 select 
 	month,   
 	dayofmonth,         
@@ -83,24 +85,29 @@ select
 	weatherdelay  ,     
 	nasdelay ,          
 	securitydelay    ,  
-	lateaircraftdelay 
-from airline_timing where year = 2007;
 
--- droping a partition
--- not that since this is an external table , the partition will be dropped from the hive metastore but will still be available on the distributed file system
--- so there will have to a hdfs command to drop the file as well
--- hdfs dfs -rm -R /user/cloudera/output/handson_train/pig/airline_time_performance/flight_partitioned_avro/year=2007
+lateaircraftdelay 
+from airline_timing 
+where year = 2007;
+
+# droping a partition
+# not that since this is an external table ,
+# the partition will be dropped from the hive metastore but will still be available on the distributed file system
+# so there will have to a hdfs command to drop the file as well
+
 alter table airline_timing_part drop partition(year=2007);
+hdfs dfs -rm -R /user/cloudera/output/handson_train/pig/airline_time_performance/flight_partitioned_avro/year=2007
 
--- DYNAMIC PARTITIONING
+## DYNAMIC PARTITIONING
+# enabling dynamic partition in a hive database
+# setting the dynamic partition mode to non-strict
 
---enabling dynamic partition in a hive database
---setting the dynamic partition mode to non-strict
 set hive.exec.dynamic.partition=true;
 set hive.exec.dynamic.partition.mode=nonstrict;
 
--- inserting data into a hive table using dynamic nonstrict partition mode
-insert into airline_timing_part partition(year)
+# inserting data into a hive table using dynamic nonstrict partition mode
+insert into airline_timing_part 
+partition(year)
 select 
 	month,   
 	dayofmonth,         
@@ -134,7 +141,12 @@ select
 from airline_timing ;
 
 
--- create external table for airports
+# create external table for airports
+# contents:
+  hdfs dfs -tail /user/yuanhsin/rawdata/hadoop/airline_performance/airports/airports.csv
+# "Z08","Ofu","Ofu Village","AS","USA",14.18435056,-169.6700236
+# "Z09","Kasigluk","Kasigluk","AK","USA",60.87202194,-162.5248094
+
 create external table airports (
     iata string, 
     airport string, 
@@ -151,10 +163,18 @@ with serdeproperties (
    "escapeChar"    = "\\"
 )  
 stored as textfile
-location '/user/cloudera/rawdata/handson_train/airline_performance/airports';
+location '/user/yuanhsin/rawdata/hadoop/airline_performance/airports';
+
+# This SerDe works for most CSV data, but does not handle embedded newlines. 
+# To use the SerDe, specify the fully qualified class name org.apache.hadoop.hive.serde2.OpenCSVSerde.  
+# This SerDe treats all columns to be of type String. 
+# Even if you create a table with non-string column types using this SerDe, the DESCRIBE TABLE output would show string column type. 
+# The type information is retrieved from the SerDe. 
+# To convert columns to the desired type in a table, you can create a view over the table that does the CAST to the desired type.
 
 
--- create external table for carriers
+
+# create external table for carriers
 create external table carriers (
     cdde varchar(4), 
     description varchar(30)
@@ -166,9 +186,12 @@ with serdeproperties (
    "escapeChar"    = "\\"
 )  
 stored as textfile
-location '/user/cloudera/rawdata/handson_train/airline_performance/carriers';
+location '/user/cloudera/rawdata/hadoop/airline_performance/carriers';
 
--- create external table for plane information
+# create external table for plane information
+# content:
+# N999CA,Foreign Corporation,CANADAIR,07/09/2008,CL-600-2B19,Valid,Fixed Wing Multi-Engine,Turbo-Jet,1998
+# N999DN,Corporation,MCDONNELL DOUGLAS CORPORATION,04/02/1992,MD-88,Valid,Fixed Wing Multi-Engine,Turbo-Jet,1992
 create external table plane_info (
     tailnum varchar(4), 
     type varchar(30),
@@ -182,14 +205,14 @@ create external table plane_info (
 row format serde 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
 with serdeproperties (
    "separatorChar" = ",",
-   "quoteChar"     = "\"",
+   "quoteChar"     = " \" ",
    "escapeChar"    = "\\"
 )  
 stored as textfile
-location '/user/cloudera/rawdata/handson_train/airline_performance/plane_data';
+location '/user/cloudera/rawdata/hadoop/airline_performance/plane_data';
 
 
--- inserting into hdfs directory as text file with non-default delimiter
+# inserting into hdfs directory as text file with non-default delimiter
 insert overwrite directory '/user/cloudera/output/handson_train/hive/insrt_directory'
 row format delimited
 fields terminated by '::::'
