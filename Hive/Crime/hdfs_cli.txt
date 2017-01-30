@@ -1,17 +1,11 @@
-## download the dataset from https://drive.google.com/open?id=0B0MdkEsxQHAQU1BIMVJuM2twVW8
+## Download the dataset from https://drive.google.com/open?id=0B0MdkEsxQHAQU1BIMVJuM2twVW8
 wget https://drive.google.com/open?id=0B0MdkEsxQHAQU1BIMVJuM2twVW8
 
-## download the scripts to prepare the hive database and tables from https://drive.google.com/drive/folders/0B0MdkEsxQHAQbjJtOHhMaEpuVUk?usp=sharing
-
-select method, count(1) from crime_incident group by method
-
-select method, shift, count(1) numOccur from crime_incident group by method, shift with rollup
-
-select method, shift, count(1) numOccur from crime_incident group by method, shift with cube
-
 ## HDFS commands
-hdfs dfs -mkdir -p /user/cloudera/rawdata/hadoop_class/crime_incidents
-hdfs dfs -mkdir /user/cloudera/rawdata/hadoop_class/crime_incidents_part
--- load data to hdfs
-hdfs dfs -put Crime_Incidents_2008-2016october.csv /user/cloudera/rawdata/hadoop_class/crime_incidents
+hdfs dfs -mkdir -p /user/cloudera/rawdata/hadoop/crime_incidents
+hdfs dfs -mkdir /user/cloudera/rawdata/hadoop/crime_incidents_part
+
+## Load data to hdfs
+hdfs dfs -put Downloads/Crime_Incidents_2008-2016october.csv /user/cloudera/rawdata/hadoop/crime_incidents
+
 
