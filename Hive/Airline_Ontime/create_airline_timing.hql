@@ -235,12 +235,18 @@ select * from airports limit  100;
  ,12,0,,0
  ,NA,NA,NA,NA,NA
 # 2008,12,13,6,1251,1240,1446,1437,DL,1639,N646DL,115,117,89,9,11,IAD,ATL,533,13,13,0,,0,NA,NA,NA,NA,NA
+
 create external table flights(
 year smallint,month tinyint,dayofmonth tinyint,dayofweek tinyint,
 deptime smallint,crsdeptime smallint,arrtime smallint, crsarrtime smallint,
 uniquecarrier string,flightnum string,tailnum string,actualelapsedtime smallint,
-crselapsedtime smallint, airtime smallint,arrdelay 
-
+crselapsedtime smallint, airtime smallint,arrdelay smallint, depdelay smallint,
+origin string, dest string,distance smallint,taxiin string,taxiout string,
+cancelled string, cancellationcode string,diverted string,carrierdelay smallint,
+weatherdelay smallint, nasdelay smallint,securitydelay smallint,lateaircraftdelay smallint)
+row format delimited
+fields terminated by ','
+location '/user/yuanhsin/rawdata/hadoop/airline_performance/flights';
 
 
 
