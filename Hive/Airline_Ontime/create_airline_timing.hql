@@ -213,7 +213,11 @@ location '/user/cloudera/rawdata/hadoop/airline_performance/plane_data';
 
 
 # inserting into hdfs directory as text file with non-default delimiter
-insert overwrite directory '/user/cloudera/output/handson_train/hive/insrt_directory'
+insert overwrite directory '/user/cloudera/output/hadoop/hive/insrt_directory'
 row format delimited
 fields terminated by '::::'
 select * from airports limit  100;
+
+
+
+
