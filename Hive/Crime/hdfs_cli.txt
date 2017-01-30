@@ -1,0 +1,5 @@
+hdfs dfs -mkdir -p /user/cloudera/rawdata/hadoop_class/crime_incidents
+hdfs dfs -mkdir /user/cloudera/rawdata/hadoop_class/crime_incidents_part
+-- load data to hdfs
+hdfs dfs -put Crime_Incidents_2008-2016october.csv /user/cloudera/rawdata/hadoop_class/crime_incidents
+
