@@ -25,3 +25,6 @@ hdfs dfs -mkdir -p /user/yuanhsin/rawdata/hadoop/airline_performance/plane_data
 hdfs dfs -moveFromLocal airports.csv	/user/yuanhsin/rawdata/hadoop/airline_performance/airports
 hdfs dfs -moveFromLocal carriers.csv	 /user/yuanhsin/rawdata/hadoop/airline_performance/carriers
 hdfs dfs -moveFromLocal plane-data.csv	/user/yuanhsin/rawdata/hadoop/airline_performance/plane_data
+
+
+head airports.csv
