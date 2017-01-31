@@ -120,6 +120,11 @@ where ANC != 'ANC';
 
 # Query 1.
 # Oracle: nvl() / MYSQL: ifnull() / TSQL: isnull()
+# Hive: 
+(1) nvl(T value, T default_value)
+    Returns default value if value is null else returns value (as of HIve 0.11).
+(2) COALESCE(T v1, T v2, ...)
+    Returns the first v that is not NULL, or NULL if all v's are NULL.
 
 select year(reportdatetime) reportYear, ward, nvl(count(1),"total") frequency
 from crime_incident
@@ -146,78 +151,6 @@ NULL	NULL	306147
 2009	6	4473
 2009	7	3747
 2009	8	4180
-2010	NULL	31574
-2010	NULL	2
-2010	1	4357
-2010	2	5550
-2010	3	1929
-2010	4	3091
-2010	5	3970
-2010	6	4221
-2010	7	4003
-2010	8	4451
-2011	NULL	33543
-2011	NULL	2
-2011	1	4921
-2011	2	6212
-2011	3	1935
-2011	4	2929
-2011	5	4315
-2011	6	4862
-2011	7	4045
-2011	8	4322
-2012	NULL	35361
-2012	NULL	4
-2012	1	5007
-2012	2	6570
-2012	3	1788
-2012	4	2991
-2012	5	4784
-2012	6	5513
-2012	7	4340
-2012	8	4364
-2013	NULL	35914
-2013	NULL	3
-2013	1	5406
-2013	2	5960
-2013	3	1950
-2013	4	3263
-2013	5	4609
-2013	6	5679
-2013	7	4613
-2013	8	4431
-2014	NULL	38434
-2014	NULL	1
-2014	1	5407
-2014	2	6780
-2014	3	1832
-2014	4	3808
-2014	5	5397
-2014	6	6024
-2014	7	5102
-2014	8	4083
-2015	NULL	36561
-2015	1	5149
-2015	2	6641
-2015	3	1882
-2015	4	3475
-2015	5	5110
-2015	6	5956
-2015	7	4385
-2015	8	3963
-2016	NULL	29443
-2016	1	4157
-2016	2	5772
-2016	3	1479
-2016	4	2644
-2016	5	4006
-2016	6	4947
-2016	7	3374
-2016	8	3064
-
-
-
-
 
 
 # Query 2.
@@ -226,4 +159,7 @@ select year(reportdatetime) reportYear , ward, count(1) frequency
 from crime_incident 
 where ANC != 'ANC'  
 group by year(reportdatetime), ward with cube;
+
+
+
 
