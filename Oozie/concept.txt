@@ -26,3 +26,11 @@ hive -f scr.hql
 email
 
 java code
+
+
+
+# Oozie Simple Flow               ok
+Start ----> Map Reduce WordCount ----> End
+       ok            | error
+                     v
+                    kill
