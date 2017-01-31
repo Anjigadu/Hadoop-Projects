@@ -30,7 +30,17 @@ java code
 
 
 # Oozie Simple Flow               ok
-Start ----> Map Reduce WordCount ----> End
-       ok            | error
+Start ----> Map Reduce WordCount ----> End (job)
+(job)       ok            | error
                      v
-                    kill
+                    kill (control)
+
+# 
+
+http://oozie:11000/
+Oozie        ------------->        Hadoop Cluster
+                                    workflow / coordinator / bundle
+
+
+
+
