@@ -61,7 +61,24 @@ Start -----> Map Reduce -----> Fork                                 -----> join
      - Decision
      - Fork,Join
  (2) Actions
-          
+     - MapReduce
+     - SPark
+     - Java
+     - Pig
+     - HDFS
+     - Hive
+     - Sqoop
+     - Shell
+     - SSH
+     - Email
+     
+ # Oozie Service
+ (1) Run HTTP service
+     - Clients interact with the service by submitting workflows
+     - Workflows are executed immediately or later
+ (2) Workflows are defined via XML
+     - Instead of writing Java code that implements Tool
+     - Interface and extending configured class
           
           
           
