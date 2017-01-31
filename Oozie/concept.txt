@@ -90,7 +90,10 @@ Start -----> Map Reduce -----> Fork                                 -----> join
   oozie client ---------->    (1) oozie coordinator     -------------------------->   Hadoop
                               (2) oozie workflow
   
-   
+          
+# http://quickstart.cloudera:11000/oozie/          
+# oozie help
+# echo $oozie_url
 
 
 
