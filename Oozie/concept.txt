@@ -90,8 +90,7 @@ Start -----> Map Reduce -----> Fork                                 -----> join
   oozie client ---------->    (1) oozie coordinator     -------------------------->   Hadoop
                               (2) oozie workflow
   
-          
-          
+   
 
 
 
