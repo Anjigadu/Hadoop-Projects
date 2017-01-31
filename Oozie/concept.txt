@@ -41,6 +41,30 @@ http://oozie:11000/
 Oozie        ------------->        Hadoop Cluster
                                     workflow / coordinator / bundle
 
+# Oozie Complex Flow
+                                    --------> Map Reduce Streaming
+Start -----> Map Reduce -----> Fork                                 -----> join
+                                    --------> Pig   
+                                                                             |
+                                                                             v
+                             Map Reduce Pipes  <----------               decision
+                                       |                                      |
+                                          ____________________________________
+                                                             |
+                                                             v
+          End <--------       File System     <-----------  java
+          
+          
+ # Oozie Components:
+ (1) Control Flow
+     - Start,End,Kill
+     - Decision
+     - Fork,Join
+ (2) Actions
+          
+          
+          
+          
 
 
 
