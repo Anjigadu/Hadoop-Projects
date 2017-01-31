@@ -1,0 +1,8 @@
+<workflow-app name="" xmlns="">
+  <start to=""/>
+  <action name="">
+    <jobtracker> </jobtracker>
+    <namenode> </namenode>
+  </action>
+  <end name="">
+</workflow-app>
