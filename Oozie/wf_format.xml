@@ -1,8 +1,22 @@
-<workflow-app name="" xmlns="">
-  <start to=""/>
-  <action name="">
-    <jobtracker> </jobtracker>
-    <namenode> </namenode>
+<workflow-app name="stockVolume-wf" xmlns="uri:oozie:workflow:0.1">
+  <start to="stockVolumePigAction"/>
+  <action name="stockVolumePigAction">
+    <pig>
+      <job-tracker>${jonbTracker} </job-tracker>
+      <name-node> </name-node>
+      <prepare>
+      </prepare>
+    </pig>
+  
+    <ok to="jobDone"/>  
+    <error to="errorOccured"/>
   </action>
-  <end name="">
+  
+  <kill name="errorOccured">
+    <message>[MESSAGE-TO-LOG]</message>
+  </kill>
+  
+  <end name="jobDone"/>
 </workflow-app>
+  
+  
