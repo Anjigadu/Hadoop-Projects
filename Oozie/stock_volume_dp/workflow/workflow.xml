@@ -2,6 +2,7 @@
     <start to="stockVolumePigAction"/>
 
     <action name="stockVolumePigAction">
+        
         <pig>
             <job-tracker>${jobTracker}</job-tracker>
             <name-node>${namenode}</name-node>
@@ -10,8 +11,11 @@
             </prepare>
             <script>/user/cloudera/oozie/stock_volume_job/wf/script/stock_total_volume_analysis.pig</script>
         </pig>
+        
         <ok to="jobDone"/>
+        
         <error to="errorOccured"/>
+    
     </action>
 
     <kill name="errorOccured">
@@ -19,3 +23,23 @@
     </kill>
      <end name="jobDone"/>
 </workflow-app>
+
+
+<workflow-app name="stockVolume-wf" xmlns="uri:oozie:workflow:0.1">
+    <start to="stockVolumePigAction"/>
+    <action name="stockVolumePigAction">
+        <pig>
+            
+        </pig>
+    
+    </action>
+    
+    <kill name="errorOccur">
+        <message> wf:lastErrorNode()</message>
+        # Workflow EL(Expression Language) Function:
+        # It returns the name of the last workflow action node that exit with an ERROR exit state, 
+        # or an empty string if no action has exited with ERROR state in the current workflow job.    
+    </kill>
+    <end name="jobDone"/>
+</workflow-app>    
+        
