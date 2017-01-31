@@ -12,7 +12,13 @@ bundles
 
 oozie
 - written in xml
-
+- Oozie is a server-based workflow engine specialized in running workflow jobs with actions that run Hadoop, MapReduce,
+  Pig, Hive, Sqoop,Filesystem and shell jobs.
+- Oozie is a java web-application that runs in a Java Servlet-container.
+- For the purpose of Oozie, a workflow is a collection of actions(ie. Hadoop MapReduce Jobs, Pig Jobs) arranged in
+  a control dependency DAG(Direct Acyclic Graph).
+  "Control dependency" from one action to another means that the second action can not run 
+  until the first action has completed.
 
 
 hive -f scr.hql
