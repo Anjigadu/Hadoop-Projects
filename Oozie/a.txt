@@ -1,0 +1,6 @@
+history | grep beeline
+267  beeline
+  268  beeline -u jdbc:hive2://localhost:10000 -n cloudera
+  270  beeline
+  477  beeline
+  478  history | grep beeline
