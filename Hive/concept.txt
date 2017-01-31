@@ -25,3 +25,14 @@ SHOW INDEX ON table01;
 
 DROP INDEX table01_index ON table01;
 
+## Cubes and Rollups
+The general syntax is WITH CUBE/ROLLUP. It is used with the GROUP BY only. 
+CUBE creates a subtotal of all possible combinations of the set of column in its argument. 
+Once we compute a CUBE on a set of dimension, we can get answer to all possible aggregation questions on those dimensions.
+(1)
+GROUP BY a, b, c WITH CUBE is equivalent to 
+GROUP BY a, b, c GROUPING SETS ( (a, b, c), (a, b), (b, c), (a, c), (a), (b), (c), ( ))
+(2)
+ROLLUP clause is used with GROUP BY to compute the aggregate at the hierarchy levels of a dimension
+GROUP BY a, b, c with ROLLUP assumes that the hierarchy is "a" drilling down to "b" drilling down to "c"
+GROUP BY a, b, c, WITH ROLLUP is equivalent to GROUP BY a, b, c GROUPING SETS ( (a, b, c), (a, b), (a), ( ))
