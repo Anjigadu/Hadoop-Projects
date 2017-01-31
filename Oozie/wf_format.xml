@@ -2,7 +2,7 @@
   <start to="stockVolumePigAction"/>
   <action name="stockVolumePigAction">
     <pig>
-      <job-tracker>${jonbTracker} </job-tracker>
+      <job-tracker>${jobTracker} </job-tracker>
       <name-node> </name-node>
       <prepare>
       </prepare>
