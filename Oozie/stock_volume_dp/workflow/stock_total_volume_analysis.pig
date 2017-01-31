@@ -22,11 +22,12 @@ proj = FOREACH filtered GENERATE stock_symbol, stock_volume;
 grouped = GROUP proj BY stock_symbol;
 
 # Reduce the grouped data by summing the groups
-agg = FOREACH grp_data GENERATE group AS symbol, SUM(proj_data.stock_volume) AS total_vol;
+agg = FOREACH grouped GENERATE group as symbol,sum(proj.stock_volume) AS total_vol;
 
--- store records in the ouput location
-STORE agg_data INTO '/user/cloudera/output/handson_train/pig/nasdaq_stock_volume';
+# store records in the ouput location
+STORE agg INTO '/user/cloudera/output/hadoop/pig/nasdaq_stock_volume';
 
--- describe 
--- explain 
--- illustrate
+
+# describe 
+# explain 
+# illustrate
