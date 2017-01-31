@@ -1,11 +1,17 @@
 <workflow-app name="stockVolume-wf" xmlns="uri:oozie:workflow:0.1">
   <start to="stockVolumePigAction"/>
   <action name="stockVolumePigAction">
+    
     <pig>
+      
       <job-tracker>${jobTracker} </job-tracker>
-      <name-node> </name-node>
+      <name-node>${namenode}</name-node>
+      
       <prepare>
+        <delete path='[]'/>
+        <mkdir path='[]'/>
       </prepare>
+      
     </pig>
   
     <ok to="jobDone"/>  
