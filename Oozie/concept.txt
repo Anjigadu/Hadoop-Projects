@@ -1,0 +1,10 @@
+workflow
+- define actions in the data pipeline
+- actions program run (program: hive,pig,mapreduce,java, email, ssh, spark)
+
+coordinator
+
+bundles
+
+hive -f scr.hql
+email
