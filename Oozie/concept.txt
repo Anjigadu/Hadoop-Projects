@@ -1,10 +1,22 @@
 workflow
-- define actions in the data pipeline
+- define actions in a DAG(Direct Acyclic Graph) for the data pipeline
 - actions program run (program: hive,pig,mapreduce,java, email, ssh, spark)
 
 coordinator
+- oozie structure for schedule execution of workflow 
+- time trigger
+- data trigger
 
 bundles
+- coordination of coordinators
+
+oozie
+- written in xml
+
+
 
 hive -f scr.hql
+
 email
+
+java code
