@@ -1,0 +1,23 @@
+# Data Sets:
+
+NASDAQ Exchange Daily 1970-2010 Open, Close, High, Low and Volume
+
+# Download Link :
+http://www.infochimps.com/datasets/nasdaq-exchange-daily-1970-2010-open-close-hgh-low- and-volume/downloads/235150
+
+# Summary of data : There are two types of data
+a) File name starting with NASDAQ_daily_prices*: These files is a CSV (comma seperated values) file which contains following fields which are self explanatory.
+exchange,stock_symbol,date,stock_price_open,stock_price_high,stock_price_low,stock_price _close,stock_volume,stock_price_adj_close
+b) File name starting with NASDAQ_dividends*: These files is a CSV (comma seperated values) file which contains following fields which are self explanatory.
+exchange,stock_symbol,date,dividends
+
+# Do following in hive:
+1. Create an external table for NASDAQ daily prices data set.
+2. Create an external table for NASDAQ dividends data set.
+3. Find out total volume sale for each stock symbol which has closing price more than $5.
+4. Find out highest price in the history for each stock symbol.
+5. Find out highesh dividends given for each stock symbol in entire history.
+6. Find out highest price and highesh dividends for each stock symbol if highest price and
+highest dividends exist.
+7. Find out highest price and highest dividends for each stock symbol, if one of them does
+not exist then keep Null values.
