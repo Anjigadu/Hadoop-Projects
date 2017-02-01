@@ -3,7 +3,7 @@
 NASDAQ Exchange Daily 1970-2010 Open, Close, High, Low and Volume
 
 # Download Link :
-http://www.infochimps.com/datasets/nasdaq-exchange-daily-1970-2010-open-close-hgh-low- and-volume/downloads/235150
+http://www.infochimps.com/datasets/nasdaq-exchange-daily-1970-2010-open-close-hgh-low-and-volume/downloads/235150
 
 # Summary of data : There are two types of data
 a) File name starting with NASDAQ_daily_prices*: These files is a CSV (comma seperated values) file which contains following fields which are self explanatory.
