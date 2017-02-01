@@ -22,12 +22,12 @@ proj = FOREACH filtered GENERATE stock_symbol, stock_volume;
 grouped = GROUP proj BY stock_symbol;
 
 # Reduce the grouped data by summing the groups
-agg = FOREACH grouped GENERATE group as symbol,sum(proj.stock_volume) AS total_vol;
+agg = FOREACH grouped GENERATE group as symbol,SUM(proj.stock_volume) AS total_vol;   # in-built function is case-sensitive
 
 # store records in the ouput location
 STORE agg INTO '/user/cloudera/output/hadoop/pig/nasdaq_stock_volume';
 
 
 # describe 
-# explain 
+# explain: explain operator is used to display the logical, physical, and MapReduce execution plans of a relation.
 # illustrate
