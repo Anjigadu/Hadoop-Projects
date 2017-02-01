@@ -7,9 +7,9 @@
             <job-tracker>${jobTracker}</job-tracker>
             <name-node>${namenode}</name-node>
             <prepare>
-               <delete path="/user/cloudera/output/handson_train/pig/nasdaq_stock_volume"/>
+               <delete path="/user/cloudera/output/hadoop/pig/nasdaq_stock_volume"/>
             </prepare>
-            <script>/user/cloudera/oozie/stock_volume_job/wf/script/stock_total_volume_analysis.pig</script>
+            <script>${oozie.wf.application.path}/script/</script>
         </pig>
         
         <ok to="jobDone"/>
