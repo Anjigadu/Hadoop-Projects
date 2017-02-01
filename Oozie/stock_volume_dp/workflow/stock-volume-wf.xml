@@ -9,7 +9,7 @@
             <prepare>
                <delete path="/user/cloudera/output/hadoop/pig/nasdaq_stock_volume"/>
             </prepare>
-            <script>${oozie.wf.application.path}/script/stock_total_volume_analysis.pig</script>
+            <script>${oozie.wf.application.path}/Script/stock_total_volume_analysis.pig</script>
         </pig>
         
         <ok to="jobDone"/>
