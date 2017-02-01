@@ -1,5 +1,10 @@
 # Execute the oozie
+# (1)
 oozie validate -oozie http://quickstart.cloudera:11000/oozie stock-volume-wf.xml
+# (2)
+export OOZIE_URL=http://quickstart.cloudera:11000/oozie
+echo $oozie_url
+oozie validate stock-volume-wf.xml
 
 
 # HDFS Cli
