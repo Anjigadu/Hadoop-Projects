@@ -1,0 +1,15 @@
+# Hive not:
+  1. Not OLTP
+  2. Not suitable for OLAP* (not “online”)
+  3. No extensive writes*
+  4. Not a real RDBMS!
+  5. Not real-time Analytics!
+  6. Hadoop is Batchy => Hive too
+
+# What is Hive?
+A system for managing and querying structured data built on top of Hadoop
+● Uses MapReduce for execution
+● HDFS for storage
+● Extensible to other Data Repositories
+
+# 
