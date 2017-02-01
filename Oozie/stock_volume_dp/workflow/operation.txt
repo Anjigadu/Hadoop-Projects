@@ -1,2 +1,5 @@
 # Execute the oozie
 oozie validate -oozie http://quickstart.cloudera:11000/oozie stock-volume-wf.xml
+
+# HDFS Cli
+hdfs dfs -put stock-volume-wf.xml
