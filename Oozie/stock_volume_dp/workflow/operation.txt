@@ -10,3 +10,8 @@ hdfs dfs -put Downloads/Hadoop-Projects-master/Oozie/stock_volume_dp/workflow/st
 # Read the creation from Hue
 # http://quickstart.cloudera:8888/filebrowser/#/user/cloudera/oozie/stock_volume_dp/workflow
 
+# Get jobtracker and namenode information
+cat /etc/hadoop/conf/core-site.xml
+cat /etc/hadoop/conf/mapred-site.xml
+cat /etc/hadoop/conf/hdfs-site.xml
+
