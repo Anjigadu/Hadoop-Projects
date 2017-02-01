@@ -1,5 +1,12 @@
 # Execute the oozie
 oozie validate -oozie http://quickstart.cloudera:11000/oozie stock-volume-wf.xml
 
+
 # HDFS Cli
-hdfs dfs -put stock-volume-wf.xml
+hdfs dfs -mkdir -p /user/cloudera/oozie/stock_volume_dp/workflow
+
+hdfs dfs -put Downloads/Hadoop-Projects-master/Oozie/stock_volume_dp/workflow/stock-volume-wf.xml   /user/cloudera/oozie/stock_volume_dp/workflow/
+
+# Read the creation from Hue
+# http://quickstart.cloudera:8888/filebrowser/#/user/cloudera/oozie/stock_volume_dp/workflow
+
