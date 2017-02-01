@@ -9,7 +9,7 @@
             <prepare>
                <delete path="/user/cloudera/output/hadoop/pig/nasdaq_stock_volume"/>
             </prepare>
-            <script>${oozie.wf.application.path}/script/</script>
+            <script>${oozie.wf.application.path}/Script/stock_total_volume_analysis.pig</script>
         </pig>
         
         <ok to="jobDone"/>
@@ -20,26 +20,9 @@
 
     <kill name="errorOccured">
         <message>wf:lastErrorNode()</message>
+        # Workflow EL(Expression Language) Function:
+        # It returns the name of the last workflow action node that exit with an ERROR exit state, 
+        # or an empty string if no action has exited with ERROR state in the current workflow job.        
     </kill>
      <end name="jobDone"/>
 </workflow-app>
-
-
-<workflow-app name="stockVolume-wf" xmlns="uri:oozie:workflow:0.1">
-    <start to="stockVolumePigAction"/>
-    <action name="stockVolumePigAction">
-        <pig>
-            
-        </pig>
-    
-    </action>
-    
-    <kill name="errorOccur">
-        <message> wf:lastErrorNode()</message>
-        # Workflow EL(Expression Language) Function:
-        # It returns the name of the last workflow action node that exit with an ERROR exit state, 
-        # or an empty string if no action has exited with ERROR state in the current workflow job.    
-    </kill>
-    <end name="jobDone"/>
-</workflow-app>    
-        
