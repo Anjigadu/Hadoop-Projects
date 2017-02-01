@@ -24,7 +24,8 @@
       <script>[PIG-SCRIPT]</script>
       <param>[PARAM-VALUE]</param>
       <argument>[ARGUMENT-VALUE]</argument>
-      
+      <file>[FILE-PATH]</file>
+      <archive>[FILE-PATH]</archive>
     </pig>
   
     <ok to="jobDone"/>  
