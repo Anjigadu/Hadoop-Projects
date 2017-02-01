@@ -1,0 +1,2 @@
+# Execute the oozie
+oozie validate -oozie http://quickstart.cloudera:11000/oozie stock-volume-wf.xml
