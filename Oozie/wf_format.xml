@@ -12,6 +12,19 @@
         <mkdir path='[]'/>
       </prepare>
       
+      <job-xml> [JOB-XML-FILE] </job-xml>
+      
+      <configuration>
+        <property>
+          <name>[PROPERTY-NAME] </name>
+          <value>[PROPERTY-VALUE] </value>
+        </property>
+      </configuration>
+      
+      <script>[PIG-SCRIPT]</script>
+      <param>[PARAM-VALUE]</param>
+      <argument>[ARGUMENT-VALUE]</argument>
+      
     </pig>
   
     <ok to="jobDone"/>  
