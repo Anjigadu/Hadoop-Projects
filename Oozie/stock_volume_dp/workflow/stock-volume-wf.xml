@@ -19,10 +19,7 @@
     </action>
 
     <kill name="errorOccured">
-        <message>wf:lastErrorNode()</message>
-        # Workflow EL(Expression Language) Function:
-        # It returns the name of the last workflow action node that exit with an ERROR exit state, 
-        # or an empty string if no action has exited with ERROR state in the current workflow job.        
+        <message>wf:lastErrorNode()</message>   
     </kill>
      <end name="jobDone"/>
 </workflow-app>
