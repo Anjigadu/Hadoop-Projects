@@ -174,7 +174,8 @@ select * from player_runs_distribute where country='India' limit 10;
 
 
 CREATE EXTERNAL TABLE player_runs_clustered(player_id INT, year_of_play STRING, runs_scored INT, balls_played INT)
-COMMENT 'This is the  player_runs table'  PARTITIONED BY(country STRING) 
+COMMENT 'This is the  player_runs table'  
+PARTITIONED BY(country STRING) 
 clustered by (player_id) INTO 10 buckets 
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
