@@ -44,13 +44,6 @@ grunt> split nydvdnds into nydvdnds_greater1 if dividends > 1, nydvdnds_less1 if
 grunt> dump nydvdnds_greater1;
 
 
-
-
-
-
-
-
-
 nydailyprices = LOAD '/input/NASDAQ_daily_prices_A.csv' using PigStorage(',') AS (exchange:chararray,stock_symbol:chararray,date:chararray,stock_price_open:float,stock_price_high:float,stock_price_low:float,stock_price_close:float,stock_volume:float,stock_price_adj_close:float); 
 
 volume_records = foreach nydailyprices generate stock_symbol, stock_volume; 
