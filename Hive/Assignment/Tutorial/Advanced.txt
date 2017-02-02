@@ -1,44 +1,49 @@
 Cubes, Rollup, Grouping Set:
-===================================================
-CREATE EXTERNAL TABLE `player_opposition_runs`(
-  `player_id` int, 
-  `year_of_play` string,
-  `country` string,
-  `opposition_country` string, 
-  `runs_scored` int, 
-  `balls_played` int)
+============================================================================================================================
+CREATE EXTERNAL TABLE player_opposition_runs
+( player_id int, 
+  year_of_play string,
+  country string,
+  opposition_country string, 
+  runs_scored int, 
+  balls_played int)
 COMMENT 'This is the staging player_runs table'
 ROW FORMAT DELIMITED 
-  FIELDS TERMINATED BY ',' 
-  LINES TERMINATED BY '\n' 
-STORED AS INPUTFORMAT 
-  'org.apache.hadoop.mapred.TextInputFormat' 
-OUTPUTFORMAT 
-  'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat'
-LOCATION
-  '/input/runs_opposition';
+FIELDS TERMINATED BY ',' 
+LINES TERMINATED BY '\n' 
+STORED AS INPUTFORMAT 'org.apache.hadoop.mapred.TextInputFormat' 
+OUTPUTFORMAT 'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat'
+LOCATION '/input/runs_opposition';
 
-  LOAD DATA LOCAL INPATH "data/runs_opposition.csv" INTO TABLE player_opposition_runs;
+LOAD DATA LOCAL INPATH "data/runs_opposition.csv" INTO TABLE player_opposition_runs;
 
-Grouping Set: 
-=================
+1. Grouping Set: 
+===========================================================================================================================
 
-SELECT player_id, year_of_play, SUM(runs_scored) FROM player_opposition_runs GROUP BY player_id, year_of_play GROUPING SETS ( (player_id, year_of_play) , (player_id));
+SELECT player_id, year_of_play, SUM(runs_scored) 
+FROM player_opposition_runs 
+GROUP BY player_id, year_of_play 
+GROUPING SETS ( (player_id, year_of_play) , (player_id));
   
-SELECT player_id, year_of_play, country, SUM(runs_scored) FROM player_opposition_runs GROUP BY player_id, year_of_play, country GROUPING SETS ( (player_id, year_of_play, country) , (player_id, country), (player_id));
+SELECT player_id, year_of_play, country, SUM(runs_scored) 
+FROM player_opposition_runs 
+GROUP BY player_id, year_of_play, country 
+GROUPING SETS ( (player_id, year_of_play, country) , (player_id, country), (player_id));
 
 
-Cube:
-======
+2. Cube:
+===========================================================================================================================
 
-SELECT player_id, year_of_play, SUM(runs_scored) FROM player_opposition_runs GROUP BY player_id, year_of_play with CUBE;
-
-
-Rollup
-=========
- SELECT player_id, year_of_play, country, SUM(runs_scored) FROM player_opposition_runs GROUP BY player_id, year_of_play, country with rollup;
+SELECT player_id, year_of_play, SUM(runs_scored) 
+FROM player_opposition_runs 
+GROUP BY player_id, year_of_play with CUBE;
 
 
+3. Rollup
+===========================================================================================================================
+ SELECT player_id, year_of_play, country, SUM(runs_scored) 
+ FROM player_opposition_runs 
+ GROUP BY player_id, year_of_play, country with rollup;
 
 
 
