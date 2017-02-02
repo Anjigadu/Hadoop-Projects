@@ -1,0 +1,63 @@
+1. Load Command: 
+
+grunt> nydvdnds = LOAD '/user/cloudera/input_20140415/NASDAQ_dividends_A.csv' using PigStorage(',') AS (exchange:chararray, stock_symbol:chararray, date:chararray, dividends:float);
+
+grunt> nydailyprices = LOAD '/user/cloudera/input_20140415/NASDAQ_daily_prices_A.csv' using PigStorage(',') AS (exchange:chararray,stock_symbol:chararray,date:chararray,stock_price_open:float,stock_price_high:float,stock_price_low:float,stock_price_close:float,stock_volume:float,stock_price_adj_close:float);
+
+2. FOR EACH
+
+grunt> for_each = foreach nydvdnds generate exchange, dividends;
+grunt> dump for_each;
+
+3. Filter Command:
+
+grunt> filter_result = filter nydvdnds by dividends > 5;
+grunt> dump filter_result;
+
+4. Join Command: 
+
+grunt> join_result= join nydvdnds by stock_symbol, nydailyprices by stock_symbol;
+grunt> dump join_result;
+
+5. Group Command: 
+
+grunt> group_result=group nydvdnds by stock_symbol 
+grunt> dump group_result;
+
+6. CoGroup Command:
+
+grunt> cogroup_result = cogroup nydvdnds by stock_symbol, nydailyprices by stock_symbol;
+grunt> dump cogroup_result;
+
+7. Cross Command: 
+
+grunt> cross_result = cross nydvdnds, nydailyprices;
+grunt> dump cross_result;
+
+8. Limit Command:
+
+grunt> limit_result = limit nydvdnds 5;
+
+9. Split Comand: 
+
+grunt> split nydvdnds into nydvdnds_greater1 if dividends > 1, nydvdnds_less1 if dividends <= 1;
+grunt> dump nydvdnds_greater1;
+
+
+
+
+
+
+
+
+
+nydailyprices = LOAD '/input/NASDAQ_daily_prices_A.csv' using PigStorage(',') AS (exchange:chararray,stock_symbol:chararray,date:chararray,stock_price_open:float,stock_price_high:float,stock_price_low:float,stock_price_close:float,stock_volume:float,stock_price_adj_close:float); 
+
+volume_records = foreach nydailyprices generate stock_symbol, stock_volume; 
+
+group_result = group volume_records by stock_symbol ;
+
+grouped_volume_records = foreach group_result generate group, sum(stock_volume) as volume;
+
+ordered_records = order volume_records by volume desc;
+

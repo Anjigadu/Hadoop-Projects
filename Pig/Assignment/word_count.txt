@@ -1,0 +1,17 @@
+-- 1: Load text into a bag, where a row is a line of text
+lines = LOAD '/input/rain.txt' using PigStorage('\n') AS (line:chararray);
+-- 2: Tokenize the provided text
+tokens = FOREACH lines GENERATE flatten(TOKENIZE(line)) AS token:chararray;
+-- 4: Group by letter
+tokenGroup = GROUP tokens BY token;
+-- 5: Count the number of occurrences in each group
+countPerToken = FOREACH tokenGroup GENERATE group, COUNT(tokens);
+
+
+
+-- 6: Descending order the group by the count
+orderedCountPerToken = ORDER countPerLetter BY $1 DESC;
+-- 7: Grab the first element => Most occurring letter
+result = LIMIT orderedCountPerLetter 1;
+-- 8: Persist result on a file system
+STORE result INTO '/training/playArea/pig/mostSeenLetterOutput';

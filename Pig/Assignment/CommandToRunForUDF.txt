@@ -1,0 +1,8 @@
+
+register /home/hduser/workspace2/module6/target/data-processing-0.0.1-SNAPSHOT.jar
+
+nydailyprices = LOAD '/input/NASDAQ_daily_prices_A.csv' using PigStorage(',') AS (exchange:chararray,stock_symbol:chararray,date:chararray,stock_price_open:float,stock_price_high:float,stock_price_low:float,stock_price_close:float,stock_volume:float,stock_price_adj_close:float);
+
+filteredRecords = FILTER nydailyprices by com.assignments.pigudf.ThresholdFilter(stock_price_open,stock_price_close,stock_price_high,stock_price_low);
+
+foreachRecords = FOREACH filteredRecords generate exchange, stock_symbol, com.assignments.pigudf.DateFormatU1(date),stock_price_close; 
