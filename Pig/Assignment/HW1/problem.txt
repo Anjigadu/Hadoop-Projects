@@ -13,4 +13,9 @@ stock_price_close,stock_volume,stock_price_adj_close
 
 NASDAQ,ABXA,2009-12-09,2.55,2.77,2.50,2.67,158500,2.67 NASDAQ,ABXA,2009-12-08,2.71,2.74,2.52,2.55,131700,2.55 NASDAQ,ABXA,2009-12-07,2.65,2.76,2.65,2.71,174200,2.71 NASDAQ,ABXA,2009-12-04,2.63,2.66,2.53,2.65,230900,2.65
 
-Problem Statement: Write a pig script to find top 10 stocks as per total volume of the stock.
+Problem Statement: 
+
+1. Write a pig script to find top 10 stocks as per total volume of the stock.
+
+
+2. Write a UDF function which takes date as input in format “1993-01-05” and output in format 5 Jan, 1993.
