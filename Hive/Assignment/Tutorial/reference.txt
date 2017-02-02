@@ -33,6 +33,7 @@ ROW FORMAT DELIMITED
 FIELDS TERMINATED BY ','
 STORED AS TEXTFILE;
 
+
 LOAD DATA LOCAL INPATH "data/runs.csv" INTO TABLE player_runs;
 
 select * from player_runs limit 10;
@@ -41,14 +42,18 @@ select * from player_runs limit 10;
 6. Create external table 
 =========================
 
-CREATE EXTERNAL TABLE player_runs_p(player_id INT, year_of_play STRING, runs_scored INT, balls_played INT)
-COMMENT 'This is the staging player_runs table'  PARTITIONED BY(country STRING)  
-ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n'
+CREATE EXTERNAL TABLE player_runs_p (player_id INT, year_of_play STRING, runs_scored INT, balls_played INT)
+COMMENT 'This is the staging player_runs table'  
+PARTITIONED BY(country STRING)  
+ROW FORMAT DELIMITED 
+FIELDS TERMINATED BY ',' 
+LINES TERMINATED BY '\n'
 STORED AS TEXTFILE
 LOCATION '/input/runs';
 
-hadoop dfs -mkdir /input/runs/country=India
-hadoop dfs -put data/runs_India.csv /input/runs/country=India/
+
+hadoop dfs -mkdir /input/runs/country=USA
+hadoop dfs -put data/runs_India.csv /input/runs/country=USA/
 
 ALTER TABLE player_runs_p ADD PARTITION(country='India');
 
@@ -65,7 +70,7 @@ INSERT OVERWRITE TABLE player_runs
 SELECT player_id, year_of_play, runs_scored,balls_played 
 where player_id=10;
 
-
+ 
 8. Simple Select Query:
 ==================
 Select player_id, runs_scored from player_runs;
@@ -80,19 +85,28 @@ select player_id, sum(runs_scored) from player_runs group by player_id;
 
 CREATE EXTERNAL TABLE players(player_id INT, name STRING)
 COMMENT 'This is the staging player table'  
-ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n'
+ROW FORMAT DELIMITED 
+FIELDS TERMINATED BY ',' 
+LINES TERMINATED BY '\n'
 STORED AS TEXTFILE
 LOCATION '/input/player';
 
 LOAD DATA LOCAL INPATH "data/player.csv" INTO TABLE players;
 
-select * from players join player_runs on players.player_id=player_runs.player_id;
+select * from players 
+join 
+player_runs 
+on players.player_id=player_runs.player_id;
 
-select * from players full outer join player_runs on players.player_id=player_runs.player_id;
+select * from players 
+full outer join 
+player_runs 
+on players.player_id=player_runs.player_id;
 
-select * from players left outer join player_runs on players.player_id=player_runs.player_id;
-
-
+select * from players 
+left outer join 
+player_runs 
+on players.player_id=player_runs.player_id;
 
 
 11 Multi Insert:
@@ -128,25 +142,31 @@ INSERT OVERWRITE DIRECTORY '/output/yearly_runs'
 
 
 
-12 Partioning + Distribute:
-============================
-
+12 Partioning + Distribute: (Dynamic Partitioning)
+====================================================
 
 CREATE EXTERNAL TABLE player_runs_distribute(player_id INT, year_of_play STRING, runs_scored INT, balls_played INT)
-COMMENT 'This is the staging player_runs table'  PARTITIONED BY(country STRING)  
-ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n'
+COMMENT 'This is the staging player_runs table'  
+PARTITIONED BY(country STRING)  
+ROW FORMAT DELIMITED 
+FIELDS TERMINATED BY ',' 
+LINES TERMINATED BY '\n'
 STORED AS TEXTFILE
 LOCATION '/input/runs_distribute/';
 
+
 set hive.exec.dynamic.partition=true;
 set hive.exec.dynamic.partition.mode=nonstrict;
+
 FROM player_runs 
-INSERT OVERWRITE TABLE player_runs_distribute PARTITION(country)
+INSERT OVERWRITE TABLE player_runs_distribute 
+PARTITION(country)
 SELECT player_id,  year_of_play , runs_scored , balls_played, country 
 DISTRIBUTE BY  country;
 
 
 select * from player_runs_distribute where country='India' limit 10;
+
 
 13 Partioning + Bucketing:
 ============================
