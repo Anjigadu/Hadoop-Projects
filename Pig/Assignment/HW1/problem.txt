@@ -19,3 +19,5 @@ Problem Statement:
 
 
 2. Write a UDF function which takes date as input in format “1993-01-05” and output in format 5 Jan, 1993.
+
+3. Write a UDF filter function which takes four input stock_price_open, stock_price_high, stock_price_low, stock_price_close and filter records which have stock_price_open greater than stock_price_high and stock_price_close is greater than stock_price_low.
