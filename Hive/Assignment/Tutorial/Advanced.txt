@@ -20,22 +20,22 @@ LOCATION
 
   LOAD DATA LOCAL INPATH "data/runs_opposition.csv" INTO TABLE player_opposition_runs;
 
-  Grouping Set: 
-----------------------------------------
+Grouping Set: 
+=================
 
 SELECT player_id, year_of_play, SUM(runs_scored) FROM player_opposition_runs GROUP BY player_id, year_of_play GROUPING SETS ( (player_id, year_of_play) , (player_id));
   
 SELECT player_id, year_of_play, country, SUM(runs_scored) FROM player_opposition_runs GROUP BY player_id, year_of_play, country GROUPING SETS ( (player_id, year_of_play, country) , (player_id, country), (player_id));
 
 
-  Cube:
-  --------------------------------------
+Cube:
+======
 
 SELECT player_id, year_of_play, SUM(runs_scored) FROM player_opposition_runs GROUP BY player_id, year_of_play with CUBE;
 
 
 Rollup
------------------------------------------
+=========
  SELECT player_id, year_of_play, country, SUM(runs_scored) FROM player_opposition_runs GROUP BY player_id, year_of_play, country with rollup;
 
 
