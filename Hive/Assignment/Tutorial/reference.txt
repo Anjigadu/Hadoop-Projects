@@ -55,7 +55,8 @@ LOCATION '/input/runs';
 hadoop dfs -mkdir /input/runs/country=USA
 hadoop dfs -put data/runs_India.csv /input/runs/country=USA/
 
-ALTER TABLE player_runs_p ADD PARTITION(country='India');
+ALTER TABLE player_runs_p 
+ADD PARTITION(country='India');
 
 
 7. Loading data into Table
