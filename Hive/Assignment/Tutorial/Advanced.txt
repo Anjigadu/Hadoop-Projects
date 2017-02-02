@@ -15,7 +15,8 @@ STORED AS INPUTFORMAT 'org.apache.hadoop.mapred.TextInputFormat'
 OUTPUTFORMAT 'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat'
 LOCATION '/input/runs_opposition';
 
-LOAD DATA LOCAL INPATH "data/runs_opposition.csv" INTO TABLE player_opposition_runs;
+LOAD DATA LOCAL INPATH "data/runs_opposition.csv" 
+INTO TABLE player_opposition_runs;
 
 1. Grouping Set: 
 ===========================================================================================================================
@@ -46,14 +47,18 @@ GROUP BY player_id, year_of_play with CUBE;
  GROUP BY player_id, year_of_play, country with rollup;
 
 
-
-----------------------------------------------------------
+4. Querying JSON records via Hive
+============================================================================================================================
 CREATE TABLE json_table ( json string );
 
-LOAD DATA LOCAL INPATH  'data/simple.json' INTO TABLE json_table;
+LOAD DATA LOCAL INPATH  'data/simple.json' 
+INTO TABLE json_table;
 
+# Built in function #1: get_json_object
+The get_json_object takes two arguments: tablename.fieldname and the JSON field to parse, where '$' represents the root of the document.
 
-select get_json_object(json_table.json, '$') from json_table; 
+select get_json_object(json_table.json, '$') 
+from json_table; 
 
 set hive.cli.print.header=true;
 select get_json_object(json_table.json, '$.Foo') as foo, 
