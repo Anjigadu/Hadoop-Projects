@@ -21,3 +21,15 @@ Problem Statement:
 2. Write a UDF function which takes date as input in format “1993-01-05” and output in format 5 Jan, 1993.
 
 3. Write a UDF filter function which takes four input stock_price_open, stock_price_high, stock_price_low, stock_price_close and filter records which have stock_price_open greater than stock_price_high and stock_price_close is greater than stock_price_low.
+
+nydailyprices = LOAD '/input/NASDAQ_daily_prices_A.csv' using PigStorage(',') AS (exchange:chararray,stock_symbol:chararray,date:chararray,stock_price_open:float,stock_price_high:float,stock_price_low:float,stock_price_close:float,stock_volume:float,stock_price_adj_close:float);
+
+volume_records = foreach nydailyprices generate stock_symbol, stock_volume;
+
+group_result = group volume_records by stock_symbol ;
+
+grouped_volume_records = foreach group_result generate group , SUM(volume_records.stock_volume) as volume;
+
+ordered_records = order grouped_volume_records by volume desc;
+
+limit_result = limit ordered_records 5;
