@@ -1,0 +1,16 @@
+Data Sets:
+NASDAQ Exchange Daily 1970-2010 Open, Close, High, Low and Volume
+Download Link : https://github.com/thebigjc/HackReduce/tree/master/datasets/nyse 
+
+Summary of data : There are two types of data
+a) File name starting with NASDAQ_daily_prices*: These files is a CSV (comma seperated values) file which contains following fields which are self explanatory.
+
+exchange,stock_symbol,date,stock_price_open,stock_price_high,stock_price_low,stock_price _close,stock_volume,stock_price_adj_close
+
+Sample Data Set:
+exchange,stock_symbol,date,stock_price_open,stock_price_high,stock_price_low,
+stock_price_close,stock_volume,stock_price_adj_close
+
+NASDAQ,ABXA,2009-12-09,2.55,2.77,2.50,2.67,158500,2.67 NASDAQ,ABXA,2009-12-08,2.71,2.74,2.52,2.55,131700,2.55 NASDAQ,ABXA,2009-12-07,2.65,2.76,2.65,2.71,174200,2.71 NASDAQ,ABXA,2009-12-04,2.63,2.66,2.53,2.65,230900,2.65
+
+Problem Statement: Write a pig script to find top 10 stocks as per total volume of the stock.
