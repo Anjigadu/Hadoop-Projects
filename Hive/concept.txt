@@ -59,6 +59,18 @@ Hive uses the columns in Distribute By to distribute the rows among reducers. Al
 (4) CLUSTER BY
 Cluster By is a short-cut for both Distribute By and Sort By.
 
+[Difference Between CLUSTER BY and DISTRIBUTE BY]
+Instead of specifying Cluster By, the user can specify Distribute By and Sort By, so the partition columns and sort columns can be different. The usual case is that the partition columns are a prefix of sort columns, but that is not required.
+
+SELECT col1, col2 FROM t1 CLUSTER BY col1
+
+SELECT col1, col2 FROM t1 DISTRIBUTE BY col1
+ 
+SELECT col1, col2 FROM t1 DISTRIBUTE BY col1 SORT BY col1 ASC, col2 DESC
+
+
+
+
 
 
 
