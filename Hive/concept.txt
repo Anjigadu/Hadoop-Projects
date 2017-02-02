@@ -36,3 +36,30 @@ GROUP BY a, b, c GROUPING SETS ( (a, b, c), (a, b), (b, c), (a, c), (a), (b), (c
 ROLLUP clause is used with GROUP BY to compute the aggregate at the hierarchy levels of a dimension
 GROUP BY a, b, c with ROLLUP assumes that the hierarchy is "a" drilling down to "b" drilling down to "c"
 GROUP BY a, b, c, WITH ROLLUP is equivalent to GROUP BY a, b, c GROUPING SETS ( (a, b, c), (a, b), (a), ( ))
+
+## ORDER BY, SORT BY, CLUSTER BY, and DISTRIBUTE BY
+(1) ORDER BY
+The default sorting order is ascending (ASC).
+Default null sorting order for ASC order is NULL FIRST, while default null sorting order for DESC order is NULL LAST.
+
+The limit clause is not necessary if you set hive.mapred.mode to nonstrict. 
+hive.mapred.mode = nostrict
+
+(2) SORT BY
+Hive supports SORT BY which sorts the data per reducer. 
+The difference between "order by" and "sort by" is that the former guarantees total order in the output while the latter only guarantees ordering of the rows within a reducer. 
+If there are more than one reducer, "sort by" may give partially ordered final results.
+
+(3) DISTRIBUTE BY
+Cluster By and Distribute By are used mainly with the Transform/Map-Reduce Scripts. 
+It is sometimes useful in SELECT statements if there is a need to partition and sort the output of a query for subsequent queries.
+
+Hive uses the columns in Distribute By to distribute the rows among reducers. All rows with the same Distribute By columns will go to the same reducer. However, Distribute By does not guarantee clustering or sorting properties on the distributed keys.
+
+(4) CLUSTER BY
+Cluster By is a short-cut for both Distribute By and Sort By.
+
+
+
+
+
