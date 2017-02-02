@@ -62,6 +62,7 @@ group by stock_symbol;
 
 Question 6:Find out highest price and highesh dividends for each stock symbol if highest price and highest dividends exist. 
 ---------------------------------------------------------------------------------------------------------------------------
+
 select np.stock_symbol, highest_price, highest_dividends 
 from 
 ( select stock_symbol, max(stock_price_close) as highest_price 
@@ -69,13 +70,22 @@ from
   group by stock_symbol) np 
 join 
 ( select stock_symbol, max(dividends) as highest_dividends 
-  from nasdaq_dividend group by stock_symbol)  nd 
+  from nasdaq_dividend 
+  group by stock_symbol)  nd 
 on np.stock_symbol = nd.stock_symbol; 
 
 
 Question 7_new: Find out highest price and highest dividends for each stock symbol, if one of them does not exist then keep Null values.
 ----------------------------------------------------------------------------------------------------------------------------
-select np.stock_symbol, highest_price, highest_dividends from (select stock_symbol, max(stock_price_close) as highest_price from nasdaq_prices group by stock_symbol)  np full outer join (select stock_symbol, max(dividends) as highest_dividends from nasdaq_dividend group by stock_symbol) nd on np.stock_symbol = nd.stock_symbol;
+select np.stock_symbol, highest_price, highest_dividends 
+from 
+( select stock_symbol, max(stock_price_close) as highest_price 
+  from nasdaq_prices group by stock_symbol)  np 
+full outer join 
+( select stock_symbol, max(dividends) as highest_dividends 
+  from nasdaq_dividend 
+  group by stock_symbol) nd 
+on np.stock_symbol = nd.stock_symbol;
 
 
 
