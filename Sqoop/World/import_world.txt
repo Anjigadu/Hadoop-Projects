@@ -32,6 +32,9 @@ sqoop-list-databases --connect jdbc:mysql://quickstart.cloudera:3306 --username 
 sqoop-list-databases --connect jdbc:mysql://localhost:3306 --username root --password cloudera
 sqoop-list-tables --connect jdbc:mysql://localhost:3306/world --username root --password cloudera
 
+sqoop eval --help
+sqoop-eval --query "show tables" --connect jdbc:mysql://localhost:3306/world --username root --password cloudera
+sqoop-eval --query "select * from mysql.user" --connect jdbc:mysql://localhost:3306 --username root --password cloudera
 ## Sqoop: World database
 ## =========================================================================================================================
 
