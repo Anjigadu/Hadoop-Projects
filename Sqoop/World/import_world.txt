@@ -16,11 +16,19 @@ select count(1) from country;
 select count(1) from countrylanguage ;
 
 [Create src/desc location]
-/user/cloudera/rawdata/hadoop/desc/
-/user/cloudera/ouput/hadoop/desc/
+# create a folder rawdata/hadoop/dec in the cloudera hdfs home directory
+# this is where all downloaded files are stored 
+hdfs dfs -mkdir -p /user/cloudera/rawdata/hadoop/dec/
+# this is where all output of application are stored
+hdfs dfs -mkdir -p /user/cloudera/ouput/hadoop/dec/
 
+hdfs dfs -rm -r rawdata -skipTrash
 
+hdfs dfs -expunge
 
+[Sqoop]
+sqoop version
+sqoop-list-databases --connect jdbc:mysql://quickstart.cloudera:3306 --username root --password cloudera
 
 ## Sqoop: World database
 ## ===============
