@@ -54,7 +54,7 @@ CREATE TABLE json_table ( json string );
 LOAD DATA LOCAL INPATH  'data/simple.json' 
 INTO TABLE json_table;
 
-# Built in function #1: get_json_object
+## Built in function 1: get_json_object
 The get_json_object takes two arguments: tablename.fieldname and the JSON field to parse, 
 where '$' represents the root of the document.
 
@@ -62,6 +62,7 @@ select get_json_object(json_table.json, '$')
 from json_table; 
 
 set hive.cli.print.header=true;
+
 select get_json_object(json_table.json, '$.Foo') as foo, 
        get_json_object(json_table.json, '$.Bar') as bar,
        get_json_object(json_table.json, '$.Quux.QuuxId') as qid,
@@ -69,19 +70,46 @@ select get_json_object(json_table.json, '$.Foo') as foo,
 from json_table;
 
 
-single parse
+-- get the output:
+
+foo    bar              qid     qname
+ABC    20090101100000   1234    Sam
+
+## Built in function 2: json_tuple
+It has the benefit of being able to pass in multiple fields, but it only works to a single level deep. You also need to use Hive's slightly odd LATERAL VIEW notation:
+
+[Single Parse]
 select v.foo, v.bar, v.quux, v.qid 
 from json_table jt
-     LATERAL VIEW json_tuple(jt.json, 'Foo', 'Bar', 'Quux', 'Quux.QuuxId') v
-     as foo, bar, quux, qid;
+LATERAL VIEW
+json_tuple(jt.json,'FOO','BAR','Quux','Quux.QuuxId') v as foo,bar,quux,qid;
 
+-- Output:
+foo  bar             quux                              qid
+ABC  20090101100000  {"QuuxId":1234,"QuuxName":"Sam"}  NULL
+
+==========================================================================================================================
+[EXAMPLE]
+# https://cwiki.apache.org/confluence/display/Hive/LanguageManual+LateralView
+
+SELECT pageid, adid
+FROM pageAds 
+LATERAL VIEW 
+explode(adid_list) adTable AS adid;  # A lateral view with explode() can be used to convert adid_list into separate rows 
+
+SELECT adid, count(1)
+FROM pageAds 
+LATERAL VIEW 
+explode(adid_list) adTable AS adid
+GROUP BY adid;
+===========================================================================================================================
 
 select v1.foo, v1.bar, v2.qid, v2.qname 
 from json_table jt
-     LATERAL VIEW json_tuple(jt.json, 'Foo', 'Bar', 'Quux') v1
-     as foo, bar, quux
-     LATERAL VIEW json_tuple(v1.quux, 'QuuxId', 'QuuxName') v2
-     as qid, qname;
+LATERAL VIEW json_tuple(jt.json, 'Foo', 'Bar', 'Quux') v1 as foo, bar, quux
+LATERAL VIEW json_tuple(v1.quux, 'QuuxId', 'QuuxName') v2 as qid, qname;
+
+
 ==================with serde -  Serde JSON:
 
 
