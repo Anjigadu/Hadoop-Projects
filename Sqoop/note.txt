@@ -1,0 +1,22 @@
+#
+Sqoop: SQL to Hadoop ---> import
+       Hadoop to SQL ---> export
+       
+Check sales vs. online experience
+                existing customer
+#
+sales/ecommerce: MYSQL, Microsoft SQL server, PostgreSQL, Oracle, db2, sybase  (SQOOP)
+clickstream: log files (FLUME)
+
+#
+JDBC
+     how does Sqoop work?
+         [IMPORT]
+                 JDBC- import: select statements
+                       export: insert/update statements
+                 MapReduce- multiple paraeel map task
+                            map
+                            reduce
+                 Write files to HDFS
+  
+              
