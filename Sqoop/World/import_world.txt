@@ -1,3 +1,27 @@
+[Linux]
+wget http://downloads.mysql.com/docs/world.sql.zip
+unzip world.sql.zip
+
+[MYSQL]
+mysql -u root -p cloudera
+source world.sql
+
+create user 'yuanhsin'@'localhost' identified by 'password';
+
+show databases;
+show schemas;
+
+select count(1) from city;
+select count(1) from country;
+select count(1) from countrylanguage ;
+
+[Create src/desc location]
+/user/cloudera/rawdata/hadoop/desc/
+/user/cloudera/ouput/hadoop/desc/
+
+
+
+
 ## Sqoop: World database
 ## ===============
 
