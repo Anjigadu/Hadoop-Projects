@@ -13,10 +13,14 @@ JDBC
      how does Sqoop work?
          [IMPORT]
                  JDBC- import: select statements
-                       export: insert/update statements
+                       
                  MapReduce- multiple paraeel map task
                             map
                             reduce
                  Write files to HDFS
-  
-              
+         [EXPORT]
+                 Read files from HDFS
+                 MapReduce- multiple paraeel map task
+                            map
+                            reduce
+                 JDBC- export: insert/update statements         
