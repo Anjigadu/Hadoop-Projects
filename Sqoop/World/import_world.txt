@@ -30,6 +30,7 @@ hdfs dfs -expunge
 sqoop version
 sqoop-list-databases --connect jdbc:mysql://quickstart.cloudera:3306 --username root --password cloudera
 sqoop-list-databases --connect jdbc:mysql://localhost:3306 --username root --password cloudera
+sqoop-list-tables --connect jdbc:mysql://localhost:3306/world --username root --password cloudera
 
 ## Sqoop: World database
 ## =========================================================================================================================
