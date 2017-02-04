@@ -64,13 +64,19 @@ ImportJobBase: Retrieved 4079 records
 sqoop-import --connect jdbc:mysql://localhost:3306/world --username root --password cloudera
 --target-dir /user/cloudera/output/hadoop/sqoop/city_singlemap --table city --num-mappers 1
 
-## import a table with defaults with a single mapper and with tab-delimited records
-sqoop-import --connect jdbc:mysql://quickstart:3306/world --username root --target-dir /user/cloudera/output/handson_train/sqoop/city_singlemap_tabdelimited -table city --num-mappers 1 --fields-terminated-by '\t' -P
+## (3) import a table with defaults with a single mapper and with tab-delimited records
+sqoop-import --connect jdbc:mysql://quickstart:3306/world --username root --target-dir /user/cloudera/output/hadoop/sqoop/city_singlemap_tabdelimited --table city --num-mappers 1 --fields-terminated-by '\t' -P
 
 
-
-
-
+sqoop-import 
+--connect jdbs:mysql://quickstart.cloudera:3306/world 
+--username root 
+--password cloudera
+--target-dir /user/cloudera/output/hadoop/sqoop/city_singlemap_tabdelimited
+--table city
+--num-mappers 1
+--fields-terminated-by '\t'
+-P
 
 ##-- Import table with different format (parquet file) into a single file
 sqoop-import --connect jdbc:mysql://quickstart:3306/world --username root --target-dir /user/cloudera/output/handson_train/sqoop/city_singlemap_parquet --table city --as-parquetfile --mapreduce-job-name SqoopJobParquet -m 1 -P 
