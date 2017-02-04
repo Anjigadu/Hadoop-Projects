@@ -27,26 +27,30 @@ hdfs dfs -rm -r rawdata -skipTrash
 hdfs dfs -expunge
 
 [Sqoop]
-sqoop-version
+
 sqoop-list-databases --connect jdbc:mysql://quickstart.cloudera:3306 --username root --password cloudera
 sqoop-list-databases --connect jdbc:mysql://localhost:3306 --username root --password cloudera
 sqoop-list-tables --connect jdbc:mysql://localhost:3306/world --username root --password cloudera
 
-sqoop-eval --help
-sqoop-eval --query "show tables" --connect jdbc:mysql://localhost:3306/world --username root --password cloudera
-sqoop-eval --query "select * from mysql.user" --connect jdbc:mysql://localhost:3306 --username root --password cloudera
 
-sqoop-import --help
-sqoop-import --connect jdbc:mysql://quickstart.cloudera:3306/world --username root --password cloudera -target-dir /user/cloudera/output/hadoop/sqoop/country -table country
+
+
 
 ## Sqoop: World database
 ## =========================================================================================================================
+## sqoop version
+sqoop-version
 
-## the compulsory generic argument for sqoop
-sqoop  --connect jdbc:mysql://quickstart:3306/world --username root -P
+## Help
+sqoop-import --help
 
 ##--sqoop evaluate
-sqoop-eval -e "show databases"  --connect jdbc:mysql://quickstart:3306/world --username root -P
+sqoop-eval --help
+
+sqoop-eval --query "show tables" --connect jdbc:mysql://localhost:3306/world --username root --password cloudera
+sqoop-eval --query "select * from mysql.user" --connect jdbc:mysql://localhost:3306 --username root --password cloudera
+
+sqoop-eval --e "show databases"  --connect jdbc:mysql://quickstart:3306/world --username root -P
 
 ##-- list tables in the particular database
 sqoop-list-tables --connect jdbc:mysql://quickstart:3306/world --username root -P
@@ -56,19 +60,23 @@ sqoop-list-databases --connect jdbc:mysql://quickstart:3306/world --username roo
 
 ## import a table with defaults
 sqoop-import --connect jdbc:mysql://quickstart:3306/world --username root --password cloudera -target-dir /user/cloudera/output/hadoop/sqoop/city -table city 
+
+sqoop-import --connect jdbc:mysql://quickstart.cloudera:3306/world --username root --password cloudera -target-dir /user/cloudera/output/hadoop/sqoop/country -table country
+
 [Output]
 ImportJobBase: Retrieved 4079 records
 
 ## import a table with defaults with a single mapper
-sqoop-import --connect jdbc:mysql://quickstart:3306/world --username root --target-dir /user/cloudera/output/hadoop/sqoop/city_singlemap -table city --password cloudera --num-mappers 1
-
-sqoop-import --connect jdbc:mysql://quickstart:3306/world --username 
-
-
-
+sqoop-import --connect jdbc:mysql://localhost:3306/world --username root --password cloudera
+--target-dir /user/cloudera/output/hadoop/sqoop/city_singlemap --table city --num-mappers 1
 
 ## import a table with defaults with a single mapper and with tab-delimited records
 sqoop-import --connect jdbc:mysql://quickstart:3306/world --username root --target-dir /user/cloudera/output/handson_train/sqoop/city_singlemap_tabdelimited -table city --num-mappers 1 --fields-terminated-by '\t' -P
+
+
+
+
+
 
 ##-- Import table with different format (parquet file) into a single file
 sqoop-import --connect jdbc:mysql://quickstart:3306/world --username root --target-dir /user/cloudera/output/handson_train/sqoop/city_singlemap_parquet --table city --as-parquetfile --mapreduce-job-name SqoopJobParquet -m 1 -P 
