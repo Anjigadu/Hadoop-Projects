@@ -26,16 +26,6 @@ hdfs dfs -rm -r rawdata -skipTrash
 
 hdfs dfs -expunge
 
-[Sqoop]
-
-sqoop-list-databases --connect jdbc:mysql://quickstart.cloudera:3306 --username root --password cloudera
-sqoop-list-databases --connect jdbc:mysql://localhost:3306 --username root --password cloudera
-sqoop-list-tables --connect jdbc:mysql://localhost:3306/world --username root --password cloudera
-
-
-
-
-
 ## Sqoop: World database
 ## =========================================================================================================================
 ## sqoop version
@@ -54,9 +44,12 @@ sqoop-eval --e "show databases"  --connect jdbc:mysql://quickstart:3306/world --
 
 ##-- list tables in the particular database
 sqoop-list-tables --connect jdbc:mysql://quickstart:3306/world --username root -P
+sqoop-list-tables --connect jdbc:mysql://localhost:3306/world --username root --password cloudera
 
 ##-- list dabases in the server
 sqoop-list-databases --connect jdbc:mysql://quickstart:3306/world --username root -P
+sqoop-list-databases --connect jdbc:mysql://quickstart.cloudera:3306 --username root --password cloudera
+sqoop-list-databases --connect jdbc:mysql://localhost:3306 --username root --password cloudera
 
 ## import a table with defaults
 sqoop-import --connect jdbc:mysql://quickstart:3306/world --username root --password cloudera -target-dir /user/cloudera/output/hadoop/sqoop/city -table city 
