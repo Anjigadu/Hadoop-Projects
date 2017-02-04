@@ -28,13 +28,13 @@ hdfs dfs -expunge
 
 ## Sqoop: World database
 ## =========================================================================================================================
-## sqoop version
+## 1. sqoop version
 sqoop-version
 
-## Help
+## 2. Help
 sqoop-import --help
 
-##--sqoop evaluate
+## 3. sqoop evaluate
 sqoop-eval --help
 
 sqoop-eval --query "show tables" --connect jdbc:mysql://localhost:3306/world --username root --password cloudera
@@ -42,16 +42,17 @@ sqoop-eval --query "select * from mysql.user" --connect jdbc:mysql://localhost:3
 
 sqoop-eval --e "show databases"  --connect jdbc:mysql://quickstart:3306/world --username root -P
 
-##-- list tables in the particular database
-sqoop-list-tables --connect jdbc:mysql://quickstart:3306/world --username root -P
-sqoop-list-tables --connect jdbc:mysql://localhost:3306/world --username root --password cloudera
-
-##-- list dabases in the server
+## 4. list dabases in the server
 sqoop-list-databases --connect jdbc:mysql://quickstart:3306/world --username root -P
 sqoop-list-databases --connect jdbc:mysql://quickstart.cloudera:3306 --username root --password cloudera
 sqoop-list-databases --connect jdbc:mysql://localhost:3306 --username root --password cloudera
 
-## import a table with defaults
+## 5. list tables in the particular database
+sqoop-list-tables --connect jdbc:mysql://quickstart:3306/world --username root -P
+sqoop-list-tables --connect jdbc:mysql://localhost:3306/world --username root --password cloudera
+
+## 6. 
+## (1) import a table with defaults
 sqoop-import --connect jdbc:mysql://quickstart:3306/world --username root --password cloudera -target-dir /user/cloudera/output/hadoop/sqoop/city -table city 
 
 sqoop-import --connect jdbc:mysql://quickstart.cloudera:3306/world --username root --password cloudera -target-dir /user/cloudera/output/hadoop/sqoop/country -table country
@@ -59,7 +60,7 @@ sqoop-import --connect jdbc:mysql://quickstart.cloudera:3306/world --username ro
 [Output]
 ImportJobBase: Retrieved 4079 records
 
-## import a table with defaults with a single mapper
+## (2) import a table with defaults " with a single mapper "
 sqoop-import --connect jdbc:mysql://localhost:3306/world --username root --password cloudera
 --target-dir /user/cloudera/output/hadoop/sqoop/city_singlemap --table city --num-mappers 1
 
