@@ -27,14 +27,18 @@ hdfs dfs -rm -r rawdata -skipTrash
 hdfs dfs -expunge
 
 [Sqoop]
-sqoop version
+sqoop-version
 sqoop-list-databases --connect jdbc:mysql://quickstart.cloudera:3306 --username root --password cloudera
 sqoop-list-databases --connect jdbc:mysql://localhost:3306 --username root --password cloudera
 sqoop-list-tables --connect jdbc:mysql://localhost:3306/world --username root --password cloudera
 
-sqoop eval --help
+sqoop-eval --help
 sqoop-eval --query "show tables" --connect jdbc:mysql://localhost:3306/world --username root --password cloudera
 sqoop-eval --query "select * from mysql.user" --connect jdbc:mysql://localhost:3306 --username root --password cloudera
+
+sqoop-import --help
+sqoop-import --connect jdbc:mysql://quickstart.cloudera:3306/world --username root --password cloudera -target-dir /user/cloudera/output/hadoop/sqoop/country -table country
+
 ## Sqoop: World database
 ## =========================================================================================================================
 
@@ -51,10 +55,17 @@ sqoop-list-tables --connect jdbc:mysql://quickstart:3306/world --username root -
 sqoop-list-databases --connect jdbc:mysql://quickstart:3306/world --username root -P
 
 ## import a table with defaults
-sqoop-import --connect jdbc:mysql://quickstart:3306/world --username root --target-dir /user/cloudera/output/handson_train/sqoop/city -table city --password cloudera
+sqoop-import --connect jdbc:mysql://quickstart:3306/world --username root --password cloudera -target-dir /user/cloudera/output/hadoop/sqoop/city -table city 
+[Output]
+ImportJobBase: Retrieved 4079 records
 
 ## import a table with defaults with a single mapper
-sqoop-import --connect jdbc:mysql://quickstart:3306/world --username root --target-dir /user/cloudera/output/handson_train/sqoop/city_singlemap -table city --password cloudera --num-mappers 1
+sqoop-import --connect jdbc:mysql://quickstart:3306/world --username root --target-dir /user/cloudera/output/hadoop/sqoop/city_singlemap -table city --password cloudera --num-mappers 1
+
+sqoop-import --connect jdbc:mysql://quickstart:3306/world --username 
+
+
+
 
 ## import a table with defaults with a single mapper and with tab-delimited records
 sqoop-import --connect jdbc:mysql://quickstart:3306/world --username root --target-dir /user/cloudera/output/handson_train/sqoop/city_singlemap_tabdelimited -table city --num-mappers 1 --fields-terminated-by '\t' -P
