@@ -2,15 +2,23 @@ The entire goal of investing in a data infrastructure is to improve the edge of 
 
 In this hackerday, we are going to be designing a data warehouse for a retail shop. 
 The design and implementation, however, we focus on answering some specific questions that are related to price optimization 
-and inventory allocation. The two question we will be looking to answer in this project include:
+and inventory allocation. 
 
-Were the higher priced items selling in certain markets?
-should inventory be re-allocated or price optimized based upon geography?
+The two question we will be looking to answer in this project include:
+1. Were the higher priced items selling in certain markets?
+2. should inventory be re-allocated or price optimized based upon geography?
 
 We will recognize the entire purpose of answer these questions with data is to boost overall bottom line for the business 
 while improving the experience for the shoppers
 
 
-Prerequisite
+# Prerequisite
 It is expected that students have a fair knowledge of Big Data and Hadoop particularly HDFS, Pig/Spark, Hive and Impala.
 Installation Cloudera Quickstart VM
+
+
+## 
+etl sqoop
+processing spark
+query hive/impala
+automate oozie
