@@ -1,0 +1,10 @@
+sqoop-export
+--connect jdbc:mysql://quickstart:3306/hadoop_sqoop
+--username root
+--export-dir /user/cloudera/rawdata/hadoop/film_data
+--table film
+--fields-terminated-by ',' 
+--columns actor,film_year,film_type
+--mapreduce-job-name SQOOP_JOB_FOR_FILM
+-P
+
