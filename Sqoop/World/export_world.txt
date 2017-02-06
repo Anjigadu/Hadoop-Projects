@@ -1,12 +1,8 @@
 ## Export tables
 
-sqoop-export 
---connect jdbc:mysql://quickstart:3306/handson_class 
---username root 
---export-dir /user/cloudera/rawdata/hadoop/nyse  
---table nyse_dividends 
---fields-terminated-by ',' 
--P
+(1)
+
+hdfs dfs -mkdir -p /user/cloudera/rawdata/hadoop/nyse
 
 sqoop-export
 --connect jdbc:mysql://quickstart:3306/hadoop_sqoop
@@ -16,11 +12,15 @@ sqoop-export
 --fields-terminated-by ','
 -P
 
+(2)
+sqoop-export
+--connect jdbc:mysql://quickstart:3306/hadoop_sqoop
+--username root
+--export-dir /user/cloudera/rawdata/hadoop/nyse
+--table altered_nyse_dividends 
+--fields-terminated-by ',' 
+--columns exchange,stock_symbol,datestring,value 
+--mapreduce-job-name SQOOP_JOB_FOR_ALTERED_NYSE_DIV_MICHAEL 
+-P
 
 
-
-
-
-
-
-sqoop-export --connect jdbc:mysql://quickstart:3306/handson_class --username root --export-dir /user/cloudera/rawdata/handson_train/nyse  --table altered_nyse_dividends --fields-terminated-by ',' --columns exchange,stock_symbol,datestring,value --mapreduce-job-name SQOOP_JOB_FOR_ALTERED_NYSE_DIV_MICHAEL -P
