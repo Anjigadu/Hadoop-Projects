@@ -20,7 +20,7 @@ sqoop-export
 --table altered_nyse_dividends 
 --fields-terminated-by ',' 
 --columns exchange,stock_symbol,datestring,value 
---mapreduce-job-name SQOOP_JOB_FOR_ALTERED_NYSE_DIV_MICHAEL 
+--mapreduce-job-name SQOOP_JOB_FOR_ALTERED_NYSE_DIV
 -P
 
 
