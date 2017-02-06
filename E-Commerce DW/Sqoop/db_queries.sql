@@ -78,3 +78,7 @@ ON cus.TerritoryID = t.TerritoryID;
 
 
 -- mysql -u root -p < sqoop/db_queries.sql
+
+--[MySQL]
+-- desc v_salesorderheader;
+-- select distinct store from v_salesorderheader;
