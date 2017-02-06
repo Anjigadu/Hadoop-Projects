@@ -1,1 +1,2 @@
-mysql -u root -p < dataset/databasescript/AWBackup.sql
+mysql -u root -p < dataset/AWBackup.sql
+
