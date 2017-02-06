@@ -38,13 +38,17 @@ sqoop-import \
 
 
 ## Import all films from sakila db to hdfs compressing the output " using bzip2 code "
-sqoop-import --connect jdbc:mysql://quickstart:3306/sakila --username root \
---table v_film --target-dir /user/cloudera/output/hadoop/sqoop/sakila/film_bzip  --compress \
---compression-codec bzip2 -m 1 --split-by film_id -P
 
 sqoop-import
-
-
+--connect jdbc:mysql://quickstart:3306/sakila
+--username root
+--table v_film
+--target-dir /user/cloudera/output/hadoop/sqoop/sakila/film_bzip
+--compress
+--compression-codec bzip2
+-m 1
+--split by film_id
+-P
 
 
 
