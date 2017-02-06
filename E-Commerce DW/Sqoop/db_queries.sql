@@ -75,3 +75,6 @@ JOIN contact con
 ON sc.ContactID = con.ContactID 
 JOIN salesterritory t 
 ON cus.TerritoryID = t.TerritoryID;
+
+
+-- mysql -u root -p < sqoop/db_queries.sql
