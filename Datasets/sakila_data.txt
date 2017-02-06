@@ -11,3 +11,4 @@ mysql -u root -p cloudera
 # inside the mysql client shell, execute both commands
 source sakila-db/sakila-schema.sql
 source sakila-db/sakila-data.sql
+
