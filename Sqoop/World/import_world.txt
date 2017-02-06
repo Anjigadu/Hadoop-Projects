@@ -75,10 +75,26 @@ sqoop-import
 -P
 
 ## (4) Import table with different format (parquet file) into a single file
-sqoop-import --connect jdbc:mysql://quickstart:3306/world --username root --target-dir /user/cloudera/output/handson_train/sqoop/city_singlemap_parquet --table city --as-parquetfile --mapreduce-job-name SqoopJobParquet -m 1 -P 
+sqoop-import 
+--connect jdbc:mysql://quickstart:3306/world 
+--username root 
+--target-dir /user/cloudera/output/hadoop/sqoop/city_singlemap_parquet 
+--table city 
+--as-parquetfile 
+--mapreduce-job-name SqoopJobParquet 
+-m 1 
+-P 
 
 ## (5) Import table with different format (avro file) into a single file
-sqoop-import --connect jdbc:mysql://quickstart:3306/world --username root --target-dir /user/cloudera/output/handson_train/sqoop/city_singlemap_avro --table city --as-avrofile --mapreduce-job-name SqoopJobParquet -m 1 -P 
+sqoop-import 
+--connect jdbc:mysql://quickstart:3306/world 
+--username root 
+--target-dir /user/cloudera/output/handson_train/sqoop/city_singlemap_avro 
+--table city 
+--as-avrofile 
+--mapreduce-job-name SqoopJobParquet 
+-m 1 
+-P 
 
 ## (6) Import table with where clause and text file with nondefault format (a text file delimited by \u001)
 sqoop-import --connect jdbc:mysql://quickstart:3306/world --username root --target-dir /user/cloudera/output/handson_train/sqoop/city_uscan --table city --mapreduce-job-name SqoopJobWhere.MARKETING.C52093452 --where "CountryCode = 'USA' or CountryCode = 'CAN'" --fields-terminated-by '\0001'  -m 1 -P 
