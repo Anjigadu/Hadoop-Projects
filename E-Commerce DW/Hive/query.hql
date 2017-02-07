@@ -1,6 +1,13 @@
-select productid,discountpct,  minimum, maximum from (select productid, discountpct, min(unitprice) minimum, max(unitprice) maximum
-from salesorderdetails sod join salesorderheader soh on sod.salesorderid = soh.salesorderid
-group by productid, discountpct) v
-where minimum <> maximum
-order by 1
+SELECT productid,discountpct,minimum,maximum
+FROM (
+      SELECT productid, discountpct, min(unitprice) minimum, max(unitprice) maximum
+      FROM salesorderdetails sod
+      JOIN salesorderheader  soh
+      ON sod.salesorderid = soh.salesorderid
+      GROUP BY productid,discountpct
+      ) v
+WHERE minimum <> maximum
+ORDER BY 1;
+      
+
 
