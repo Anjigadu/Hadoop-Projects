@@ -17,3 +17,5 @@ create external table customer_demographics
 )
 stored as parquet
 location '/user/cloudera/bigretail/output/stores/spark/customer_demographics' 
+
+CREATE EXTERNAL TABLE customer_demographics
