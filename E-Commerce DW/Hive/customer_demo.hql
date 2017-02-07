@@ -1,5 +1,5 @@
 CREATE EXTERNAL TABLE customer_demographics
-(
+( 
   CustomerID int,
   TotalPurchaseYTD string,
   DateFirstPurchase string,
@@ -16,4 +16,4 @@ CREATE EXTERNAL TABLE customer_demographics
   CommuteDistance string
 )
 stored as parquet
-location '/user/cloudera/bigretail/output/stores/spark/customer_demographics'
+location '/user/cloudera/bigretail/output/stores/spark/customer_demographics';
