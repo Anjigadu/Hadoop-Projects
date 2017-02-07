@@ -39,10 +39,11 @@ sqoop-job
 
 # hdfs dfs -chmod 400 bigretail/passwordfile
 
-# sqoop-job --list
+# verify the saved jobs
+  sqoop-job --list
   [output]
-           loadcustomers
-           loadsalesorderheader
+          loadcustomers
+          loadsalesorderheader
 
 ## (3) Sqoop script to create a new job to load salesorderdetails data from rdbms to hdfs
 
@@ -82,6 +83,7 @@ sqoop-job --exec jobname
 
 sqoop-job --info loadproducts;
 
+# Inspect or verify particular jobs and their details
 sqoop-job --show loadproducts;
 
 
