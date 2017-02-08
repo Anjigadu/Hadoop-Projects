@@ -29,4 +29,4 @@ ggplot(offense, aes(x = year,fill=offense))
 + geom_point()
                      
                     
-    values=c(gg_color_hue(length(unique(dfr$group))),
+    
