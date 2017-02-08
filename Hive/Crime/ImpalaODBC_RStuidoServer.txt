@@ -1,0 +1,126 @@
+## Impala Execution
+1. use impala-shell which is part of the impala package and provides a command line interface. 
+2. use Hue (Cloduera’s Hadoop User Experience product) that is a web browser based UI offering a query editor 
+   among other functions that is capable of run queries against Pig, Hive or Impala.
+3. use ODBC driver and connect some of the well-known popular BI tools to Impala.
+
+## Cloudera provides connectors for some of the most popular leading analytics and data visualization tools 
+   such as Tableau, QlikView or Microstrategy. 
+   It can also offer a generic ODBC driver that can be used to connect various tools. 
+   This is the software component that we will use in the post to demonstrate how to integrate R with Cloudera Impala.
+   
+## Install R, RStudio Server, Impala ODBC and RODBC(R library)
+
+# Install EPEL package - EPEL stands for Extra package for Enterprise Linux
+$ sudo rpm -ivh http://mirror.chpc.utah.edu/pub/epel/5/x86_64/epel-release-5-4.noarch.rpm
+$ sudo yum install R
+
+# R comes with a command line interpreter or RStudio. 
+# RStudio has a desktop version as well as a web browser based alternative called RStudio Server. 
+
+# To install RStudio Server
+$ sudo yum install --nogpgcheck rstudio-server-0.97.551-x86_64.rpm
+
+# To ensure that Impala ODBC driver will work and RODBC package can be installed within R 
+# To install unixODBC and unixODBC-devel packages
+$ sudo yum install unixODBC
+$ sudo yum install unixODBC-devel
+
+# To install Cloudera Impala ODBC driver. 
+# To install Impala ODBC driver, you need to run the following command after downloading the driver (ClouderaImpalaODBC-2.5.5.1005-1.el6.x86_64.rpm)
+$ yum --nogpgcheck localinstall ClouderaImpalaODBC-2.5.5.1005-1.el6.x86_64.rpm
+
+# Impala ODBC driver requires a couple of files configured properly 
+(the driver package has templates files embedded that needs to be edited and copied to the correct directory). 
+The two key configuration files are odbc.init and cloudera.impalaodbc.ini.
+
+1. odbc.ini should look something like this:
+
+[Impala]
+# Description: DSN Description.
+# This key is not necessary and is only to give a description of the data source.
+Description=Cloudera ODBC Driver for Impala (64-bit) DSN
+
+# Driver: The location where the ODBC driver is installed to.
+Driver=/opt/cloudera/impalaodbc/lib/64/libclouderaimpalaodbc64.so
+
+# Values for HOST, PORT, KrbFQDN, and KrbServiceName should be set here.
+# They can also be specified on the connection string.
+HOST=localhost
+PORT=21050
+Database=default
+
+
+2. In cloudera.impalaodbc.ini configuration file we have the following settings:
+
+# SimbaDN / unixODBC
+ODBCInstLib=libodbcinst.so
+
+# To define the environment variables
+
+$ export LD_LIBRARY_PATH=/usr/local/lib:/opt/cloudera/impalaodbc/lib/64
+$ export ODBCINI=/etc/odbc.ini
+$ export SIMBADN=/etc/cloudera.impalaodbc.ini
+
+# To install RODBC package for R. 
+$ R
+>install.packages("RODBC")
+
+## Analyzing Hadoop datasets with R and Impala
+# To remove the first line (header) from the file and then load it into HDFS using Hadoop file system shell.
+
+$ hadoop fs -mkdir /user/cloudera/stock
+$ hadoop fs -put google.csv /user/cloudera/stock
+$ hadoop fs -ls /user/cloudera/stock
+
+
+# Impala has a SQL-like query language so you can use the familiar CREATE TABLE command. 
+# The external clause indicates that the physical data files are managed outside Impala; 
+  even if you drop the table, the files will be kept in the HDFS directory.
+
+# After the table is created, we can run SHOW TABLES statement to verify if the table is accessible from Impala. 
+$ impala-shell
+[localhost.localdomain:21000] > create external table stock (stock_date string, stock_open float, stock_high float, stock_low float, stock_close_ float, stock_volume int, stock_adjclose float) row format delimited fields terminated by ',' lines terminated by '\n' location '/user/cloudera/stock/';
+...
+[localhost.localdomain:21000] > show tables;
+
+[localhost.localdomain:21000] > select * from crime_incident limit 3;
+
+# To start R command line interpreter. 
+$ R
+> library("RODBC");
+> conn <- odbcConnect("Impala")
+> crime <- sqlQuery(conn, "select * from crime_incident limit 3")
+> crime
+  
+  
+# It can be run as a desktop application or via a web browser once installing RStudio Server.  
+  RStudio can be accessed via http://quickstart.cloudera:8787 
+
+# Before using RStudio from browser,it is necessary to set the following environment variables in .Renviron file in your home directory:
+$ cat .Renviron 
+LD_LIBRARY_PATH=/usr/local/lib:/opt/cloudera/impalaodbc/lib/64
+ODBCINI=/etc/odbc.ini
+SIMBAINI=/etc/cloudera.impalaodbc.ini
+
+# Login to RStudio and execute the R commands 
+- plot a graphical representation of your data set
+- the diagram illustrates a line chart for crime distribution from 2008 to 2016
+
+> library("RODBC");
+> conn <- odbcConnect("Impala")
+> offense <- sqlQuery(conn,"select substring(reportdatetime,1,4) year,offense,count(offense) frequency from crime_incident where substring(reportdatetime,1,4) between '2010' and '2016' group by substring(reportdatetime,1,4),offense")
+> offense
+
+(1) 
+> plot(offense$year, lwd="1", xlab="year", ylab="frequency")
+> lines(offense$frequency, lwd="2")
+> axis(1, offense$year, labels=crime$year)
+
+(2)
+> ggplot(offense, aes(x = year,linetype=offense)) 
+  + geom_line(aes(y=frequency)) 
+  + ylab(label="Number of Event Occurred") 
+  + xlab("year")
+  + geom_point(aes(y=frequency))
+
