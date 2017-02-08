@@ -1,0 +1,159 @@
+## Impala Execution
+1. use impala-shell which is part of the impala package and provides a command line interface. 
+2. use Hue (Cloduera’s Hadoop User Experience product) that is a web browser based UI offering a query editor 
+   among other functions that is capable of run queries against Pig, Hive or Impala.
+3. use ODBC driver and connect some of the well-known popular BI tools to Impala.
+
+## Cloudera provides connectors for some of the most popular leading analytics and data visualization tools 
+   such as Tableau, QlikView or Microstrategy. 
+   It can also offer a generic ODBC driver that can be used to connect various tools. 
+   This is the software component that we will use in the post to demonstrate how to integrate R with Cloudera Impala.
+   
+## Install R, RStudio Server, Impala ODBC and RODBC(R library)
+
+# Install EPEL package - EPEL stands for Extra package for Enterprise Linux
+$ sudo rpm -ivh http://mirror.chpc.utah.edu/pub/epel/5/x86_64/epel-release-5-4.noarch.rpm
+$ sudo yum install R
+
+# R comes with a command line interpreter or RStudio. 
+# RStudio has a desktop version as well as a web browser based alternative called RStudio Server. 
+
+# To install RStudio Server
+$ sudo yum install --nogpgcheck rstudio-server-0.97.551-x86_64.rpm
+
+# To ensure that Impala ODBC driver will work and RODBC package can be installed within R 
+# To install unixODBC and unixODBC-devel packages
+$ sudo yum install unixODBC
+$ sudo yum install unixODBC-devel
+
+# To install Cloudera Impala ODBC driver. 
+# To install Impala ODBC driver, you need to run the following command after downloading the driver (ClouderaImpalaODBC-2.5.5.1005-1.el6.x86_64.rpm)
+$ yum --nogpgcheck localinstall ClouderaImpalaODBC-2.5.5.1005-1.el6.x86_64.rpm
+
+# Impala ODBC driver requires a couple of files configured properly 
+(the driver package has templates files embedded that needs to be edited and copied to the correct directory). 
+The two key configuration files are odbc.init and cloudera.impalaodbc.ini.
+
+1. odbc.ini should look something like this:
+
+[Impala]
+# Description: DSN Description.
+# This key is not necessary and is only to give a description of the data source.
+Description=Cloudera ODBC Driver for Impala (64-bit) DSN
+
+# Driver: The location where the ODBC driver is installed to.
+Driver=/opt/cloudera/impalaodbc/lib/64/libclouderaimpalaodbc64.so
+
+# Values for HOST, PORT, KrbFQDN, and KrbServiceName should be set here.
+# They can also be specified on the connection string.
+HOST=localhost
+PORT=21050
+Database=default
+
+
+2. In cloudera.impalaodbc.ini configuration file we have the following settings:
+
+# SimbaDN / unixODBC
+ODBCInstLib=libodbcinst.so
+
+# To define the environment variables
+
+$ export LD_LIBRARY_PATH=/usr/local/lib:/opt/cloudera/impalaodbc/lib/64
+$ export ODBCINI=/etc/odbc.ini
+$ export SIMBADN=/etc/cloudera.impalaodbc.ini
+
+# To install RODBC package for R. 
+$ R
+>install.packages("RODBC")
+
+# Analyzing Hadoop datasets with R and Impala
+
+Now we are ready to start analyzing our Hadoop data set with R and Impala. 
+We will demonstrate how they work together using stock price information. 
+You can download e.g. Google stock prices from http://finance.yahoo.com (symbol: GOOG). 
+Once you have the spreadsheet downloaded, you need to remove the first line (header) from the file and then load it into HDFS using Hadoop file system shell.
+
+$ hadoop fs -mkdir /user/cloudera/stock
+$ hadoop fs -put google.csv /user/cloudera/stock
+$ hadoop fs -ls /user/cloudera/stock
+Found 1 items
+-rw-r--r--   3 cloudera cloudera     126379 2013-11-22 12:22 /user/cloudera/stock/google.csv
+
+Now we can login to impala shell to create our table. 
+Impala has a SQL-like query language so you can use the familiar CREATE TABLE command. 
+The external clause indicates that the physical data files are managed outside Impala; even if you drop the table, the files will be kept in the HDFS directory.
+
+After the table is created, we can run SHOW TABLES statement to verify if the table is accessible from Impala. We can also run a SELECT statement from impala-shell to display a couple of rows from the stock table.
+$ impala-shell
+[localhost.localdomain:21000] > create external table stock (stock_date string, stock_open float, stock_high float, stock_low float, stock_close_ float, stock_volume int, stock_adjclose float) row format delimited fields terminated by ',' lines terminated by '\n' location '/user/cloudera/stock/';
+...
+[localhost.localdomain:21000] > show tables;
+Query: show tables
+
++-------+
+| name  |
++-------+
+| stock |
++-------+
+Returned 1 row(s) in 0.01s
+[localhost.localdomain:21000] > select * from stock limit 3;
+...
++------------+-------------------+-------------------+-------------------+-------------------+--------------+-------------------+
+| stock_date | stock_open        | stock_high        | stock_low         | stock_close_      | stock_volume | stock_adjclose    |
++------------+-------------------+-------------------+-------------------+-------------------+--------------+-------------------+
+| 2013-11-21 | 1027              | 1038.31005859375  | 1026              | 1034.069946289062 | 1091800      | 1034.069946289062 |
+| 2013-11-20 | 1029.949951171875 | 1033.359985351562 | 1020.359985351562 | 1022.309997558594 | 963700       | 1022.309997558594 |
+| 2013-11-19 | 1031.719970703125 | 1034.75           | 1023.049987792969 | 1025.199951171875 | 1116400      | 1025.199951171875 |
++------------+-------------------+-------------------+-------------------+-------------------+--------------+-------------------+
+Returned 3 row(s) in 0.37s
+The next step is to start R command line interpreter. In order to run the same Impala SELECT statement from R, we need to execute the following commands from R:
+
+$ R
+> library("RODBC");
+> conn <- odbcConnect("Impala")
+> result <- sqlQuery(conn, "select * from stock limit 3")
+> result
+  stock_date stock_open stock_high stock_low stock_close_ stock_volume
+1 2013-11-21    1027.00    1038.31   1026.00      1034.07      1091800
+2 2013-11-20    1029.95    1033.36   1020.36      1022.31       963700
+3 2013-11-19    1031.72    1034.75   1023.05      1025.20      1116400
+  stock_adjclose
+1        1034.07
+2        1022.31
+3        1025.20
+As mentioned above, if you want to use a more convenient R development environment with various advanced features such as debugging, package management, file system navigation, etc. then RStudio is an excellent choice. It can be run as a desktop application or via a web browser if you have installed RStudio Server.  In case of the second option, RStudio can be accessed via http://hostname:8787 and you can login using your Linux username and password.
+
+Before you use RStudio from your browser, you also need to set the following environment variables in .Renviron file n your home directory:
+
+$ cat .Renviron 
+LD_LIBRARY_PATH=/usr/local/lib:/opt/cloudera/impalaodbc/lib/64
+ODBCINI=/etc/odbc.ini
+SIMBAINI=/etc/cloudera.impalaodbc.ini
+Now you can login to RStudio and execute the same R commands as we have shown from the command line interpreter, see the figure below.
+
+Impala-R-2
+
+You can also plot a graphical representation of your data set, as show below. The diagram illustrates a line chart for Google stock prices in 2013:
+
+Impala-R-1
+
+The actual R commands to generate this plot are as follows:
+
+> library("RODBC");
+> conn <- odbcConnect("Impala")
+> result <- sqlQuery(conn, "select stock_date, stock_close from stock where stock_date > '2013' order by stock_date asc limit 300")
+> result
+    stock_date stock_close
+1   2013-01-02      723.25
+2   2013-01-03      723.67
+3   2013-01-04      737.97
+...
+
+> plot(result$stock_close, lwd="1", xlab="Days", ylab="Price (USD)")
+> lines(result$stock_close, lwd="2")
+> axis(1, result$stock_date, labels=result$stock_date)
+Conclusion
+
+Cloudera Impala is an exciting new technology to provide real-time, interactive queries in Hadoop environment. It supports ODBC connectors and this makes it possible to integrate it with many popular BI tools and statistical software such as R. Together R and Impala provide an excellent combination for data analyst to process massive data sets efficiently and they can also support graphical representation of the result sets.
+
+If you are interested to learn more about Impala, please, check out our book, Impala in Action at Manning Publishing.
