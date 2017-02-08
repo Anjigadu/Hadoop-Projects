@@ -1,0 +1,8 @@
+Python code base
+Callable events
+Trigger rules
+Xcoms
+Cool UI & Rich cli
+Queues and Pools
+Zoombie cleanup
+Grwoing community
