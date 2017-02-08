@@ -18,7 +18,18 @@ Installation Cloudera Quickstart VM
 
 
 ## 
-etl sqoop
-processing spark
-query hive/impala
-automate oozie
+etl          - sqoop
+               sqoop-job  why?
+processing   - spark
+query        - hive/impala
+automate     - oozie
+
+qlikview 
+olap
+
+design
+      informed
+etl
+spark
+
+
