@@ -1,0 +1,16 @@
+wget http://files.grouplens.org/datasets/movielens/ml-latest.zip
+
+unzip ml-latest.zip
+
+hdfs dfs -mkdir -p /user/aws/rawdata/pig/movielens/latest/movies
+hdfs dfs -mkdir -p /user/aws/rawdata/pig/movielens/latest/ratings
+hdfs dfs -mkdir -p /user/aws/rawdata/pig/movielens/latest/tags
+hdfs dfs -mkdir -p /user/aws/rawdata/pig/movielens/latest/genome.scores
+hdfs dfs -mkdir -p /user/aws/rawdata/pig/movielens/latest/genome.tags
+
+
+hdfs dfs -moveFromLocal ml-latest/movies.csv /user/aws/rawdata/pig/movielens/latest/movies
+hdfs dfs -moveFromLocal ml-latest/ratings.csv /user/aws/rawdata/pig/movielens/latest/ratings
+hdfs dfs -moveFromLocal ml-latest/tags.csv /user/aws/rawdata/pig/movielens/latest/tags
+hdfs dfs -moveFromLocal ml-latest/genome-tags.csv /user/aws/rawdata/pig/movielens/latest/genome.scores
+hdfs dfs -moveFromLocal ml-latest/genome-scores.csv /user/aws/rawdata/pig/movielens/latest/genome.tags
