@@ -1,4 +1,4 @@
-hdfs dfs -get /user/aws/rawdata/pig/movielens/latest/movies/movies.csv
+hdfs dfs -get /user/cloudera/rawdata/hadoop_train/movielens/latest/movies/movies.csv
 head movies.csv
 head -n -40 movies.csv
 wc -l movies.csv
