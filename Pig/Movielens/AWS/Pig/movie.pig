@@ -1,53 +1,20 @@
-data = LOAD '/user/cloudera/rawdata/hadoop_train/movielens/latest/movies/movies.csv'
+data = LOAD '/user/aws/rawdata/pig/movielens/latest/movies/movies.csv'
        USING PigStorage(',')
        AS (movieid: chararray, title: chararray, genres: chararray);
 
-# inspect the structure
-describe data;
-=> data: {movieid: chararray,title: chararray,genres: chararray}
-
-# request an example
-illustrate data;
-
- data     | movieid:chararray    | title:chararray         | genres:chararray     | 
-------------------------------------------------------------------------------------
-|          | 3803                 | Greaser's Palace (1972) | Comedy|Drama|Western | 
-#  step 2. remove the header
 headless = FILTER data BY movieid != 'movieid';
-#  step 3. project one fields genres
+
 projData = FOREACH headless GENERATE genres;
-#  step 4. split the genres by a pipe (Adventure,Children,Fantasy)
-#  STRSPLIT: Splits a string around matches of a given regular expression
-#  STRSPLIT(string, regex, limit)
-#  http://pig.apache.org/docs/r0.9.1/func.html#strsplit
+
 splitted = FOREACH projData GENERATE STRSPLIT(genres,'\\|',0) AS t;
-#  step 5. flatten the tuple of splitted genres  (Adventure) (Children) (Fantasy)
+
 flattened = FOREACH splitted GENERATE FLATTEN(t) AS f;
-# edit filename starting at line 1
-vi pig_1485214765234.log     
-rm pig_1485214765234.log
-#  step 6. group the flattened typle by name
-grouped = GROUP flattened BY f;
-grouped = GROUP flattened BY (chararray)f;   ## after using myCSVLoader
-#  step 7. get the count on each group
+
+grouped = GROUP flattened BY f;  
+
 agged = FOREACH grouped GENERATE (chararray)group AS genre, COUNT(flattened) AS num;
-#  step 8. debugging
-ls
-cat pig_1485214765234.log
-rm pig_1485214765234.log
-hdfs dfs -ls -R rawdata rawdata
-hdfs dfs -tail rawdata/hadoop_train/movielens/latest/movies/movies.csv
-##-----------------------------------------------------------------------------------------------------------------------##
-## User-Defined Function
-   1. datafu
-   2. piggybank : load/storage function
-      # https://mvnrepository.com/artifact/org.apache.pig/piggybank/0.15.0
-      # a Java repository for accessing UDF written by other users
-   3. elephantbird: json
-# CSV Loader
-# https://pig.apache.org/docs/r0.9.1/api/org/apache/pig/piggybank/storage/CSVLoader.html
-pwd
-ls home/cloudera/
+
+
 hdfs dfs -moveFromLocal home/cloudera/piggybank-0.15.0.jar  rawdata/hadoop_train/movielens/
 #  step 1. Registering the jar file 
 REGISTER /home/cloudera/piggybank-0.15.0.jar
