@@ -32,4 +32,7 @@ design
 etl
 spark
 
+## Client faced pressure to migrate to faster processing cycles so that pricing team could answer more difficult questions 
+about consumers and markets in smaller time frames. Historically, client's retail inventory, pricing and POS data was spread accross multiple systems and multiple formats. Business user needed to aggregate this information to understand inventory and pricing points across all stores.Specific questions that needed to be answered: "Were higher priced items selling in certain market? " and "should inventory be re-allocated or price be optimized based upon geography?"
 
+We built a Hadoop infrastructure and migrated all required data into a centralized HDFS data hub repository from 
