@@ -1,0 +1,2 @@
+step 1. examine dataset (mysql)
+step 2. etl (sqoop)
