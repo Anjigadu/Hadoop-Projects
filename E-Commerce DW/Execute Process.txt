@@ -2,3 +2,4 @@ step 1. examine dataset (mysql)
 step 2. etl (sqoop)
         - configure once, execute many times
         - benefit from increment loads
+step 3. hive/impala
