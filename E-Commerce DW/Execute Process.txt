@@ -3,3 +3,4 @@ step 2. etl (sqoop)
         - configure once, execute many times
         - benefit from increment loads
 step 3. hive/impala
+step 4. spark 
