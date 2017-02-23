@@ -15,6 +15,10 @@ val customerRDD = sqlContext.read.parquet("/user/cloudera/bigretail/output/store
 
 val projDF = customerRDD.select("CustomerID","Demographics")
 
+var kk = customerRDD.map(r => (r(0).toString.toInt,r))
+kk.first
+kk.reduceByKey()
+
 # projDF.first
 # res1: org.apache.spark.sql.Row = [11000,<IndividualSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/IndividualSurvey">
 # <TotalPurchaseYTD>8248.99</TotalPurchaseYTD>
@@ -37,6 +41,9 @@ case class CustomerDemo(CustomerID: Int, TotalPurchaseYTD: String, DateFirstPurc
 			TotalChildren : String, NumberChildrenAtHome : String, Education : String, 
 			Occupation : String, HomeOwnerFlag : String, NumberCarsOwned : String, 
 			CommuteDistance : String) extends java.io.Serializable
+
+case class CustomerDemo() extends java.io.Serializable
+
 
 # defined class CustomerDemo
 
