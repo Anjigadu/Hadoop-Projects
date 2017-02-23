@@ -1,4 +1,4 @@
-# 1.
+# 1. Hive
 SELECT store,territory, count(1)
 FROM salesorderheader
 GROUP BY store,territory WITH ROLLUP;
