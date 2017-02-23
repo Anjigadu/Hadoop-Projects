@@ -118,3 +118,6 @@ CREATE EXTERNAL TABLE salesorderdetails(
 stored as parquet
 location '/user/cloudera/bigretail/output/stores/sqoop/salesorderdetails';
 
+# impala-shell
+# show databases;
+# invalidate metadata;
